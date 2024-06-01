@@ -1,5 +1,9 @@
 class Public::UsersController < ApplicationController
+
   def mypage
+  end
+
+  def edit
   end
 
   def confirm
@@ -10,4 +14,5 @@ class Public::UsersController < ApplicationController
 
   def show
   end
+
 end
