@@ -12,4 +12,14 @@ Rails.application.routes.draw do
     sessions: "admin/sessions"
   }
 
+  scope module: :public do
+    root to: 'homes#top'
+    get 'mypage' => 'users#mypage', as: 'mypage'
+    get 'mypage/edit' => 'users#edit', as: 'edit_mypage'
+    patch 'mypage' => 'users#update'
+    get 'users/confirm' => 'users#confirm', as: 'confirm_user'
+    patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
+    resources :users, only: [:show]
+  end
+
 end
