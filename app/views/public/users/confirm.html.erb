@@ -1,2 +1,10 @@
-<h1>Public::Users#confirm</h1>
-<p>Find me in app/views/public/users/confirm.html.erb</p>
+<h1>退会確認画面</h1>
+
+<p>
+  退会するとユーザー情報や<br>
+  これまでの投稿履歴が閲覧できなくなります。<br>
+  退会する場合は、「退会する」ボタンをクリックしてください。
+</p>
+
+<%= link_to "退会しない", mypage_path %>
+<%= link_to "退会する", close_account_user_path, method: :patch, data: { confirm: "本当に退会しますか？" } %>

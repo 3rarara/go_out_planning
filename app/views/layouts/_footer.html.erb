@@ -1,0 +1,26 @@
+<footer>
+
+  <% if user_signed_in? %>
+  <li>
+    <%= link_to "投稿一覧", "#" %>
+  </li>
+  <li>
+    <%= link_to "検索","#" %>
+  </li>
+  <li>
+    <%= link_to "投稿","#" %>
+  </li>
+  <li>
+    <%= link_to "マイページ", mypage_path %>
+  </li>
+
+  <% else %>
+  <li>
+    <%= link_to "投稿一覧", "#" %>
+  </li>
+  <li>
+    <%= link_to "検索","#" %>
+  </li>
+  <% end %>
+
+</header>

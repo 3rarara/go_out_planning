@@ -1,2 +1,6 @@
-<h1>Public::Users#mypage</h1>
-<p>Find me in app/views/public/users/mypage.html.erb</p>
+<h1>マイページ</h1>
+
+<%= @user.name %>
+<%= @user.email %>
+
+<%= link_to "編集", edit_mypage_path %>
