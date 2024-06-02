@@ -7,6 +7,10 @@ class Public::PlansController < ApplicationController
     @plan.plan_details.build
   end
 
+  def index
+    @plans = Plan.all
+  end
+
   def show
     @plan_details = @plan.plan_details
   end

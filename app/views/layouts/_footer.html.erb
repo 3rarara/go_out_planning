@@ -2,10 +2,7 @@
 
   <% if user_signed_in? %>
   <li>
-    <%= link_to "投稿一覧", "#" %>
-  </li>
-  <li>
-    <%= link_to "検索","#" %>
+    <%= link_to "投稿一覧", plans_path %>
   </li>
   <li>
     <%= link_to "投稿",new_plan_path %>
@@ -16,10 +13,7 @@
 
   <% else %>
   <li>
-    <%= link_to "投稿一覧", "#" %>
-  </li>
-  <li>
-    <%= link_to "検索","#" %>
+    <%= link_to "投稿一覧", plans_path %>
   </li>
   <% end %>
 
