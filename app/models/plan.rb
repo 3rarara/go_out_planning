@@ -6,4 +6,8 @@ class Plan < ApplicationRecord
   # 子モデル（plan_details）の属性を受入れ、更新や削除を
   accepts_nested_attributes_for :plan_details, allow_destroy: true
 
+  # バリデーション
+  validates :title, presence: true
+
+  
 end

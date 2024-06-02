@@ -1,4 +1,5 @@
 <h1>プラン投稿画面</h1>
+<%= render "layouts/errors", object: @plan %>
 
 <%= form_with model:@plan do |f| %>
 
@@ -10,6 +11,14 @@
 
   <h4>プラン詳細</h4>
   <%= f.fields_for :plan_details do |plan_detail| %>
+
+　　<h4>スケジュール1</h4>
+    <%= f.label :プラン詳細 %>
+    <%= f.text_field :title %>
+
+    <%= f.label :本文 %>
+    <%= f.text_field :body %>
+
   <% end %>
 
   <div id="plan_details_wrapper"></div>

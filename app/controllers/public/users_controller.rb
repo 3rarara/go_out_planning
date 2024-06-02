@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   before_action :set_current_user
+  before_action :ensure_current_user, only: [:edit, :update]
 
   def mypage
     @plans = current_user.plans.all
@@ -25,6 +26,8 @@ class Public::UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
+    @plans = @user.plans.all
   end
 
   private
@@ -34,7 +37,14 @@ class Public::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :profile_image)
+  end
+
+  def ensure_current_user
+    user = current_user
+    unless user.id == current_user.id
+      redirect_to plans_path
+    end
   end
 
 end
