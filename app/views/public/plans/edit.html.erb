@@ -8,6 +8,14 @@
   <%= f.label :本文 %>
   <%= f.text_field :body %>
 
+  <%= f.fields_for :plan_details do |f| %>
+    <%= f.label :タイトル %>
+    <%= f.text_field :title %>
+
+    <%= f.label :本文 %>
+    <%= f.text_field :body %>
+  <% end %>
+
   <%= f.submit "編集を保存" %>
 
 <% end %>

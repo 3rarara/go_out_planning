@@ -18,11 +18,11 @@ Turbolinks.start()
 ActiveStorage.start()
 
 $(document).ready(function() {
-  var wrapper = $('#plan_details_wrapper');
-  var addButton = $('#add_plan_details');
+  var wrapper = '#plan_details_wrapper';
+  var addButton = '#add_plan_details';
   var x = 0;
 
-  $(addButton).click(function(e) {
+  $(document).on("click", addButton, function(e) {
     e.preventDefault();
     x++;
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
     $(wrapper).append(formHtml);
   });
 
-  $(wrapper).on("click", ".remove_field", function(e) {
+  $(document).on("click", wrapper + " .remove_field", function(e) {
     e.preventDefault();
     $(this).parent('div').remove();
     x--;
