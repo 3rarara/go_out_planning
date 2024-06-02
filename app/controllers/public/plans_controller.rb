@@ -3,6 +3,7 @@ class Public::PlansController < ApplicationController
 
   def new
     @plan = Plan.new
+    @plan.plan_details.build
   end
 
   def show

@@ -8,6 +8,17 @@
   <%= f.label :本文 %>
   <%= f.text_field :body %>
 
+  <h4>プラン詳細</h4>
+  <div id="plan-details">
+    <%= f.fields_for :plan_details do |plan_detail| %>
+      <div class="nested-fields">
+        <%= render 'plan_detail_fields', f: detail_form %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to_add_fields "追加", f, :plan_details %>
+
   <%= f.submit "投稿" %>
 
 <% end %>
