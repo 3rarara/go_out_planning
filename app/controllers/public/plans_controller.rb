@@ -3,10 +3,12 @@ class Public::PlansController < ApplicationController
 
   def new
     @plan = Plan.new
+    # PlanDetailsモデルのインスタンス作成
     @plan.plan_details.build
   end
 
   def show
+    @plan_details = @plan.plan_details
   end
 
   def create
@@ -36,7 +38,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body)
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:title, :body])
   end
 
 end

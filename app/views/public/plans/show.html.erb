@@ -3,5 +3,10 @@
 <%= @plan.title %>
 <%= @plan.body %>
 
+<% @plan_details.each do |plan_detail| %>
+  <%= link_to plan_detail.title, "#" %>
+  <%= plan_detail.body %>
+<% end %>
+
 <%= link_to "編集", edit_plan_path %>
 <%= link_to "削除", plan_path, method: :delete, data: { confirm: "投稿を削除しますか？" } %>
