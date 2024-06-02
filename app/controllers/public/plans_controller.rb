@@ -20,10 +20,11 @@ class Public::PlansController < ApplicationController
   def create
     @plan = current_user.plans.new(plan_params)
     if @plan.save
-      # flash[:notice] = "プランを投稿しました"
+      flash[:notice] = "プランを投稿しました"
       redirect_to plan_path(@plan)
     else
-      render :new
+      flash.now[:alert] = "プランを投稿できませんでした"
+      render 'new'
     end
   end
 
@@ -31,13 +32,23 @@ class Public::PlansController < ApplicationController
   end
 
   def update
-    @plan.update(plan_params)
-    redirect_to plan_path(@plan)
+    if @plan.update(plan_params)
+      flash[:notice] = "プランを編集しました"
+      redirect_to plan_path(@plan)
+    else
+      flash.now[:alert] = "プランを編集できませんでした"
+      render 'edit'
+    end
   end
 
   def destroy
-    @plan.destroy
-    redirect_to mypage_path
+    if @plan.destroy
+      flash[:notice] = "プランを削除しました"
+      redirect_to mypage_path
+    else
+      flash.now[:alert] = "プランを削除できませんでした"
+      render 'show'
+    end
   end
 
   private
