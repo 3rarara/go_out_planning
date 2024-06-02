@@ -8,6 +8,13 @@
   <%= f.label :本文 %>
   <%= f.text_field :body %>
 
+  <h4>プラン詳細</h4>
+  <%= f.fields_for :plan_details do |plan_detail| %>
+  <% end %>
+
+  <div id="plan_details_wrapper"></div>
+  <%= link_to '追加', '#', id: 'add_plan_details' %>
+
   <%= f.submit "投稿" %>
 
 <% end %>
