@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'users/confirm' => 'users#confirm', as: 'confirm_user'
     patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
     resources :users, only: [:show]
+    resources :plans, only: [:new, :index, :show, :create, :edit, :update, :destroy]
   end
 
 end

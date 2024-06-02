@@ -1,0 +1,13 @@
+<h1>プラン投稿画面</h1>
+
+<%= form_with model:@plan do |f| %>
+
+  <%= f.label :プラン名 %>
+  <%= f.text_field :title %>
+
+  <%= f.label :本文 %>
+  <%= f.text_field :body %>
+
+  <%= f.submit "投稿" %>
+
+<% end %>

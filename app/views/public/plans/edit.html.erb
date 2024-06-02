@@ -1,0 +1,13 @@
+<h1>投稿編集</h1>
+
+<%= form_with model:@plan, url: plan_path, method: :patch do |f| %>
+
+  <%= f.label :プラン名 %>
+  <%= f.text_field :title %>
+
+  <%= f.label :本文 %>
+  <%= f.text_field :body %>
+
+  <%= f.submit "編集を保存" %>
+
+<% end %>

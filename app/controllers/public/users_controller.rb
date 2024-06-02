@@ -3,6 +3,7 @@ class Public::UsersController < ApplicationController
   before_action :set_current_user
 
   def mypage
+    @plans = current_user.plans.all
   end
 
   def edit
