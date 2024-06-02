@@ -3,11 +3,13 @@
 
   <%= f.label :ユーザー名 %>
   <%= f.text_field :name %>
-  
+
   <%= f.label :メールアドレス %>
   <%= f.email_field :email, autocomplete: "email" %>
-  
+
+  <%= f.file_field :profile_image, placeholder: "プロフィール", accept: "image/*" %>
+
   <%= f.submit "編集を保存" %>
   <%= link_to "退会", confirm_user_path %>
-  
+
 <% end %>

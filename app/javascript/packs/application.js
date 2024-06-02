@@ -20,7 +20,7 @@ ActiveStorage.start()
 $(document).ready(function() {
   var wrapper = '#plan_details_wrapper';
   var addButton = '#add_plan_details';
-  var x = 0;
+  var x = 1;
 
   $(document).on("click", addButton, function(e) {
     e.preventDefault();
@@ -28,8 +28,8 @@ $(document).ready(function() {
 
     var formHtml =
       '<div>' +
-        '<h3>フォーム ' + x + '</h3>' +
-        '<label for="plan_plan_details_attributes_' + x + '_title">タイトル</label>' +
+        '<h4>スケジュール ' + x + '</h4>' +
+        '<label for="plan_plan_details_attributes_' + x + '_title">プラン詳細</label>' +
         '<input type="text" id="plan_plan_details_attributes_' + x + '_title" name="plan[plan_details_attributes][' + x + '][title]">' +
         '<label for="plan_plan_details_attributes_' + x + '_body">本文</label>' +
         '<input type="text" id="plan_plan_details_attributes_' + x + '_body" name="plan[plan_details_attributes][' + x + '][body]">' +

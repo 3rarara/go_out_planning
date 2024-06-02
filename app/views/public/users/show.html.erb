@@ -1,2 +1,12 @@
-<h1>Public::Users#show</h1>
-<p>Find me in app/views/public/users/show.html.erb</p>
+<h1>ユーザーページ</h1>
+<%= image_tag @user.get_profile_image(100,100) %>
+<%= @user.name %>
+
+<h1>投稿一覧</h1>
+
+<% @plans.each do |plan| %>
+
+  <%= link_to plan.title, plan_path(plan) %>
+  <%= plan.body %>
+
+<% end %>
