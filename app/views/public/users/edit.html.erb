@@ -1,12 +1,13 @@
 <h1>プロフィール編集</h1>
 <%= form_with model:@user, url: mypage_path, method: :patch do |f| %>
 
-<%= f.label :ユーザー名 %>
-<%= f.text_field :name %>
-
-<%= f.label :メールアドレス %>
-<%= f.email_field :email, autocomplete: "email" %>
-
-<%= f.submit "編集を保存" %>
-<%= link_to "退会", confirm_user_path %>
+  <%= f.label :ユーザー名 %>
+  <%= f.text_field :name %>
+  
+  <%= f.label :メールアドレス %>
+  <%= f.email_field :email, autocomplete: "email" %>
+  
+  <%= f.submit "編集を保存" %>
+  <%= link_to "退会", confirm_user_path %>
+  
 <% end %>

@@ -4,3 +4,12 @@
 <%= @user.email %>
 
 <%= link_to "編集", edit_mypage_path %>
+
+<h1>投稿一覧</h1>
+
+<% @plans.each do |plan| %>
+
+  <%= link_to plan.title, plan_path(plan) %>
+  <%= plan.body %>
+
+<% end %>
