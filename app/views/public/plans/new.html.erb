@@ -1,8 +1,42 @@
 <div class="container mx-auto">
   <h1 class="my-3">プラン投稿</h1>
   <div class="row">
-    <%= render "layouts/errors", object: @plan %>
-    <%= render 'form', plan: @plan %>
 
+    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg">
+      <%= render "layouts/errors", object: @plan %>
+      <%= form_with model: @plan do |f| %>
+      <div class="row">
+        <div class="col-3">
+          <%= image_tag current_user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
+          <div class="text-center mb-3"><%= current_user.name %></div>
+        </div>
+        <div class="col">
+          <%= f.text_field :title, class:"form-control my-3", placeholder: "プランタイトル" %>
+          <%= f.text_field :body, class:"form-control my-3", placeholder: "プラン説明" %>
+        </div>
+      </div>
+
+      <%= f.fields_for :plan_details do |plan_detail| %>
+      <div class="row">
+        <div class="col"><%= plan_detail.text_field :title, class:"form-control", placeholder: "詳細タイトル" %></div>
+         <div class="col"><%= plan_detail.text_field :body, class:"form-control", placeholder: "詳細説明" %></div>
+      </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col text-center">
+          <div id="plan_details_wrapper"></div>
+          <%= link_to '+', '#', id: 'add_plan_details', class: "btn btn-outline-dark rounded-circle ml-auto shadow" %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col text-center my-3">
+          <%= f.submit "投稿", class: "btn btn-success mx-auto" %>
+        </div>
+      </div>
+      <% end %>
+
+    </div>
   </div>
 </div>
