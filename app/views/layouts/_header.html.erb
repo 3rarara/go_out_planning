@@ -1,23 +1,31 @@
-<header>
+<header style="background-color: #3B4674;">
+<!--<header style="background-color: #f7ce5f;">-->
+<!--<header class="shadow-sm">-->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container my-2">
+      <a class="navbar-brand p-3" href="/"><%= image_tag "go_out_planning.jpg" ,size: "270x50" %></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
 
-  <%= link_to root_path do %>
-  <!--ロゴ作成予定-->
-    <%= "おでかけplanning" %>
-  <% end %>
+          <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "ログアウト",destroy_user_session_path, method: :delete, class: "nav-link text-light" %>
+          </li>
 
-  <% if user_signed_in? %>
-  <li>
-    <%= link_to "ログアウト",destroy_user_session_path, method: :delete %>
-  </li>
+          <% else %>
+          <li class="nav-item">
+            <%= link_to "新規登録", new_user_registration_path, class: "nav-link text-light" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログイン", user_session_path, class: "nav-link text-light" %>
+          </li>
+          <% end %>
 
-  <% else %>
-  <li>
-    <%= link_to "新規登録", new_user_registration_path %>
-  </li>
-  <li>
-    <%= link_to "ログイン", user_session_path %>
-  </li>
-  <% end %>
-
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>
-

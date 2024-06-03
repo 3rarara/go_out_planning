@@ -1,15 +1,32 @@
-<h1>投稿詳細</h1>
+<div class="container mx-auto">
+  <h1 class="my-3">投稿詳細</h1>
+  <div class="row">
 
-<%= link_to @plan.user.name, user_path(@plan.user) %>
-<%= @plan.title %>
-<%= @plan.body %>
+    <div class="col-sm-12 col-md-11 col-lg-10 bg-white my-3 p-4 shadow-lg">
 
-<% @plan_details.each do |plan_detail| %>
-  <%= plan_detail.title %>
-  <%= plan_detail.body %>
-<% end %>
 
-<% if @plan.user == current_user %>
-  <%= link_to "編集", edit_plan_path %>
-  <%= link_to "削除", plan_path, method: :delete, data: { confirm: "投稿を削除しますか？" } %>
-<% end %>
+      <div class="row">
+        <div class="col-3">
+          <%= image_tag current_user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
+          <div class="text-center mb-1"><%= link_to @plan.user.name, user_path(@plan.user) %></div>
+        </div>
+        <div class="col">
+          <h4><%= @plan.title %></h4><br>
+          <%= @plan.body %>
+        </div>
+      </div>
+
+      <% @plan_details.each do |plan_detail| %>
+      <div class="row my-3">
+        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
+        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
+      </div>
+      <% end %>
+
+      <% if @plan.user == current_user %>
+        <%= link_to "編集", edit_plan_path %>
+        <%= link_to "削除", plan_path, method: :delete, data: { confirm: "投稿を削除しますか？" } %>
+      <% end %>
+    </div>
+  </div>
+</div>

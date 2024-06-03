@@ -1,23 +1,18 @@
-<div class="container mx-auto">
-  <h1 class="my-3">プラン編集</h1>
-  <div class="row">
-
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg">
-      <%= render "layouts/errors", object: @plan %>
-      <%= form_with model: @plan, url: plan_path, method: :patch do |f| %>
+      <%= form_with model: plan do |f| %>
       <div class="row">
         <div class="col-3">
           <%= image_tag current_user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
-          <div class="text-center mb-1"><%= current_user.name %></div>
+          <div class="text-center mb-3"><%= current_user.name %></div>
         </div>
         <div class="col">
           <%= f.text_field :title, class:"form-control my-3", placeholder: "プランタイトル" %>
-          <%= f.text_area :body, class:"form-control my-3", placeholder: "プラン説明" %>
+          <%= f.text_field :body, class:"form-control my-3", placeholder: "プラン説明" %>
         </div>
       </div>
 
-      <%= f.fields_for :plan_details, method: :patch do |f| %>
-      <div class="row my-3">
+      <%= f.fields_for :plan_details do |plan_detail| %>
+      <div class="row">
         <div class="col"><%= f.text_field :title, class:"form-control", placeholder: "詳細タイトル" %></div>
         <div class="col"><%= f.text_field :body, class:"form-control", placeholder: "詳細説明" %></div>
       </div>
@@ -32,11 +27,9 @@
 
       <div class="row">
         <div class="col text-center my-3">
-          <%= f.submit "変更", class: "btn btn-success mx-auto" %>
+          <%= f.submit "投稿", class: "btn btn-success mx-auto" %>
         </div>
       </div>
       <% end %>
 
     </div>
-  </div>
-</div>

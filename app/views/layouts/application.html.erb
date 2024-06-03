@@ -11,14 +11,18 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column vh-100" style="background-color: #CDD3E8;" >
     <%= render 'layouts/header' %>
       <div>
         <% flash.each do |message_type, message| %>
         <div class="flash-message <%= message_type %>"><%= message %></div>
         <% end %>
       </div>
-    <%= yield %>
+      <main class="mb-auto">
+        <div class="col-sm-12 col-md-10 col-lg-8 px-sm-0 mx-auto">
+          <%= yield %>
+        </div>
+      </main>
     <%= render 'layouts/footer' %>
   </body>
 </html>
