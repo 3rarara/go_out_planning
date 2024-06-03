@@ -27,13 +27,13 @@ $(document).ready(function() {
     x++;
 
     var formHtml =
-      '<div>' +
-        '<h4>スケジュール ' + x + '</h4>' +
-        '<label for="plan_plan_details_attributes_' + x + '_title">プラン詳細</label>' +
-        '<input type="text" id="plan_plan_details_attributes_' + x + '_title" name="plan[plan_details_attributes][' + x + '][title]">' +
-        '<label for="plan_plan_details_attributes_' + x + '_body">本文</label>' +
-        '<input type="text" id="plan_plan_details_attributes_' + x + '_body" name="plan[plan_details_attributes][' + x + '][body]">' +
-        '<a href="#" class="remove_field">削除</a>' +
+      '<div class="row my-3">' +
+        '<div class="col">' +
+          '<input type="text" class="form-control" name="plan[plan_details_attributes][' + x + '][title]" placeholder="詳細タイトル">' +
+        '</div>' +
+        '<div class="col">' +
+          '<input type="text" class="form-control" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明">' +
+        '</div>' +
       '</div>';
 
     $(wrapper).append(formHtml);

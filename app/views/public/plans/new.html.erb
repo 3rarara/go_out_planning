@@ -1,29 +1,8 @@
-<h1>プラン投稿画面</h1>
-<%= render "layouts/errors", object: @plan %>
+<div class="container mx-auto">
+  <h1 class="my-3">プラン投稿</h1>
+  <div class="row">
+    <%= render "layouts/errors", object: @plan %>
+    <%= render 'form', plan: @plan %>
 
-<%= form_with model:@plan do |f| %>
-
-  <%= f.label :プラン名 %>
-  <%= f.text_field :title %>
-
-  <%= f.label :本文 %>
-  <%= f.text_field :body %>
-
-  <h4>プラン詳細</h4>
-  <%= f.fields_for :plan_details do |plan_detail| %>
-
-　　<h4>スケジュール1</h4>
-    <%= f.label :プラン詳細 %>
-    <%= f.text_field :title %>
-
-    <%= f.label :本文 %>
-    <%= f.text_field :body %>
-
-  <% end %>
-
-  <div id="plan_details_wrapper"></div>
-  <%= link_to '追加', '#', id: 'add_plan_details' %>
-
-  <%= f.submit "投稿" %>
-
-<% end %>
+  </div>
+</div>
