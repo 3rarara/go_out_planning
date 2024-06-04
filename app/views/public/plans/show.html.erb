@@ -1,5 +1,4 @@
 <div class="container mx-auto">
-  <h1 class="my-3">投稿詳細</h1>
   <div class="row">
 
     <div class="col-sm-12 col-md-11 col-lg-10 bg-white my-3 p-4 shadow-lg">
@@ -10,8 +9,8 @@
           <%= image_tag @plan.user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
           <div class="text-center mb-1"><%= link_to @plan.user.name, user_path(@plan.user) %></div>
         </div>
-        <div class="col">
-          <h4><%= @plan.title %></h4><br>
+        <div class="col my-auto">
+          <h5><%= @plan.title %></h5>
           <%= @plan.body %>
         </div>
       </div>

@@ -1,0 +1,29 @@
+<div class="container mx-auto">
+  <div class="row">
+
+    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
+      <div class="row">
+        <div class="col mx-2">
+          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
+        </div>
+        <div class="col mx-2 my-auto">
+          <div class="row">
+            <%= user.name %>
+          </div>
+
+          <% if user.id == current_user.id %>
+          <div class="row">
+            <%= user.email %>
+          </div>
+          <div class="row">
+            <div class="col my-3">
+              <%= link_to "編集", edit_mypage_path, class: "btn btn-success" %>
+            </div>
+          </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

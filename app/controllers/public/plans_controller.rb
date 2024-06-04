@@ -1,6 +1,7 @@
 class Public::PlansController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update, :destroy]
 
   def new
@@ -10,7 +11,7 @@ class Public::PlansController < ApplicationController
   end
 
   def index
-    @plans = Plan.all
+    @plans = Plan.includes(:user).where(users: { is_active: true })
   end
 
   def show
@@ -65,6 +66,15 @@ class Public::PlansController < ApplicationController
     plan = Plan.find(params[:id])
     unless plan.user == current_user
       redirect_to plans_path
+    end
+  end
+
+  def user_is_active
+    user = @plan.user
+    if user.is_active?
+    else
+      flash[:alert] = "指定のユーザーは退会済みです"
+      redirect_to mypage_path
     end
   end
 

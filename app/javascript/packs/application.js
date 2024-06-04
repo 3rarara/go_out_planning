@@ -34,10 +34,12 @@ $(document).ready(function() {
         '<div class="col">' +
           '<input type="text" class="form-control" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明">' +
         '</div>' +
+        '<a href="#" class="remove_field btn btn-danger">削除</a>' +
       '</div>';
 
     $(wrapper).append(formHtml);
   });
+
 
   $(document).on("click", wrapper + " .remove_field", function(e) {
     e.preventDefault();

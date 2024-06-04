@@ -18,8 +18,10 @@
         <div class="flash-message <%= message_type %>"><%= message %></div>
         <% end %>
       </div>
-      <main class="mb-auto">
+      <main>
+        <div class="col-sm-12 col-md-10 col-lg-8 px-sm-0 my-3 p-4 mx-auto">
           <%= yield %>
+        </div>
       </main>
     <%= render 'layouts/footer' %>
   </body>
