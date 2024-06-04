@@ -7,7 +7,7 @@ class Public::PlansController < ApplicationController
   def new
     @plan = Plan.new
     # PlanDetailsモデルのインスタンス作成
-    @plan.plan_details.build
+    @plan_detail = @plan.plan_details.build
   end
 
   def index
@@ -59,7 +59,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:title, :body])
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body])
   end
 
   def ensure_current_user
