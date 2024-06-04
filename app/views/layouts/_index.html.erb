@@ -1,19 +1,18 @@
 <div class="container mx-auto">
-  <h1 class="my-3">投稿一覧</h1>
   <div class="row">
     <% plans.each do |plan| %>
 
-      <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg">
+      <div class="col-sm-12 col-md-10 col-lg-8 px-sm-0 bg-white my-3 p-4 shadow-lg mx-auto">
         <div class="row">
           <div class="col-3">
-            <%= image_tag plan.user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
-            <div class="text-center"><%= plan.user.name %></div>
+            <%= image_tag plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
+            <div class="text-center"><%= link_to plan.user.name, user_path(plan.user) %></div>
           </div>
-          <div class="col">
+          <div class="col mx-4 my-auto">
             <%= link_to plan_path(plan) do %>
-              <h4><%= plan.title %></h4><br>
-              <%= plan.body %>
+              <h5><%= plan.title %></h5>
             <% end %>
+            <%= plan.body %>
           </div>
         </div>
       </div>

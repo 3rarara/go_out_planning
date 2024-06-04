@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
-  before_action :set_current_user
+  before_action :authenticate_user!
+  before_action :set_current_user, except: [:show]
+  before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
 
   def mypage
@@ -53,6 +54,15 @@ class Public::UsersController < ApplicationController
     user = current_user
     unless user.id == current_user.id
       redirect_to plans_path
+    end
+  end
+
+  def user_is_active
+    user = User.find(params[:id])
+    if user.is_active?
+    else
+      flash[:alert] = "指定のユーザーは退会済みです"
+      redirect_to mypage_path
     end
   end
 

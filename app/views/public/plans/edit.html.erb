@@ -16,10 +16,10 @@
         </div>
       </div>
 
-      <%= f.fields_for :plan_details, method: :patch do |f| %>
+      <%= f.fields_for :plan_details do |plan_detail| %>
       <div class="row my-3">
-        <div class="col"><%= f.text_field :title, class:"form-control", placeholder: "詳細タイトル" %></div>
-        <div class="col"><%= f.text_field :body, class:"form-control", placeholder: "詳細説明" %></div>
+        <div class="col"><%= plan_detail.text_field :title, class:"form-control", placeholder: "詳細タイトル" %></div>
+        <div class="col"><%= plan_detail.text_field :body, class:"form-control", placeholder: "詳細説明" %></div>
       </div>
       <% end %>
 

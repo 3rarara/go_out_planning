@@ -1,5 +1,4 @@
 <div class="container mx-auto">
-  <h1 class="my-3">投稿詳細</h1>
   <div class="row">
 
     <div class="col-sm-12 col-md-11 col-lg-10 bg-white my-3 p-4 shadow-lg">
@@ -7,11 +6,11 @@
 
       <div class="row">
         <div class="col-3">
-          <%= image_tag current_user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
+          <%= image_tag @plan.user.get_profile_image(100, 100), class: "rounded-circle mx-auto d-block" %>
           <div class="text-center mb-1"><%= link_to @plan.user.name, user_path(@plan.user) %></div>
         </div>
-        <div class="col">
-          <h4><%= @plan.title %></h4><br>
+        <div class="col my-auto">
+          <h5><%= @plan.title %></h5>
           <%= @plan.body %>
         </div>
       </div>
@@ -24,8 +23,12 @@
       <% end %>
 
       <% if @plan.user == current_user %>
-        <%= link_to "編集", edit_plan_path %>
-        <%= link_to "削除", plan_path, method: :delete, data: { confirm: "投稿を削除しますか？" } %>
+      <div class="row">
+        <div class="col text-center my-3">
+          <%= link_to "編集", edit_plan_path, class: "btn btn-warning mx-auto" %>
+          <%= link_to "削除", plan_path, method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
+        </div>
+      </div>
       <% end %>
     </div>
   </div>

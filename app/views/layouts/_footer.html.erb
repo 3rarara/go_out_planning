@@ -1,30 +1,28 @@
-<footer class="footer" style="background-color: #3B4674;">
+<footer class="footer fixed-bottom" style="background-color: #3B4674;">
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container mx-auto">
-      <div class="row">
-        <div class="col">
+    <div class="container mt-2">
 
-          <ul class="navbar-nav justify-content-center">
-            <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to "投稿一覧", plans_path, class: "nav-link text-light mx-3" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "投稿",new_plan_path, class: "nav-link text-light mx-3" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "マイページ", mypage_path, class: "nav-link text-light mx-3" %>
-            </li>
+      <div class="d-flex justify-content-center">
+        <ul class="navbar-nav">
+          <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "投稿一覧", plans_path, class: "nav-link text-light mx-3" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "投稿",new_plan_path, class: "nav-link text-light mx-3" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "マイページ", mypage_path, class: "nav-link text-light mx-3" %>
+          </li>
 
-            <% else %>
-            <li class="nav-item">
-              <%= link_to "投稿一覧", plans_path, class: "nav-link text-light mx-3" %>
-            </li>
-            <% end %>
-
-          </ul>
-        </div>
+          <% else %>
+          <li class="nav-item">
+            <%= link_to "投稿一覧", plans_path, class: "nav-link text-light mx-3" %>
+          </li>
+          <% end %>
+        </ul>
       </div>
+
     </div>
   </nav>
 </footer>
