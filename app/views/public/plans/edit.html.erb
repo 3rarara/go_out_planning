@@ -1,10 +1,10 @@
 <div class="container mx-auto">
-  <h1 class="my-3">プラン編集</h1>
   <div class="row">
 
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg">
+    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto">
       <%= render "layouts/errors", object: @plan %>
-      <%= form_with model: @plan, url: plan_path, method: :patch do |f| %>
+      <%= form_with model: @plan, url: plan_path(@plan), method: :patch do |f| %>
+      <h4>プラン概要</h4>
       <div class="row">
         <div class="col">
           <%= f.text_field :title, class:"form-control my-3", placeholder: "プランタイトル" %>
@@ -12,12 +12,20 @@
         </div>
       </div>
 
-      <%= f.fields_for :plan_details do |plan_detail| %>
-      <div class="row my-3">
-        <div class="col"><%= plan_detail.text_field :title, class:"form-control", placeholder: "詳細タイトル" %></div>
-        <div class="col"><%= plan_detail.text_field :body, class:"form-control", placeholder: "詳細説明" %></div>
-      </div>
-      <% end %>
+      <h4>スケジュール</h4>
+        <%= f.fields_for :plan_details do |plan_detail| %>
+        <div class="row nested-fields">
+          <div class="col-10">
+            <%= plan_detail.text_field :title, class:"form-control my-3", placeholder: "詳細タイトル" %>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <%= link_to "削除", "#", class: "remove_field btn btn-danger my-3" %>
+          </div>
+          <div class="col-12">
+            <%= plan_detail.text_area :body, class:"form-control my-3", placeholder: "詳細説明" %>
+          </div>
+        </div>
+        <% end %>
 
       <div class="row">
         <div class="col text-center">
