@@ -10,15 +10,15 @@
           <div class="text-center mb-3"><%= current_user.name %></div>
         </div>
         <div class="col">
-          <%= f.text_field :title, class:"form-control my-3", placeholder: "プランタイトル" %>
-          <%= f.text_area :body, class:"form-control my-3", placeholder: "プラン説明" %>
+          <%= f.text_field :title, class:"form-control my-3", placeholder: "例) ＊＊県旅行！" %>
+          <%= f.text_area :body, class:"form-control my-3", placeholder: "例)御朱印巡りをしました！これで12個目！" %>
         </div>
       </div>
 
       <%= f.fields_for :plan_details do |plan_detail| %>
       <div class="row">
-        <div class="col"><%= plan_detail.text_field :title, class: "form-control", placeholder: "詳細タイトル" %></div>
-        <div class="col"><%= plan_detail.text_field :body, class: "form-control", placeholder: "詳細説明" %></div>
+        <div class="col"><%= plan_detail.text_field :title, class: "form-control", placeholder: "例) ＊＊駅到着" %></div>
+        <div class="col"><%= plan_detail.text_field :body, class: "form-control", placeholder: "例) 10:00集合 徒歩3分移動" %></div>
       </div>
       <% end %>
 
