@@ -26,6 +26,11 @@
               <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ログイン</i>
             <% end %>
           </li>
+          <li class="nav-item mx-3">
+            <%= link_to users_guest_sign_in_path, method: :post do %>
+              <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ゲストログイン</i>
+            <% end %>
+          </li>
           <% end %>
 
         </ul>

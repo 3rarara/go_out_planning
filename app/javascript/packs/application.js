@@ -62,14 +62,12 @@ $(document).ready(function() {
       // return false;
       // // var planId = removeButton.closest('.nested-fields').find('input')[0].dataset.planId
 
-      console.log(planId);
       if(detailId) {
         $.ajax({
           url: '/plans/' + planId + '/plan_details/' + detailId,
           method: 'DELETE',
           dataType: 'json',
           success: function() {
-            // フォームを削除
             removeButton.closest('.nested-fields').remove();
           },
           error: function(xhr, textStatus, errorThrown) {
