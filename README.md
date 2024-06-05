@@ -33,5 +33,10 @@
 - IDE：Cloud9
 ​
 ## 使用素材
+
+・Canva</br>
+・https://www.canva.com/ja_jp/learn/commercial-use/#commercial-use</br>
+・引用元の指示に従って利用します</br>
+
 著作権を考慮し、架空のデータを扱う予定です。</br>
 なお今後、実在するデータを利用する際には、事前に著作権保持者と契約を結んだ上で利用します。
