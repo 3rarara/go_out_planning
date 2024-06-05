@@ -1,9 +1,10 @@
 class Public::PlanDetailsController < ApplicationController
-
   def destroy
     @plan_detail = PlanDetail.find(params[:id])
-    @plan_detail.destroy
-    redirect_to edit_plan_path(@plan_detail.plan)
+    if @plan_detail.destroy
+      render json: { success: true }
+    else
+      render json: { success: false, message: '削除に失敗しました' }
+    end
   end
-
 end
