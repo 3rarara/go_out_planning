@@ -1,0 +1,16 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success text-center mx-auto" style="width: 100%;">
+    <%= flash[:notice] %><button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger text-center mx-auto" style="width: 100%;">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <ul style="padding-left: 0;">
+      <% flash[:alert].split(", ").each do |message| %>
+        <li style="list-style: none;"><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

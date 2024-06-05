@@ -33,7 +33,9 @@ $(document).ready(function() {
           '<input type="text" class="form-control mt-4" name="plan[plan_details_attributes][' + x + '][title]" placeholder="詳細タイトル">' +
         '</div>' +
         '<div class="col-2 d-flex align-items-center">' +
-          '<a href="#" class="remove_field btn btn-danger mt-4">削除</a>' +
+          '<a href="#" class="remove_field btn btn-danger my-3">' +
+          '<i class="fa-solid fa-trash" style="color: #ffffff;"></i>' +
+          '</a>' +
         '</div>' +
         '<div class="col-12">' +
           '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
