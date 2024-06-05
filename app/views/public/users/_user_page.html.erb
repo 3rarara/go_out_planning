@@ -11,7 +11,7 @@
             <%= user.name %>
           </div>
 
-          <% if user.id == current_user.id %>
+          <% if user.id == current_user.id && user.email != "guest@example.com" %>
           <div class="row">
             <%= user.email %>
           </div>

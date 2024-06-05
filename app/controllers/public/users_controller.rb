@@ -3,6 +3,7 @@ class Public::UsersController < ApplicationController
   before_action :set_current_user, except: [:show]
   before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
+  before_action :ensure_guest_user, only: [:edit]
 
   def mypage
     @plans = current_user.plans.all
@@ -66,4 +67,10 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def ensure_guest_user
+    @user = current_user
+    if @user.guest_user?
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end
 end
