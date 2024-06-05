@@ -40,42 +40,22 @@ $(document).ready(function() {
         '<div class="col-12">' +
           '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
         '</div>' +
+        '<input type="hidden" name="plan[plan_details_attributes][' + x + '][_destroy]" class="destroy-field" value="false">' +
       '</div>';
 
-// 22行目で指定した<div id="plan_details_wrapper"></div>=(wrapper)にフォーム(formHtml)を追加(append)する
     $(wrapper).append(formHtml);
   });
-
 
   $(document).on("click", ".remove_field", function(e) {
     e.preventDefault();
 
     if(confirm('この詳細を削除してもよろしいですか？')) {
-      // 削除ボタンの参照を変数にセット
       var removeButton = $(e.target);
-      // 詳細のあるフォーム
-      var form = removeButton.closest('form');
-      // 削除する詳細のID
-      var detailId = removeButton.closest('.nested-fields').find('input')[0].dataset.planDetailId
-      var planId = $("#plan_title")[0].dataset.planId
-      // console.log(planId, detailId, removeButton.closest('.nested-fields').find('input')[0]);
-      // return false;
-      // // var planId = removeButton.closest('.nested-fields').find('input')[0].dataset.planId
-
-      if(detailId) {
-        $.ajax({
-          url: '/plans/' + planId + '/plan_details/' + detailId,
-          method: 'DELETE',
-          dataType: 'json',
-          success: function() {
-            removeButton.closest('.nested-fields').remove();
-          },
-          error: function(xhr, textStatus, errorThrown) {
-            console.log(textStatus);
-          }
-        });
+      var destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
+      if (destroyField.length > 0) {
+        destroyField.val('true');
+        removeButton.closest('.nested-fields').hide();
       } else {
-        // フォームを削除
         removeButton.closest('.nested-fields').remove();
       }
     }
