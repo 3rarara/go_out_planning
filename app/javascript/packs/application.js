@@ -33,7 +33,9 @@ $(document).ready(function() {
           '<input type="text" class="form-control mt-4" name="plan[plan_details_attributes][' + x + '][title]" placeholder="詳細タイトル">' +
         '</div>' +
         '<div class="col-2 d-flex align-items-center">' +
-          '<a href="#" class="remove_field btn btn-danger mt-4">削除</a>' +
+          '<a href="#" class="remove_field btn btn-danger my-3">' +
+          '<i class="fa-solid fa-trash" style="color: #ffffff;"></i>' +
+          '</a>' +
         '</div>' +
         '<div class="col-12">' +
           '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
@@ -47,7 +49,28 @@ $(document).ready(function() {
 
   $(document).on("click", ".remove_field", function(e) {
     e.preventDefault();
-    $(this).closest('.nested-fields').remove();
-    x--;
+
+    if(confirm('この詳細を削除してもよろしいですか？')) {
+      var removeButton = $(this); // 削除ボタンの参照を変数にセット
+
+      var form = removeButton.closest('form'); // 詳細のあるフォーム
+      var detailId = removeButton.closest('.nested-fields').find('input[name$="_id"]').val(); // 削除する詳細のID
+
+      if(detailId) {
+        $.ajax({
+          url: '/plans/' + planId + '/plan_details/' + detailId,
+          method: 'DELETE',
+          dataType: 'json',
+          success: function() {
+            removeButton.closest('.nested-fields').remove(); // フォームを削除
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            console.log(textStatus);
+          }
+        });
+      } else {
+        removeButton.closest('.nested-fields').remove(); // フォームを削除
+      }
+    }
   });
 });
