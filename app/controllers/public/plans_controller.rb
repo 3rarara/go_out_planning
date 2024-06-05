@@ -59,7 +59,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body])
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy])
   end
 
   def ensure_current_user
