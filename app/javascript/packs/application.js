@@ -55,9 +55,13 @@ $(document).ready(function() {
       if (destroyField.length > 0) {
         destroyField.val('true');
         removeButton.closest('.nested-fields').hide();
+        console.log('Status: success - The item was marked for deletion.');
       } else {
         removeButton.closest('.nested-fields').remove();
+        console.log('Status: success - The new item was removed.');
       }
+    } else {
+      console.log('Status: cancelled - The item was not deleted.');
     }
   });
 });

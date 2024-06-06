@@ -2,9 +2,9 @@ class Public::PlanDetailsController < ApplicationController
   def destroy
     @plan_detail = PlanDetail.find(params[:id])
     if @plan_detail.destroy
-      render json: { success: true }
+      render json: { status: 'success' }, status: :ok
     else
-      render json: { success: false, message: '削除に失敗しました' }
+      render json: { status: 'error' }, status: :unprocessable_entity
     end
   end
 end
