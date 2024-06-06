@@ -2,7 +2,7 @@
   <div class="row">
     <% plans.each do |plan| %>
 
-      <div class="col-sm-12 col-md-10 col-lg-8 px-sm-0 bg-white my-3 p-4 shadow-lg mx-auto">
+      <div class="col-sm-12 col-md-10 col-lg-8 px-sm-0 bg-white my-3 p-4 shadow-lg mx-auto rounded">
         <div class="row">
           <div class="col-3">
             <%= image_tag plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
