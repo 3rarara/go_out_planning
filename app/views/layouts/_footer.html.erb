@@ -1,0 +1,35 @@
+<footer class="footer fixed-bottom" style="background-color: #3B4674;">
+  <div class="container mt-3">
+    <nav class="row">
+      <div class="col">
+        <ul class="d-flex justify-content-center list-unstyled">
+          <% if user_signed_in? %>
+          <li class="mx-3">
+            <%= link_to plans_path do %>
+              <i class="fa-solid fa-house" style="color: #FFD43B;"> 一覧</i>
+            <% end %>
+          </li>
+          <li class="mx-3">
+            <%= link_to new_plan_path do %>
+              <i class="fa-solid fa-plus" style="color: #FFD43B;"> 投稿</i>
+            <% end %>
+          </li>
+          <li class="mx-3">
+            <%= link_to mypage_path do %>
+              <i class="fa-solid fa-circle-user" style="color: #FFD43B;"> マイページ</i>
+            <% end %>
+          </li>
+
+          <% else %>
+          <li class="mx-3">
+            <%= link_to plans_path do %>
+              <i class="fa-solid fa-house" style="color: #FFD43B;"> 一覧</i>
+            <% end %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </nav>
+  </div>
+</footer>
