@@ -14,6 +14,3 @@
  *= require_self
  */
 
-body {
-  background-image: image-url("/hoge.jpg");
-}
