@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :plans do
       resources :plan_details
       resources :comments, only: [:create, :destroy]
+      resource :like, only: [:create, :destroy]
     end
   end
 
