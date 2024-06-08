@@ -21,7 +21,23 @@
       </div>
       <% end %>
 
-      <div><%= @plan.comments.count %>コメント</div>
+      <div class="row">
+        <div class="col"><%= @plan.comments.count %>コメント</div>
+        <% if @plan.liked_by?(current_user) %>
+        <div class="col">
+          <%= link_to plan_like_path(@plan), method: :delete do %>
+            <i class="fa-solid fa-heart"></i><%= @plan.likes.count %>
+          <% end %>
+        </div>
+        <% else %>
+        <div class="col">
+          <%= link_to plan_like_path(@plan), method: :post do %>
+            <i class="fa-regular fa-heart"></i><%= @plan.likes.count %>
+          <% end %>
+        <% end %>
+        </div>
+      </div>
+
 
       <% if @plan.user == current_user %>
       <div class="row">
