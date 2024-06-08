@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show]
     resources :plans do
       resources :plan_details
+      resources :comments, only: [:create, :destroy]
     end
   end
 
