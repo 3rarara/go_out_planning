@@ -3,7 +3,6 @@
 
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
 
-
       <div class="row">
         <div class="col-4">
           <%= image_tag @plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
@@ -11,7 +10,7 @@
         </div>
         <div class="col my-auto">
           <h5><%= @plan.title %></h5>
-          <%= @plan.body %>
+          <%=safe_join(@plan.body.split("\n"),tag(:br)) %>
         </div>
       </div>
 
@@ -22,6 +21,8 @@
       </div>
       <% end %>
 
+      <div><%= @plan.comments.count %>コメント</div>
+
       <% if @plan.user == current_user %>
       <div class="row">
         <div class="col text-center my-3">
@@ -29,6 +30,28 @@
           <%= link_to "削除", plan_path, method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
         </div>
       </div>
+      <% end %>
+    </div>
+
+    <!-- コメント一覧 -->
+    <% @plan.comments.each do |comment| %>
+    <div class="col-sm-8 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
+      <div class="row">
+        <div class="col-3 text-center">
+          <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
+          <%= comment.user.name %><br>
+          <%= comment.created_at.strftime('%Y/%m/%d') %>
+        </div>
+        <div class="col text-center my-auto"><%=safe_join(comment.comment.split("\n"),tag(:br)) %></div>
+      </div>
+    </div>
+    <% end %>
+
+    <!-- コメント送信画面 -->
+    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
+      <%= form_with model: [@plan, @comment] do |f| %>
+        <%= f.text_area :comment, rows: '3', class: "form-control", placeholder: "コメントを返信" %>
+        <div class="text-center mt-2"><%= f.submit "送信", class: "btn btn-warning" %></div>
       <% end %>
     </div>
   </div>
