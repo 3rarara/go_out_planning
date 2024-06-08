@@ -13,6 +13,8 @@ class Public::LikesController < ApplicationController
     redirect_to request.referer
   end
 
+  private
+
   def set_plan
     @plan = Plan.find(params[:plan_id])
   end
