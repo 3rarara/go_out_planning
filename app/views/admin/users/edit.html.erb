@@ -12,13 +12,11 @@
           <div class="row"><%= @user.email %></div>
           <div class="row">
             <div class="col">
-              <% if @user.is_active %>
-                <div><b>有効</b></div>
-              <% else %>
-                <div><b>無効</b></div>
+              <%= form_with model: @user, url: admin_user_path, method: :patch do |f| %>
+                <%= f.select :is_active, [['有効',true],['無効',false]], class: "custom-select" %>
+              <%= f.submit "変更", class: "btn btn-success" %>
               <% end %>
             </div>
-            <div class="col my-3"><%= link_to "編集", edit_admin_user_path, class: "btn btn-warning" %></div>
           </div>
         </div>
 

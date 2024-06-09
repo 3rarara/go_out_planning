@@ -11,6 +11,7 @@ class Admin::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @plans = @user.plans.all
   end
 
   def update
