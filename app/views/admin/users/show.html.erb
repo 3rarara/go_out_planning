@@ -10,7 +10,16 @@
         <div class="col mx-2 my-auto">
           <div class="row"><%= @user.name %></div>
           <div class="row"><%= @user.email %></div>
-          <div class="row"><%= @user.is_active %></div>
+          <div class="row">
+            <div class="col">
+              <% if @user.is_active %>
+                <div><b>有効</b></div>
+              <% else %>
+                <div><b>無効</b></div>
+              <% end %>
+            </div>
+            <div class="col"></div>
+          </div>
         </div>
 
       </div>
