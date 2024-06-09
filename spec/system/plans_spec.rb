@@ -2,7 +2,6 @@ require 'rails_helper'
 
   RSpec.describe '新規登録画面のテスト', type: :system do
     let(:user_attributes) { attributes_for(:user) }
-
     before do
       visit new_user_registration_path
     end
