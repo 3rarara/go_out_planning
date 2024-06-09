@@ -23,30 +23,17 @@
 
       <div class="row">
         <div class="col"><%= @plan.comments.count %>コメント</div>
-        <% if @plan.liked_by?(current_user) %>
         <div class="col">
-          <%= link_to plan_like_path(@plan), method: :delete do %>
             <i class="fa-solid fa-star fa-lg" style="color: #FFD43B;"></i><%= @plan.likes.count %>
-          <% end %>
         </div>
-        <% else %>
-        <div class="col">
-          <%= link_to plan_like_path(@plan), method: :post do %>
-            <i class="fa-regular fa-star fa-lg" style="color: #3b4674;"></i><%= @plan.likes.count %>
-          <% end %>
-        <% end %>
         </div>
-      </div>
 
-
-      <% if @plan.user == current_user %>
       <div class="row">
         <div class="col text-center my-3">
-          <%= link_to "編集", edit_plan_path, class: "btn btn-warning mx-auto" %>
+          <%= link_to "編集", "#", class: "btn btn-warning mx-auto" %>
           <%= link_to "削除", plan_path, method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
         </div>
       </div>
-      <% end %>
     </div>
 
     <!-- コメント一覧 -->
@@ -59,9 +46,7 @@
           <%= comment.created_at.strftime('%Y/%m/%d') %>
         </div>
         <div class="col text-center my-auto"><%=safe_join(comment.comment.split("\n"),tag(:br)) %></div>
-        <% if comment.user == current_user %>
-          <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger my-auto", data: { confirm: "コメントを削除しますか？" } %>
-        <% end %>
+          <%= link_to "削除", admin_plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger my-auto", data: { confirm: "コメントを削除しますか？" } %>
       </div>
     </div>
     <% end %>
