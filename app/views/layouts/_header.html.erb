@@ -16,6 +16,7 @@
           </li>
 
           <% elsif user_signed_in? %>
+          <%= render 'layouts/search' %>
           <li class="nav-item mx-3">
             <%= link_to destroy_user_session_path, method: :delete do %>
               <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
