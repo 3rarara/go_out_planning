@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     resources :plans, only: [:show, :edit, :update, :destroy] do
       resources :comments, only: [:destroy]
     end
+    get "search" => "searches#search"
   end
 
 end

@@ -9,6 +9,7 @@
           <ul class="navbar-nav ml-auto">
 
           <% if admin_signed_in? %>
+          <%= render 'layouts/search', object: admin_search_path %>
           <li class="nav-item mx-3">
             <%= link_to destroy_admin_session_path, method: :delete do %>
               <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
@@ -16,7 +17,7 @@
           </li>
 
           <% elsif user_signed_in? %>
-          <%= render 'layouts/search' %>
+          <%= render 'layouts/search', object: search_path %>
           <li class="nav-item mx-3">
             <%= link_to destroy_user_session_path, method: :delete do %>
               <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
