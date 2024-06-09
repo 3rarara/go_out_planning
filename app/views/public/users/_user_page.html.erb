@@ -12,13 +12,9 @@
           </div>
 
           <% if user.id == current_user.id && user.email != "guest@example.com" %>
+          <div class="row"><%= user.email %></div>
           <div class="row">
-            <%= user.email %>
-          </div>
-          <div class="row">
-            <div class="col my-3">
-              <%= link_to "編集", edit_mypage_path, class: "btn btn-warning" %>
-            </div>
+            <div class="col my-3"><%= link_to "編集", edit_mypage_path, class: "btn btn-warning" %></div>
           </div>
           <% end %>
 

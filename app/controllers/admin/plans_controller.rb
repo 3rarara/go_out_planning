@@ -5,6 +5,8 @@ class Admin::PlansController < ApplicationController
   end
 
   def show
+    @plan = Plan.find(params[:id])
+    @plan_details = @plan.plan_details
   end
 
 end
