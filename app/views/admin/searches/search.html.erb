@@ -1,2 +1,40 @@
-<h1>Admin::Search#search</h1>
-<p>Find me in app/views/admin/search/search.html.erb</p>
+<div class="container mx-auto">
+  <div class="row">
+    <div class="table table-hover table-inverse">
+
+      <!--検索対象モデルがUserの時-->
+      <% if @range == "ユーザー" %>
+        <% @users.each do |user| %>
+          <div class="container mx-auto">
+            <div class="row">
+
+              <div class="col-sm-10 col-md-8 col-lg-6 bg-white my-3 p-4 mx-auto rounded-pill">
+                <div class="row">
+                  <div class="col mx-2">
+                    <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
+                  </div>
+                  <div class="col mx-2 my-auto">
+                    <div class="row">
+                      <%= user.name %>
+                    </div>
+
+                    <div class="row"><%= user.email %></div>
+                    <div class="row">
+                      <div class="col my-3"><%= link_to "編集", edit_mypage_path, class: "btn btn-warning" %></div>
+                    </div>
+                    <% end %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      <% elsif @range == "プラン" %>
+      <!--検索対象モデルがPlanの時-->
+        <%= render 'layouts/index', plans: @plans %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
