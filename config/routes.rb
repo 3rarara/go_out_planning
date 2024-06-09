@@ -31,4 +31,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    root to: 'plans#index'
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :plans, only: [:show, :destroy]
+  end
+
 end

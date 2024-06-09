@@ -20,7 +20,7 @@ class Admin::SessionsController < Devise::SessionsController
 
   # ログイン後トップページへ
   def after_sign_in_path_for(resource)
-    root_path
+    admin_root_path
   end
 
   # ログアウト後ログインページへ
