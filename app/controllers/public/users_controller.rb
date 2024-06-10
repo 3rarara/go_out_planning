@@ -38,8 +38,12 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @plans = @user.plans.all
+    if @user == current_user
+      redirect_to mypage_path
+    else
+      render 'show'
+    end
   end
 
   def likes
@@ -60,7 +64,7 @@ class Public::UsersController < ApplicationController
 
   def ensure_current_user
     user = current_user
-    unless user.id == current_user.id
+    unless user == current_user
       redirect_to plans_path
     end
   end

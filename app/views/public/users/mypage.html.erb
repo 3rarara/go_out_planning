@@ -3,3 +3,6 @@
 
 <!--プラン一覧を表示-->
 <%= render 'public/plans/index', plans: @plans %>
+
+<!--仮リンク作成-->
+<%= link_to "いいねした投稿", likes_user_path(@user) %>
