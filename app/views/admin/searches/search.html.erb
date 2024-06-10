@@ -1,10 +1,32 @@
-<!--検索対象モデルがUserの時-->
-<% if @range == "User" %>
+<div class="container mx-auto">
+  <div class="row">
+    <div class="col">
 
-<!--ユーザー一覧のテンプレート使用-->
-<%= render 'admin/users/index', users: @users %>
+      <!--検索対象モデルがUserの時-->
+      <% if @range == "User" %>
+        <% if @users.present? %>
+          <%= render 'admin/users/index', users: @users %>
+        <% else %>
+        <div class="text-center mt-5">
+          検索にヒットしませんでした。
+        </div>
+        <% end %>
 
-<% elsif @range == "Plan" %>
-<!--検索対象モデルがPlanの時-->
-  <%= render 'admin/plans/index', plans: @plans %>
-<% end %>
+      <!--検索対象モデルがPlanの時-->
+      <% elsif @range == "Plan" %>
+        <% if @plans.present? %>
+          <%= render 'admin/plans/index', plans: @plans %>
+        <% else %>
+          <div class="text-center mt-5">
+            検索にヒットしませんでした。
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center mt-5">
+          検索にヒットしませんでした。
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
