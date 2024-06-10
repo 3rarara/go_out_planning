@@ -1,0 +1,10 @@
+<!--検索対象モデルがUserの時-->
+<% if @range == "User" %>
+
+<!--ユーザー一覧のテンプレート使用-->
+<%= render 'admin/users/index', users: @users %>
+
+<% elsif @range == "Plan" %>
+<!--検索対象モデルがPlanの時-->
+  <%= render 'admin/plans/index', plans: @plans %>
+<% end %>

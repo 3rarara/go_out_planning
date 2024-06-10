@@ -8,7 +8,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ml-auto">
 
-          <% if user_signed_in? %>
+          <% if admin_signed_in? %>
+          <%= render 'layouts/search', object: admin_search_path %>
+          <li class="nav-item mx-3">
+            <%= link_to destroy_admin_session_path, method: :delete do %>
+              <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
+            <% end %>
+          </li>
+
+          <% elsif user_signed_in? %>
+          <%= render 'layouts/search', object: search_path %>
           <li class="nav-item mx-3">
             <%= link_to destroy_user_session_path, method: :delete do %>
               <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>

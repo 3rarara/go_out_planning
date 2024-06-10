@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   # アソシエーション
   has_many :plans, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   # バリデーション
   validates :name, presence: true, uniqueness: true
@@ -34,6 +36,13 @@ class User < ApplicationRecord
 
   def guest_user?
     email == GUEST_USER_EMAIL
+  end
+
+  # 検索方法分岐
+  def self.looks(search, word)
+    if search == "partial"
+      @user = User.where("name LIKE?","%#{word}%")
+    end
   end
 
 end

@@ -16,6 +16,7 @@ class Public::PlansController < ApplicationController
 
   def show
     @plan_details = @plan.plan_details
+    @comment = Comment.new
   end
 
   def create

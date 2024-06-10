@@ -5,6 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Admin.find_or_create_by!(email: ENV['ADMIN_EMAIL']) do |admin|
+  admin.password = ENV['ADMIN_PASSWORD']
+end
 
 olivia = User.find_or_create_by!(email: "olivia@example.com") do |user|
   user.name = "olivia"
@@ -68,3 +71,5 @@ Plan.find_or_create_by!(title: "鎌倉のお寺へ行くぞ️") do |plan|
     body: "11:05 11:00御朱印ゲット！"
   )
 end
+
+puts 'データを追加しました'

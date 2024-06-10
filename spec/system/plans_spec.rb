@@ -2,7 +2,6 @@ require 'rails_helper'
 
   RSpec.describe '新規登録画面のテスト', type: :system do
     let(:user_attributes) { attributes_for(:user) }
-
     before do
       visit new_user_registration_path
     end
@@ -105,14 +104,10 @@ require 'rails_helper'
     end
     context '投稿処理のテスト' do
       it '投稿後のリダイレクト先は正しいか' do
-        # find('#add_plan_details').click
-        # click_link '+'
         fill_in 'plan[title]', with: Faker::Lorem.characters(number:5)
         fill_in 'plan[body]', with: Faker::Lorem.characters(number:20)
         fill_in 'plan[plan_details_attributes][0][title]', with: Faker::Lorem.sentence
         fill_in 'plan[plan_details_attributes][0][body]', with: Faker::Lorem.sentence
-        # fill_in 'plan[plan_details_attributes][title]', with: Faker::Lorem.sentence
-        # fill_in 'plan[plan_details_attributes][body]', with: Faker::Lorem.sentence
         click_button '投稿'
         expect(page).to have_current_path plan_path(Plan.last)
       end
@@ -134,11 +129,15 @@ require 'rails_helper'
         expect(page).to have_link '編集'
       end
       context 'リンクの遷移先の確認' do
-        it '編集の遷移先は編集画面か' do
-          # なぜ[3]を指定するのか不明
-          edit_link = find_all('a')[3]
-          edit_link.click
-          expect(current_path).to eq('/plans/'+ plan.id.to_s + '/edit')
+        let(:user) { create(:user) }
+        let!(:plan) { create(:plan, user: user) }
+        before do
+          sign_in user
+          visit edit_plan_path(plan)
+        end
+        it '編集後の遷移先は詳細画面か' do
+          click_button '変更'
+          expect(current_path).to eq("/plans/#{plan.id}")
         end
       end
       context 'plan削除のテスト' do
@@ -150,9 +149,8 @@ require 'rails_helper'
   end
 
   describe '編集画面のテスト' do
-    let(:user) { create(:user) }
+    let!(:user) { create(:user) }
     let!(:plan){ create(:plan,title:'hoge',body:'body', user: user) }
-    let!(:plan_detail) { create(:plan_detail,title:'hoge',body:'body', plan: plan) }
     context '表示の確認' do
       before do
         sign_in user
@@ -161,8 +159,9 @@ require 'rails_helper'
       it '編集前のタイトルと本文がフォームに表示(セット)されている' do
         expect(page).to have_field 'plan[title]', with: plan.title
         expect(page).to have_field 'plan[body]', with: plan.body
-        # expect(page).to have_field 'plan[plan_details_attributes][0][title]', with: plan_detail.title
-        # expect(page).to have_field 'plan[plan_details_attributes][0][body]', with: plan_detail.body
+        # binding.pry
+        expect(page).to have_field 'plan[plan_details_attributes][0][title]', with: PlanDetail.last.title
+        expect(page).to have_field 'plan[plan_details_attributes][0][body]', with: PlanDetail.last.body
       end
       it '保存ボタンが表示される' do
         expect(page).to have_button '変更'

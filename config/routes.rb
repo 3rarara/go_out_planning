@@ -25,8 +25,19 @@ Rails.application.routes.draw do
     patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
     resources :users, only: [:show]
     resources :plans do
-      resources :plan_details
+      resources :comments, only: [:create, :destroy]
+      resource :like, only: [:create, :destroy]
     end
+    get "search" => "searches#search"
+  end
+
+  namespace :admin do
+    root to: 'plans#index'
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :plans, only: [:show, :edit, :update, :destroy] do
+      resources :comments, only: [:destroy]
+    end
+    get "search" => "searches#search"
   end
 
 end

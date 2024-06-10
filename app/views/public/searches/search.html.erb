@@ -1,0 +1,18 @@
+<div class="container mx-auto">
+  <div class="row">
+    <div class="table table-hover table-inverse">
+
+      <!--検索対象モデルがUserの時 -->
+      <% if @range == "User" %>
+        <% @users.each do |user| %>
+          <%= render 'public/users/user_page', user: user %>
+        <% end %>
+
+      <% elsif @range == "Plan" %>
+        <!--検索対象モデルがPlanの時-->
+        <%= render 'public/plans/index', plans: @plans %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
