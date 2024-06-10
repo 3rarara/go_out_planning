@@ -23,7 +23,7 @@ jobs:
       #- name: pre compile
         #run: bundle exec rails webpacker:compile
       - name: Set up database schema
-        run: bundle exec rails db:create db:schema:load db:seed
+        run: bundle exec rails db:create db:schema:load
       - name: Run yarn
         run: yarn
       - name: Run tests
