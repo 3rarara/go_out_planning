@@ -1,16 +1,32 @@
 <div class="container mx-auto">
   <div class="row">
-    <div class="table table-hover table-inverse">
+    <div class="col">
 
       <!--検索対象モデルがUserの時 -->
       <% if @range == "User" %>
-        <% @users.each do |user| %>
-          <%= render 'public/users/user_page', user: user %>
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <%= render 'public/users/user_page', user: user %>
+          <% end %>
+        <% else %>
+        <div class="text-center mt-5">
+          検索にヒットしませんでした。
+        </div>
         <% end %>
 
+      <!--検索対象モデルがPlanの時-->
       <% elsif @range == "Plan" %>
-        <!--検索対象モデルがPlanの時-->
-        <%= render 'public/plans/index', plans: @plans %>
+        <% if @plans.present? %>
+          <%= render 'public/plans/index', plans: @plans %>
+        <% else %>
+          <div class="text-center mt-5">
+            検索にヒットしませんでした。
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center mt-5">
+          検索にヒットしませんでした。
+        </div>
       <% end %>
 
     </div>

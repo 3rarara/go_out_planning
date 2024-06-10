@@ -3,4 +3,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :plan
 
+  # バリデーション
+  validates :comment, presence: true
+
 end

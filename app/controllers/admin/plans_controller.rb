@@ -17,10 +17,13 @@ class Admin::PlansController < ApplicationController
   end
 
   def destroy
+    @plan = Plan.find(params[:id])
     if @plan.destroy
       flash[:notice] = "プランを削除しました"
       redirect_to admin_root_path
     else
+      @plan = Plan.find(params[:id])
+      @plan_details = @plan.plan_details
       flash.now[:alert] = "プランを削除できませんでした"
       render 'show'
     end

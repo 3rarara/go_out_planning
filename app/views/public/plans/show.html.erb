@@ -42,8 +42,8 @@
       <% if @plan.user == current_user %>
       <div class="row">
         <div class="col text-center my-3">
-          <%= link_to "編集", edit_plan_path, class: "btn btn-warning mx-auto" %>
-          <%= link_to "削除", plan_path, method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
+          <%= link_to "編集", edit_plan_path(@plan), class: "btn btn-warning mx-auto" %>
+          <%= link_to "削除", plan_path(@plan), method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
         </div>
       </div>
       <% end %>
