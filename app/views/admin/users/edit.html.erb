@@ -3,7 +3,7 @@
 
     <div class="col-sm-10 col-md-8 col-lg-6 bg-white my-3 p-4 mx-auto rounded-pill">
       <div class="row">
-        <div class="col mx-2">
+        <div class="col mx-2 my-auto">
           <%= image_tag @user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
         </div>
 
@@ -13,9 +13,14 @@
           <div class="row">
             <div class="col">
               <%= form_with model: @user, url: admin_user_path, method: :patch do |f| %>
-                <%= f.select :is_active, [['有効',true],['無効',false]], class: "custom-select" %>
-              <%= f.submit "変更", class: "btn btn-success" %>
+                <%= f.select :is_active, [['有効',true],['無効',false]] %>
+              <%= f.submit "変更", class: "btn btn-warning" %>
               <% end %>
+              <div class="col">
+                <% if @user.is_active == false %>
+                  <%= link_to "ユーザー削除", admin_user_path(@user), method: :delete, class: "btn btn-danger btn-sm mt-3", data: { confirm: "ユーザーを削除しますか？" } %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -26,4 +31,4 @@
 </div>
 
 <!--プラン一覧を表示-->
-<%= render 'layouts/admin_index', plans: @plans %>
+<%= render 'admin/plans/index', plans: @plans %>
