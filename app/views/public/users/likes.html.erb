@@ -1,0 +1,12 @@
+<p>いいねした投稿一覧</p>
+<table class="table">
+        <tbody>
+          <% @like_plans.each do |plan| %>
+          <tr>
+            <td>
+              <%= link_to plan.title, plan_path(plan) %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>

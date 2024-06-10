@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: [:show, :likes]
   before_action :set_current_user, except: [:show]
   before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
@@ -41,14 +42,20 @@ class Public::UsersController < ApplicationController
     @plans = @user.plans.all
   end
 
+  def likes
+    likes = Like.where(user_id: @user.id).pluck(:plan_id)
+    @like_plans = Plan.find(likes)
+    @plan = Plan.find(params[:id])
+  end
+
   private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def set_current_user
     @user = current_user
-  end
-
-  def user_params
-    params.require(:user).permit(:name, :email, :profile_image)
   end
 
   def ensure_current_user
@@ -68,9 +75,14 @@ class Public::UsersController < ApplicationController
   end
 
   def ensure_guest_user
-    @user = current_user
+    set_current_user
     if @user.guest_user?
       redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
     end
   end
+
+  def user_params
+    params.require(:user).permit(:name, :email, :profile_image)
+  end
+
 end
