@@ -1,4 +1,5 @@
 class Admin::CommentsController < ApplicationController
+  before_action :authenticate_admin!
 
   def destroy
     comment = Comment.find(params[:id])
@@ -9,7 +10,7 @@ class Admin::CommentsController < ApplicationController
       flash.now[:alert] = "コメントを削除できませんでした"
       @plan = Plan.find(params[:plan_id])
       @plan_details = @plan.plan_details
-      render 'public/plans/show'
+      render 'admin/plans/show'
     end
   end
 

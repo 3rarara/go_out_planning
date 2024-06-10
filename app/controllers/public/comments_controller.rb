@@ -1,4 +1,5 @@
 class Public::CommentsController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     plan = Plan.find(params[:plan_id])

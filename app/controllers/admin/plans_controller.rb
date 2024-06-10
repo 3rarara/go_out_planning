@@ -1,4 +1,5 @@
 class Admin::PlansController < ApplicationController
+  before_action :authenticate_admin!
 
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true })
