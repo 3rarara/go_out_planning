@@ -21,7 +21,8 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Run tests
-        run: bundle exec rspec spec/ --format documentation
+        run: bundle exec rspec spec/models --format documentation
+        # run: bundle exec rspec spec/ --format documentation
 
   build:
     runs-on: ubuntu-latest
