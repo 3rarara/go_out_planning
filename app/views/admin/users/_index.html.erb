@@ -1,0 +1,26 @@
+<% users.each do |user| %>
+
+    <div class="col-sm-10 col-md-8 col-lg-6 bg-white my-3 p-4 mx-auto rounded-pill">
+      <div class="row">
+        <div class="col mx-2 my-auto ">
+          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
+        </div>
+
+        <div class="col mx-2 my-auto">
+          <div class="row"><%= user.name %></div>
+          <div class="row"><%= user.email %></div>
+        </div>
+
+        <div class="col text-center mt-3">
+          <% if user.is_active? %>
+            <div><b><%= "有効" %></b></div>
+          <% else %>
+            <div><b><%= "無効" %></b></div>
+          <% end %>
+          <%= link_to "編集", edit_admin_user_path(user), class: "btn btn-warning" %>
+        </div>
+
+      </div>
+    </div>
+
+<% end %>

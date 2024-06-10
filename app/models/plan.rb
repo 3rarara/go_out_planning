@@ -18,16 +18,8 @@ class Plan < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(search, word)
-    if search == "perfect_match"
-      @plan = Plan.where("title LIKE?","#{word}")
-    elsif search == "forward_match"
-      @plan = Plan.where("title LIKE?","#{word}%")
-    elsif search == "backward_match"
-      @plan = Plan.where("title LIKE?","%#{word}")
-    elsif search == "partial_match"
+    if search == "partial"
       @plan = Plan.where("title LIKE?","%#{word}%")
-    else
-      @plan = Plan.all
     end
   end
 
