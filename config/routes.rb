@@ -23,7 +23,11 @@ Rails.application.routes.draw do
     patch 'mypage' => 'users#update'
     get 'users/confirm' => 'users#confirm', as: 'confirm_user'
     patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
-    resources :users, only: [:show]
+    resources :users, only: [:show] do
+      member do
+        get :likes
+      end
+    end
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
