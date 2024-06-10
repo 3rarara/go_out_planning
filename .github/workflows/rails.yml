@@ -19,9 +19,13 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
       - name: Install dependencies
-        run: bundle install
-      - name: pre compile
-        run: bundle exec rails webpacker:compile
+        run: bundle install --jobs 4 --retry 3
+      #- name: pre compile
+        #run: bundle exec rails webpacker:compile
+      - name: Set up database schema
+        run: bundle exec rails db:create db:schema:load db:seed
+      - name: Run yarn
+        run: yarn
       - name: Run tests
         # run: bundle exec rspec spec/models --format documentation
         run: bundle exec rspec spec/ --format documentation
