@@ -60,7 +60,7 @@
         </div>
         <div class="col text-center my-auto"><%=safe_join(comment.comment.split("\n"),tag(:br)) %></div>
         <% if comment.user == current_user %>
-          <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger my-auto", data: { confirm: "コメントを削除しますか？" } %>
+          <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger my-auto mr-3", data: { confirm: "コメントを削除しますか？" } %>
         <% end %>
       </div>
     </div>
