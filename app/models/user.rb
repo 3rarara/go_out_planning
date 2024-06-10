@@ -40,16 +40,8 @@ class User < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(search, word)
-    if search == "perfect_match"
-      @user = User.where("name LIKE?", "#{word}")
-    elsif search == "forward_match"
-      @user = User.where("name LIKE?","#{word}%")
-    elsif search == "backward_match"
-      @user = User.where("name LIKE?","%#{word}")
-    elsif search == "partial_match"
+    if search == "partial"
       @user = User.where("name LIKE?","%#{word}%")
-    else
-      @user = User.all
     end
   end
 
