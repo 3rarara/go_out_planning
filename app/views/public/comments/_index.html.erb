@@ -1,17 +1,27 @@
 <div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
   <% plan.comments.each do |comment| %>
-  <div class="row bg-white my-3 p-4 shadow-lg rounded mx-auto">
-    <div class="col-3 text-center">
+  <div class="col bg-white shadow-lg p-1 my-3 rounded">
+  <div class="row p-3 rounded mx-auto">
+    <div class="col-3 text-center  fsize_13-18">
       <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
-      <%= comment.user.name %><br>
+    </div>
+    <div class="col text-left my-auto">
+      <%= comment.user.name %>
       <%= comment.created_at.strftime('%Y/%m/%d') %>
     </div>
-    <div class="col text-center my-auto">
-      <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+  </div>
+
+    <div class="row">
+      <div class="col-md-6 offset-md-3 text-center fsize_13-18 my-3">
+        <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+      </div>
     </div>
+
     <% if comment.user == current_user %>
-    <div class="col text-right my-auto">
-      <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" }, remote: true %>
+    <div class="col text-center mb-2">
+      <%= link_to plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" }, remote: true do %>
+        <i class="fa-solid fa-trash fa-lg px-3" style="color: #ffffff;"></i>
+      <% end %>
     </div>
     <% end %>
   </div>

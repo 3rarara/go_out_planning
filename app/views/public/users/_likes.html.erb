@@ -7,7 +7,7 @@
           <tbody>
             <% like_plans.each do |plan| %>
             <tr>
-              <td>
+              <td style="font-size: clamp(14px, 3vw, 20px);;">
                 <%= link_to plan.title, plan_path(plan) %>
               </td>
             </tr>

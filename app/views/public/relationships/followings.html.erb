@@ -1,4 +1,4 @@
-<h2 class="text-center"><%= @user.name %>のフォローユーザー</h2>
+<h2 class="text-center fsize_13-18 mt-4"><%= @user.name %>のフォローユーザー</h2>
 <% if @users.exists? %>
   <%= render "public/users/index", users: @users %>
 <% else %>

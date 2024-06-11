@@ -8,7 +8,6 @@
 
         <div class="col mx-2 my-auto">
           <div class="row"><%= user.name %></div>
-          <div class="row"><%= user.email %></div>
           <div class="row">
             フォロー：<%= link_to user.followings.count, user_followings_path(user) %>
           </div>

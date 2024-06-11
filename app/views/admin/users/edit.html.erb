@@ -14,7 +14,7 @@
             <div class="col">
               <%= form_with model: @user, url: admin_user_path, method: :patch do |f| %>
                 <%= f.select :is_active, [['有効',true],['無効',false]] %>
-              <%= f.submit "変更", class: "btn btn-warning" %>
+              <%= f.submit "変更", class: "btn btn-warning mb-1" %>
               <% end %>
               <div class="col">
                 <% if @user.is_active == false %>
