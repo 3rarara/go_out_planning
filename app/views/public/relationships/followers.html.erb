@@ -1,0 +1,6 @@
+<h2 class="text-center"><%= @user.name %>のフォロワー</h2>
+<% if @users.exists? %>
+  <%= render "public/users/index", users: @users %>
+<% else %>
+  <p class="text-center">ユーザーはいません</p>
+<% end %>

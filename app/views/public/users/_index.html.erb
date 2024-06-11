@@ -1,0 +1,23 @@
+<% users.each do |user| %>
+
+    <div class="col-sm-8 col-md-6 col-lg-4 bg-white my-3 p-4 mx-auto rounded-pill">
+      <div class="row">
+        <div class="col mx-2 my-auto ">
+          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
+        </div>
+
+        <div class="col mx-2 my-auto">
+          <div class="row"><%= user.name %></div>
+          <div class="row"><%= user.email %></div>
+          <div class="row">
+            フォロー：<%= link_to user.followings.count, user_followings_path(user) %>
+          </div>
+          <div class="row">
+            フォロワー：<%= link_to user.followers.count, user_followers_path(user) %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+<% end %>
