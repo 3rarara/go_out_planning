@@ -41,12 +41,9 @@
       <%= render 'public/comments/index', plan: @plan %>
     </div>
 
-    <!-- コメント送信画面 -->
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <%= form_with model: [@plan, @comment], local: false do |f| %>
-        <%= f.text_area :comment, rows: '3', class: "form-control comment_textarea", placeholder: "コメントを返信" %>
-        <div class="text-center mt-2"><%= f.submit "送信", class: "btn btn-warning" %></div>
-      <% end %>
+    <!-- コメント送信非同期化テンプレート -->
+    <div class="row mx-auto">
+      <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
     </div>
 
 </div>
