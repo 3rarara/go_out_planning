@@ -1,5 +1,5 @@
-<div class="container mx-auto">
-  <div class="row">
+<div class="container">
+
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
       <div class="row">
         <div class="col-4">
@@ -21,6 +21,7 @@
 
       <div class="row">
         <div class="col-6 text-center"><%= @plan.comments.count %>コメント</div>
+        <!--いいね非同期化テンプレート-->
         <div class="col-6 text-center" id="like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
       </div>
 
@@ -34,31 +35,17 @@
       <% end %>
     </div>
 
-    <!-- コメント一覧 -->
-    <% @plan.comments.each do |comment| %>
-    <div class="col-sm-8 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <div class="row">
-        <div class="col-3 text-center">
-          <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
-          <%= comment.user.name %><br>
-          <%= comment.created_at.strftime('%Y/%m/%d') %>
-        </div>
-        <div class="col text-center my-auto"><%=safe_join(comment.comment.split("\n"),tag(:br)) %></div>
-        <% if comment.user == current_user %>
-        <div class="col text-right my-auto">
-          <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" } %>
-        </div>
-        <% end %>
-      </div>
+    <!-- コメント一覧非同期かテンプレート -->
+    <div class="row comment-index mx-auto">
+      <%= render 'public/comments/index', plan: @plan %>
     </div>
-    <% end %>
 
     <!-- コメント送信画面 -->
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <%= form_with model: [@plan, @comment] do |f| %>
-        <%= f.text_area :comment, rows: '3', class: "form-control", placeholder: "コメントを返信" %>
+      <%= form_with model: [@plan, @comment], local: false do |f| %>
+        <%= f.text_area :comment, rows: '3', class: "form-control comment_textarea", placeholder: "コメントを返信" %>
         <div class="text-center mt-2"><%= f.submit "送信", class: "btn btn-warning" %></div>
       <% end %>
     </div>
-  </div>
+
 </div>

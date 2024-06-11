@@ -1,6 +1,6 @@
-<div class="container mx-auto">
+<div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
   <% plan.comments.each do |comment| %>
-  <div class="row bg-white my-3 p-4 shadow-lg mx-auto rounded">
+  <div class="row bg-white my-3 p-4 shadow-lg rounded mx-auto">
     <div class="col-3 text-center">
       <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
       <%= comment.user.name %><br>
