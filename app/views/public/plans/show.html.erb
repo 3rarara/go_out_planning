@@ -20,9 +20,10 @@
       <% end %>
 
       <div class="row">
-        <div class="col-6 text-center"><%= @plan.comments.count %>コメント</div>
+        <!--コメントカウント非同期化テンプレート-->
+        <div class="col-6 text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
         <!--いいね非同期化テンプレート-->
-        <div class="col-6 text-center" id="like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+        <div class="col-6 text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
       </div>
 
       <% if @plan.user == current_user %>
@@ -35,7 +36,7 @@
       <% end %>
     </div>
 
-    <!-- コメント一覧非同期かテンプレート -->
+    <!-- コメント一覧非同期化テンプレート -->
     <div class="row comment-index mx-auto">
       <%= render 'public/comments/index', plan: @plan %>
     </div>

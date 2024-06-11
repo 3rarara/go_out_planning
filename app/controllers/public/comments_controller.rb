@@ -19,6 +19,7 @@ class Public::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    @plan = @comment.plan
     # if comment.user == current_user
     @comment.destroy
       # flash[:notice] = "コメントを削除しました"
