@@ -21,17 +21,7 @@
 
       <div class="row">
         <div class="col-6 text-center"><%= @plan.comments.count %>コメント</div>
-        <div class="col-6 text-center">
-          <% if @plan.liked_by?(current_user) %>
-          <%= link_to plan_like_path(@plan), method: :delete do %>
-            <i class="fa-solid fa-star fa-lg" style="color: #FFD43B;"></i><%= @plan.likes.count %>
-          <% end %>
-          <% else %>
-          <%= link_to plan_like_path(@plan), method: :post do %>
-            <i class="fa-regular fa-star fa-lg" style="color: #3b4674;"></i><%= @plan.likes.count %>
-          <% end %>
-          <% end %>
-        </div>
+        <div class="col-6 text-center" id="like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
       </div>
 
       <% if @plan.user == current_user %>
