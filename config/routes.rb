@@ -3,17 +3,17 @@ Rails.application.routes.draw do
 
   # ユーザー用　URL/users/sign_in...
   devise_for :users,skip: [:passwords], controllers: {
-    registrations: "public/registrations",
+    registrations: 'public/registrations',
     sessions: 'public/sessions'
   }
 
   # 管理者用　URL/admin/sign_in...
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
-    sessions: "admin/sessions"
+    sessions: 'admin/sessions'
   }
 
   devise_scope :user do
-    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
 
   scope module: :public do
@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     get 'users/confirm' => 'users#confirm', as: 'confirm_user'
     patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
     resources :users, only: [:show] do
+      resource :relationships, only: [:create, :destroy]
+        get 'followings' => 'relationships#followings', as: 'followings'
+        get 'followers' => 'relationships#followers', as: 'followers'
+
       member do
         get :likes
       end
@@ -32,7 +36,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
     end
-    get "search" => "searches#search"
+    get 'search' => 'searches#search'
   end
 
   namespace :admin do
@@ -41,7 +45,7 @@ Rails.application.routes.draw do
     resources :plans, only: [:show, :edit, :update, :destroy] do
       resources :comments, only: [:destroy]
     end
-    get "search" => "searches#search"
+    get 'search' => 'searches#search'
   end
 
 end

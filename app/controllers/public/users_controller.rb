@@ -43,6 +43,9 @@ class Public::UsersController < ApplicationController
     @plans = @user.plans.all
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
     @like_plans = Plan.find(likes)
+    if current_user == @user
+      redirect_to mypage_path
+    end
   end
 
   def likes

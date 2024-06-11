@@ -1,0 +1,7 @@
+<% if current_user != user %>
+  <% if current_user.following?(user) %>
+    <%= link_to "フォロー解除", user_relationships_path(usre), method: :delete, class: options[:class].presence || "btn btn-info" %>
+  <% else %>
+    <%= link_to "フォロー", user_relationships_path(user), method: :post, class: options[:class].presence || "btn btn-success" %>
+  <% end %>
+<% end %>
