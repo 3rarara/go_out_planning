@@ -14,6 +14,7 @@
             <% end %>
             <%=safe_join(plan.body.split("\n"),tag(:br)) %>
           </div>
+          <div class="col text-center" id="like_buttons_<%= plan.id %>"><%= render 'public/likes/like', plan: plan %></div>
         </div>
       </div>
 
