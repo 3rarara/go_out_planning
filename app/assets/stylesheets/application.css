@@ -26,3 +26,58 @@
 #range {
   padding: 4px 0;
 }
+
+
+
+/*タブメニューcss*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrap {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#tab-menu {
+  display: flex;
+}
+
+#tab-menu li {
+  list-style-type: none;
+  width: 25%;
+}
+
+#tab-menu li a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  background: #CDD3E8;
+}
+
+#tab-menu .active {
+  border-bottom: 3px solid #FFDF5B;
+  color: #000;
+}
+
+#tab-contents {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#tab-contents .tab {
+  width: 100%;
+  padding: 30px;
+  background: #CDD3E8;
+  border-top: none;
+}
+
+#tab-contents p {
+  color: #000;
+  line-height: 2.5;
+}

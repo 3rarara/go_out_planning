@@ -1,8 +1,31 @@
-<!--プラン情報を表示-->
+<!--ユーザー情報を表示-->
 <%= render 'user_page', user: @user %>
 
-<!--プラン一覧を表示-->
-<%= render 'public/plans/index', plans: @plans %>
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">プラン</a></li>
+    <li><a href="#tab2" class="">いいね</a></li>
+    <li><a href="#tab3" class="">フォロー</a></li>
+    <li><a href="#tab4" class="">フォロワー</a></li>
+  </ul>
 
-<!--仮リンク作成-->
-<%= link_to "いいねした投稿", likes_user_path(@user) %>
+  <div id="tab-contents">
+    <div id="tab1" class="tab">
+      <!--プラン一覧を表示-->
+      <%= render 'public/plans/index', plans: @plans %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--いいね一覧を表示-->
+      <%= render 'public/users/likes', like_plans: @like_plans %>
+    </div>
+
+    <div id="tab3" class="tab">
+      <!--フォロー-->
+    </div>
+
+    <div id="tab4" class="tab">
+      <!--フォロワー-->
+    </div>
+  </div>
+</div>

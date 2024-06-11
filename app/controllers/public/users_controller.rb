@@ -8,6 +8,8 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @plans = current_user.plans.all
+    likes = Like.where(user_id: @user.id).pluck(:plan_id)
+    @like_plans = Plan.find(likes)
   end
 
   def edit
@@ -39,11 +41,8 @@ class Public::UsersController < ApplicationController
 
   def show
     @plans = @user.plans.all
-    if @user == current_user
-      redirect_to mypage_path
-    else
-      render 'show'
-    end
+    likes = Like.where(user_id: @user.id).pluck(:plan_id)
+    @like_plans = Plan.find(likes)
   end
 
   def likes
