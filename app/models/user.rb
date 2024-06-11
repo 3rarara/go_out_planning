@@ -9,6 +9,15 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  # フォローしている関連付け
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  # フォローされている関連付け
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  # フォローしているユーザーを取得
+  has_many :followings, through: :active_relationships, source: :followed
+  # フォロワーを取得
+  has_many :followers, through: :passive_relationships, source: :follower
+
   # バリデーション
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -43,6 +52,19 @@ class User < ApplicationRecord
     if search == "partial"
       @user = User.where("name LIKE?","%#{word}%")
     end
+  end
+
+  # フォローフォロワー機能
+  def follow(user)
+    active_relationships.create(followed_id: user.id)
+  end
+
+  def unfollow(user)
+    active_relationships.find_by(followed_id: user.id).destroy
+  end
+
+  def following?(user)
+    followings.include?(user)
   end
 
 end

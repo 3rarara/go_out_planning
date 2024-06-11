@@ -1,4 +1,6 @@
-<% users.each do |user| %>
+<div class="container mx-auto">
+  <div class="row">
+    <% users.each do |user| %>
 
     <div class="col-sm-10 col-md-8 col-lg-6 bg-white my-3 p-4 mx-auto rounded-pill">
       <div class="row">
@@ -19,8 +21,9 @@
           <% end %>
           <%= link_to "編集", edit_admin_user_path(user), class: "btn btn-warning" %>
         </div>
-
       </div>
     </div>
 
-<% end %>
+    <% end %>
+  </div>
+</div>
