@@ -1,0 +1,19 @@
+<div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
+  <% plan.comments.each do |comment| %>
+  <div class="row bg-white my-3 p-4 shadow-lg rounded mx-auto">
+    <div class="col-3 text-center">
+      <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
+      <%= comment.user.name %><br>
+      <%= comment.created_at.strftime('%Y/%m/%d') %>
+    </div>
+    <div class="col text-center my-auto">
+      <%= safe_join(comment.comment.split("\n"), tag(:br)) %>
+    </div>
+    <% if comment.user == current_user %>
+    <div class="col text-right my-auto">
+      <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" }, remote: true %>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>

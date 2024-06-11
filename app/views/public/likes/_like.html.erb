@@ -1,0 +1,9 @@
+<% if plan.liked_by?(current_user) %>
+  <%= link_to plan_like_path(plan), method: :delete, remote: true do %>
+    <i class="fa-solid fa-star fa-lg" style="color: #FFD43B;"></i><%= plan.likes.count %>
+  <% end %>
+<% else %>
+  <%= link_to plan_like_path(plan), method: :post, remote: true do %>
+    <i class="fa-regular fa-star fa-lg" style="color: #3b4674;"></i><%= plan.likes.count %>
+  <% end %>
+<% end %>
