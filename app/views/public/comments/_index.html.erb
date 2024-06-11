@@ -19,7 +19,9 @@
 
     <% if comment.user == current_user %>
     <div class="col text-center mb-2">
-      <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" }, remote: true %>
+      <%= link_to plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger", data: { confirm: "コメントを削除しますか？" }, remote: true do %>
+        <i class="fa-solid fa-trash fa-lg px-3" style="color: #ffffff;"></i>
+      <% end %>
     </div>
     <% end %>
   </div>
