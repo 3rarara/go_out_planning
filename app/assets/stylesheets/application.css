@@ -28,6 +28,9 @@
 }
 
 
+.fsize_13-18 {
+  font-size: clamp(14px, 3vw, 18px);;
+}
 
 /*タブメニューcss*/
 * {
