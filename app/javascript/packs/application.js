@@ -18,6 +18,7 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
+// plans/showでplan_detailsの入力フォームを追加するための記述
 $(document).ready(function() {
   var wrapper = '#plan_details_wrapper';
   var addButton = '#add_plan_details';
@@ -46,9 +47,11 @@ $(document).ready(function() {
     $(wrapper).append(formHtml);
   });
 
+// plans/showでplan_detailsの入力フォームを削除するための記述
   $(document).on("click", ".remove_field", function(e) {
     e.preventDefault();
 
+// plans/editでplan_detailsの入力フォームを削除するための記述
     if(confirm('この詳細を削除してもよろしいですか？')) {
       var removeButton = $(e.target);
       var destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
@@ -63,5 +66,19 @@ $(document).ready(function() {
     } else {
       console.log('Status: cancelled - The item was not deleted.');
     }
+  });
+});
+
+
+// mypageのタブメニューの記述
+$(document).on('turbolinks:load', function() {
+  $('#tab-contents .tab').not('#tab1').hide();
+
+  $('#tab-menu').on('click', 'a', function(event) {
+    $('#tab-contents .tab').hide();
+    $('#tab-menu .active').removeClass('active');
+    $(this).addClass('active');
+    $($(this).attr('href')).show();
+    event.preventDefault();
   });
 });
