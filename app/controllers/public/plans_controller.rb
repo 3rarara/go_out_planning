@@ -24,7 +24,7 @@ class Public::PlansController < ApplicationController
 
   def create
     @plan = current_user.plans.new(plan_params)
-    tag_list = params[:plan][:name].split(',')
+    tag_list = params[:plan][:tags].split(',') if params[:plan][:tags]
     if @plan.save
       @plan.save_plan_tags(tag_list)
       flash[:notice] = "プランを投稿しました"
@@ -36,10 +36,14 @@ class Public::PlansController < ApplicationController
   end
 
   def edit
+    @tag_list = @plan.tags.pluck(:name).join(',')
   end
 
   def update
+    tag_list = params[:plan][:tags].split(',') if params[:plan][:tags]
     if @plan.update(plan_params)
+      @plan.tags.destroy_all
+      @plan.save_plan_tags(tag_list)
       flash[:notice] = "プランを編集しました"
       redirect_to plan_path(@plan)
     else

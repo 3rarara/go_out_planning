@@ -25,20 +25,21 @@ class Plan < ApplicationRecord
     end
   end
 
-  # タグ作成
+  # タグ機能
   def save_plan_tags(tags)
-    current_tags = self.plan_tags.pluck(:name) unless self.tags.nil?
-    old_tags = current_tags - tags
-    new_tags = tags - current_tags
+    # 現在のタグを取得し、nilの場合は空の配列を代入する
+    current_tags = self.tags.pluck(:name)
+    current_tags ||= []
 
-    old_tags.each do |old_name|
-      self.tags.delete Tag.find_by(name:old_name)
+    # 新しいタグの作成・更新
+    tags.each do |tag_name|
+      tag = Tag.find_or_create_by(name: tag_name.strip)
+      self.tags << tag unless self.tags.include?(tag)
     end
 
-    new_tags.each do |new_name|
-      tag = Tag.find_or_create_by(name:new_name)
-      self.tags << tag
-    end
+    # 削除されたタグの削除
+    tags_to_delete = current_tags - tags
+    self.tags.where(name: tags_to_delete).destroy_all
   end
 
 end

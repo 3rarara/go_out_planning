@@ -19,9 +19,15 @@
       </div>
       <% end %>
 
-      <% @plan_tags.each do |tag| %>
-        <%= link_to tag.name %>
-      <% end %>
+      <div class="row">
+        <% @plan_tags.each do |tag| %>
+          <div class="col text-center mx-4">
+            <i class="fa-sharp fa-solid fa-tag"></i>
+            <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+          </div>
+        <% end %>
+
+      </div>
 
       <div class="row">
         <!--コメントカウント非同期化テンプレート-->

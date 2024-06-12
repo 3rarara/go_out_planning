@@ -16,6 +16,15 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col text-center pl-5">
+            <% plan.tags.each do |tag| %>
+              <i class="fa-sharp fa-solid fa-tag"></i>
+              <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+            <% end %>
+          </div>
+        </div>
+
           <div class="row mx-5">
             <!--コメント件数非同期化テンプレート-->
             <div class="col text-center pl-5 comment_counter"><%= render 'public/comments/counter', plan: plan %></div>

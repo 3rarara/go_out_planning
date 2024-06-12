@@ -36,6 +36,9 @@
           </div>
         </div>
 
+        <h4>タグ</h4>
+        <%= f.text_field :tags, value: @plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録できます" %>
+
         <div class="row">
           <div class="col text-center my-3">
             <%= f.submit "変更", class: "btn btn-warning mx-auto" %>

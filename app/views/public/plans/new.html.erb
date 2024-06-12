@@ -23,15 +23,15 @@
       </div>
       <% end %>
 
-      <h4>タグ</h4>
-      <%= f.text_field :name, value: @tag_list, class: 'form-control', placeholder: ",で区切ると複数タグ登録できます" %>
-
       <div class="row">
         <div class="col text-center">
           <div id="plan_details_wrapper"></div>
           <%= link_to '+', '#', id: 'add_plan_details', class: "btn btn-outline-dark rounded-circle ml-auto shadow" %>
         </div>
       </div>
+
+      <h4>タグ</h4>
+      <%= f.text_field :tags, value: @plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録できます" %>
 
       <div class="row">
         <div class="col text-center my-3">
