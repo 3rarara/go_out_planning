@@ -11,16 +11,23 @@
           <div class="col text-left my-auto fsize_13-18"><%= link_to plan.user.name, user_path(plan.user) %></div>
         </div>
 
-          <div class="row my-3">
-            <div class="col-md-6 offset-md-3">
-              <%= link_to plan_path(plan) do %>
-                <h5 class="fsize_13-18"><%= plan.title %></h5>
-              <% end %>
-              <div class="fsize_13-18"><%=safe_join(plan.body.split("\n"),tag(:br)) %></div>
-            </div>
+        <div class="row my-3">
+          <div class="col-md-6 offset-md-3">
+            <%= link_to plan_path(plan) do %>
+              <h5 class="fsize_13-18"><%= plan.title %></h5>
+            <% end %>
+            <div class="fsize_13-18"><%=safe_join(plan.body.split("\n"),tag(:br)) %></div>
           </div>
+        </div>
 
-
+        <div class="row">
+          <div class="col text-center pl-5">
+            <% plan.tags.each do |tag| %>
+              <i class="fa-sharp fa-solid fa-tag"></i>
+              <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+            <% end %>
+          </div>
+        </div>
 
         <div class="row mx-5">
           <!--コメント件数非同期化テンプレート-->

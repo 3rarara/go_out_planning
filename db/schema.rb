@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_11_072708) do
+ActiveRecord::Schema.define(version: 2024_06_12_055134) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -75,6 +75,16 @@ ActiveRecord::Schema.define(version: 2024_06_11_072708) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "plan_tags", force: :cascade do |t|
+    t.integer "plan_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id", "tag_id"], name: "index_plan_tags_on_plan_id_and_tag_id", unique: true
+    t.index ["plan_id"], name: "index_plan_tags_on_plan_id"
+    t.index ["tag_id"], name: "index_plan_tags_on_tag_id"
+  end
+
   create_table "plans", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", null: false
@@ -88,6 +98,13 @@ ActiveRecord::Schema.define(version: 2024_06_11_072708) do
     t.integer "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -106,4 +123,6 @@ ActiveRecord::Schema.define(version: 2024_06_11_072708) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "plan_tags", "plans"
+  add_foreign_key "plan_tags", "tags"
 end

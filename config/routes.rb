@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         get :likes
       end
     end
+    get "search_tag" => "plans#search_tag"
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
