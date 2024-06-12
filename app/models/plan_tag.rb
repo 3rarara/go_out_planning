@@ -1,0 +1,2 @@
+class PlanTag < ApplicationRecord
+end
