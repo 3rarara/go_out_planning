@@ -19,6 +19,10 @@
       </div>
       <% end %>
 
+      <%= @plan_tags.each do |tag| %>
+        <%=link_to tag.name, plan_search_tag_path(tag_id: tag.id) %>
+      <% end %>
+
       <div class="row">
         <!--コメントカウント非同期化テンプレート-->
         <div class="col-6 text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>

@@ -12,16 +12,21 @@ class Public::PlansController < ApplicationController
 
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true })
+    @tags = Tag.all
   end
 
   def show
     @plan_details = @plan.plan_details
     @comment = Comment.new
+    @tags = @plan.tags.pluck(:name).join(',')
+    @plan_tags = @plan.tags
   end
 
   def create
     @plan = current_user.plans.new(plan_params)
+    tag_list = params[:plan][:name].split(',')
     if @plan.save
+      @plan.save_plan_tags(tag_list)
       flash[:notice] = "プランを投稿しました"
       redirect_to plan_path(@plan)
     else
@@ -53,14 +58,16 @@ class Public::PlansController < ApplicationController
     end
   end
 
+  def search_tag
+    @tags = Tag.all
+    @tag = Tag.find(params[:tag_id])
+    @plans = @tag.plans
+  end
+
   private
 
   def set_plan
     @plan = Plan.find(params[:id])
-  end
-
-  def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy])
   end
 
   def ensure_current_user
@@ -77,6 +84,10 @@ class Public::PlansController < ApplicationController
       flash[:alert] = "指定のユーザーは退会済みです"
       redirect_to mypage_path
     end
+  end
+
+  def plan_params
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy])
   end
 
 end

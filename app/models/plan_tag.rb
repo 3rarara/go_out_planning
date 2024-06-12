@@ -1,2 +1,0 @@
-class PlanTag < ApplicationRecord
-end
