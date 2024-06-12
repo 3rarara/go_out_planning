@@ -19,8 +19,8 @@
       </div>
       <% end %>
 
-      <%= @plan_tags.each do |tag| %>
-        <%=link_to tag.name, plan_search_tag_path(tag_id: tag.id) %>
+      <% @plan_tags.each do |tag| %>
+        <%= link_to tag.name %>
       <% end %>
 
       <div class="row">

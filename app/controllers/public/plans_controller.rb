@@ -18,7 +18,7 @@ class Public::PlansController < ApplicationController
   def show
     @plan_details = @plan.plan_details
     @comment = Comment.new
-    @tags = @plan.tags.pluck(:name).join(',')
+    @tag_list = @plan.tags.pluck(:name).join(',')
     @plan_tags = @plan.tags
   end
 
@@ -59,7 +59,7 @@ class Public::PlansController < ApplicationController
   end
 
   def search_tag
-    @tags = Tag.all
+    @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @plans = @tag.plans
   end

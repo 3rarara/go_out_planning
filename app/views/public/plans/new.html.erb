@@ -23,13 +23,8 @@
       </div>
       <% end %>
 
-      <h4>タグ(,で区切ると複数タグ登録できます)</h4>
-      <%= f.text_field :name, value: @tags, class: 'form-control' %>
-      <% if post_workout.new_record? %>
-        <%= f.submit '新規作成', class: "btn btn-success mt-4" %>
-      <% else %>
-        <%= f.submit '更新する', class: "btn btn-success mt-4" %>
-      <% end %>
+      <h4>タグ</h4>
+      <%= f.text_field :name, value: @tag_list, class: 'form-control', placeholder: ",で区切ると複数タグ登録できます" %>
 
       <div class="row">
         <div class="col text-center">
