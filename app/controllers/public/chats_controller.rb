@@ -2,11 +2,11 @@ class Public::ChatsController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    rooms_ids = current_user.user_rooms.pluck(:room_id)
-    user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms_ids)
+    rooms = current_user.user_rooms.pluck(:room_id)
+    user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 
     # もしuser_roomsが空でないなら
-    unless user_rooms.nil?
+    unless user_room.nil?
       @room = user_room.room
     else
       # user_roomsが空なら@roomを作成
@@ -24,7 +24,7 @@ class Public::ChatsController < ApplicationController
     if @chat.save
       redirect_to request.referer
     else
-      redirect_to request.refere, alert: メッセージを送信できませんでした
+      redirect_to request.referer, alert: "メッセージを送信できませんでした"
     end
   end
 

@@ -18,6 +18,9 @@ class User < ApplicationRecord
   # フォロワーを取得
   has_many :followers, through: :passive_relationships, source: :follower
 
+  has_many :user_rooms
+  has_many :chats
+
   # バリデーション
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true

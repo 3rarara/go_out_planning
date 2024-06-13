@@ -35,12 +35,13 @@ Rails.application.routes.draw do
         get :likes
       end
     end
-    get "search_tag" => "plans#search_tag"
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
     end
     get 'search' => 'searches#search'
+    get "search_tag" => "plans#search_tag"
+    resources :chats, only: [:create, :show]
   end
 
   namespace :admin do
