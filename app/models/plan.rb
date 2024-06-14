@@ -7,7 +7,7 @@ class Plan < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :plan_tags, dependent: :destroy
   has_many :tags, through: :plan_tags
-  has_many :notifications, as: :notifiable, dependent: :destroy
+  has_one :notification, as: :subject, dependent: :destroy
 
   # 子モデル（plan_details）の属性を受入れ、更新や削除を許可する
   accepts_nested_attributes_for :plan_details, allow_destroy: true
@@ -43,12 +43,12 @@ class Plan < ApplicationRecord
     tags_to_delete = current_tags - tags
     self.tags.where(name: tags_to_delete).destroy_all
   end
-  
+
   # 通知機能
   after_create do
     user.followers.each do |follower|
       notifications.create(user_id: follower.id)
     end
-  end 
+  end
 
 end
