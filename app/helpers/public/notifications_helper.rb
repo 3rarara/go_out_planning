@@ -8,6 +8,8 @@ module Public::NotificationsHelper
       plan_path(notification.subject.plan)
     when :followed_me
       user_path(notification.subject.follower)
+    when :new_message
+      user_path(notification.subject.user)
     end
   end
 
