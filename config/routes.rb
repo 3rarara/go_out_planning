@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"
     resources :chats, only: [:create, :show]
-    resources :notifications, only: [:update]
+    resources :notifications, only: [:update, :index, :destroy]
   end
 
   namespace :admin do

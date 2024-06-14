@@ -1,5 +1,5 @@
 class Public::NotificationsController < ApplicationController
-  
+
   before_action :authenticate_user!
 
   def update
@@ -13,5 +13,8 @@ class Public::NotificationsController < ApplicationController
       redirect_to user_path(notification.notifiable.user)
     end
   end
-  
+
+  def index
+  end
+
 end
