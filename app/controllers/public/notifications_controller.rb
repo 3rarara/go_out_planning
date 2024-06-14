@@ -1,20 +1,16 @@
 class Public::NotificationsController < ApplicationController
-
   before_action :authenticate_user!
 
-  def update
-    notification = current_user.notifications.find(params[:id])
-    notification.update(read: true)
-    # 通知の種類によるリダイレクトパスの生成
-    case notification.notifiable_type
-    when "Plan"
-      redirect_to plan_path(notification.notifiable)
-    else
-      redirect_to user_path(notification.notifiable.user)
+  def index
+    @notifications = current_user.notifications.order(created_at: :desc)
+    @notifications.where(read: false).each do |notification|
+      notification.update(read: true)
     end
   end
 
-  def index
+  def destroy
+    @notifications = current_user.notifications.destroy_all
+    redirect_to notifications_path
   end
 
 end

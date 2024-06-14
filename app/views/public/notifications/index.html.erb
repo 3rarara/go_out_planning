@@ -1,7 +1,7 @@
-<% if current_user.notifications.where(read: false).any? %>
-  直近5件の未読の通知を表示しています
-  <% current_user.notifications.where(read: false).limit(5).order(created_at: :desc).each do |notification| %>
-  <%= link_to notification_message(notification), notification_path(notification), method: :patch %>
+<% if @notifications.present? %>
+  <%= link_to "全削除",notification_path(@notifications), method: :delete,class:"btn btn-light" %>
+  <% @notifications.each do |notification| %>
+    <%= render "#{notification.action_type}", notification: notification %>
   <% end %>
 <% else %>
   通知はありません
