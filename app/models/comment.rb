@@ -13,6 +13,7 @@ class Comment < ApplicationRecord
 
   private
 
+  # 通知機能
   def create_notifications
     Notification.create(subject: self, user: plan.user, action_type: :commented_to_own_plan)
   end
