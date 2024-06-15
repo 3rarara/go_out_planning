@@ -49,6 +49,8 @@
       <% end %>
     </div>
 
+    <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;"></div>
+
     <!-- コメント一覧非同期化テンプレート -->
     <div class="row comment-index mx-auto">
       <%= render 'public/comments/index', plan: @plan %>
@@ -60,3 +62,4 @@
     </div>
 
 </div>
+<%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
