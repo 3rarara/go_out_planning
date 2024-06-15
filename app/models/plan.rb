@@ -45,7 +45,7 @@ class Plan < ApplicationRecord
   end
 
   # 通知機能
-  after_create :notify_followers
+  after_create_commit :notify_followers
 
   private
 
