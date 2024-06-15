@@ -13,10 +13,9 @@
       </div>
 
       <% @plan_details.each do |plan_detail| %>
-      <div class="row my-3">
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
-      </div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.address %></div>
       <% end %>
 
       <div class="row">
@@ -50,6 +49,8 @@
       <% end %>
     </div>
 
+    <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;"></div>
+
     <!-- コメント一覧非同期化テンプレート -->
     <div class="row comment-index mx-auto">
       <%= render 'public/comments/index', plan: @plan %>
@@ -61,3 +62,4 @@
     </div>
 
 </div>
+<%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
