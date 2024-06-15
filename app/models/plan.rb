@@ -7,7 +7,7 @@ class Plan < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :plan_tags, dependent: :destroy
   has_many :tags, through: :plan_tags
-  has_one :notification, as: :subject, dependent: :destroy
+  has_many :notifications, as: :subject, dependent: :destroy
 
   # 子モデル（plan_details）の属性を受入れ、更新や削除を許可する
   accepts_nested_attributes_for :plan_details, allow_destroy: true
@@ -45,10 +45,23 @@ class Plan < ApplicationRecord
   end
 
   # 通知機能
-  after_create do
-    user.followers.each do |follower|
-      notifications.create(user_id: follower.id)
-    end
-  end
+  after_create :notify_followers
 
+  private
+
+  def notify_followers
+    follower_ids = user.followers.pluck(:id)
+    notifications = follower_ids.map do |follower_id|
+      {
+        subject_type: 'Plan',
+        subject_id: self.id,
+        user_id: follower_id,
+        action_type: 'new_plan',
+        created_at: Time.current,
+        updated_at: Time.current
+      }
+    end
+
+    Notification.insert_all(notifications)
+  end
 end
