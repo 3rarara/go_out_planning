@@ -2,8 +2,10 @@ module Public::NotificationsHelper
 
   def transition_path(notification)
     case notification.action_type.to_sym
+    when :new_plan
+      plan_path(notification.subject)
     when :commented_to_own_plan
-      plan_path(notification.subject.plan, anchor: "comment-#{notification.subject.id}")
+      plan_path(notification.subject, anchor: "comment-#{notification.subject.id}")
     when :liked_to_own_plan
       plan_path(notification.subject.plan)
     when :followed_me
