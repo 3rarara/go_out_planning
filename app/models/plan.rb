@@ -62,6 +62,6 @@ class Plan < ApplicationRecord
       }
     end
 
-    Notification.insert_all!(notifications)
+    Notification.insert_all(notifications)
   end
 end
