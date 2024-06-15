@@ -13,6 +13,15 @@ class Public::PlansController < ApplicationController
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true })
     @tags = Tag.all
+
+    respond_to do |format|
+      format.html do
+        @plan_details = PlanDetail.page(params[:page])
+      end
+      format.json do
+        @plan_details = PlanDetail.all
+      end
+    end
   end
 
   def show
@@ -91,7 +100,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy])
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address])
   end
 
 end

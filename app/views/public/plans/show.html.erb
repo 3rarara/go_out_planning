@@ -13,10 +13,9 @@
       </div>
 
       <% @plan_details.each do |plan_detail| %>
-      <div class="row my-3">
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
-      </div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
+        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.address %></div>
       <% end %>
 
       <div class="row">

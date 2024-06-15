@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :public do
-    get 'chats/show'
-  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # ユーザー用　URL/users/sign_in...
@@ -43,6 +40,7 @@ Rails.application.routes.draw do
     get "search_tag" => "plans#search_tag"
     resources :chats, only: [:create, :show]
     resources :notifications, only: [:index, :destroy]
+    resource :map, only: [:show]
   end
 
   namespace :admin do
