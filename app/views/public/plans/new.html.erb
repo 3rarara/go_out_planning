@@ -16,17 +16,10 @@
       <%= f.fields_for :plan_details do |plan_detail| %>
       <div class="row">
         <div class="col">
-          <%= plan_detail.text_field :title, class: "form-control my-3", placeholder: "例) ＊＊駅到着" %>
+          <%= plan_detail.text_field :title, class: "form-control my-3", placeholder: "例) ＊＊駅(集合場所や施設名など)" %>
           <%= plan_detail.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動
           移動後＊＊カフェでランチ！" %>
-          <div class="row">
-            <div class="col-md-3">
-              <%= text_field_tag :zipcode, nil, class: "form-control mb-3", placeholder: "郵便番号" %>
-            </div>
-            <div class="col-md-9">
-              <%= plan_detail.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
-            </div>
-          </div>
+          <%= plan_detail.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
         </div>
       </div>
       <% end %>
@@ -53,4 +46,3 @@
     </div>
   </div>
 </div>
-<%= javascript_pack_tag "jpostal",  'data-turbolinks-track': 'reload' %>

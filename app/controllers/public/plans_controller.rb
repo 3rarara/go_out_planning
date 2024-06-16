@@ -16,7 +16,7 @@ class Public::PlansController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @plan_details = PlanDetail.page(params[:page])
+        @plan_details = PlanDetail.all
       end
       format.json do
         @plan_details = PlanDetail.all
@@ -100,7 +100,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address])
+    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
   end
 
 end

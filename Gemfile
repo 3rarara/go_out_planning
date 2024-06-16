@@ -73,3 +73,5 @@ gem 'net-pop'
 gem 'net-imap'
 
 gem 'geocoder'
+gem 'gmaps4rails'
+gem 'kaminari'

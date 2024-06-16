@@ -7,6 +7,7 @@ json.data do
         json.image url_for(plan_detail.plan.user.profile_image)
       end
       json.address plan_detail.address
+      json.title plan_detail.title
       json.latitude plan_detail.latitude
       json.longitude plan_detail.longitude
     end
