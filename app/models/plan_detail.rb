@@ -4,7 +4,12 @@ class PlanDetail < ApplicationRecord
   belongs_to :plan
 
   # バリデーション
-  validates :title, presence: true
+  validates :title, presence: true, unless: :plan_is_draft?
+
+  # 下書き時、バリデーションをスキップ
+  def plan_is_draft?
+    self.plan.is_draft?
+  end
 
   # Google.map API
   # addressカラムを緯度経度に変換

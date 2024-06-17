@@ -13,7 +13,7 @@ class Plan < ApplicationRecord
   accepts_nested_attributes_for :plan_details, allow_destroy: true
 
   # バリデーション
-  validates :title, presence: true
+  validates :title, presence: true, unless: :is_draft?
 
   # いいねの確認
   def liked_by?(user)
@@ -51,17 +51,19 @@ class Plan < ApplicationRecord
 
   def notify_followers
     follower_ids = user.followers.pluck(:id)
-    notifications = follower_ids.map do |follower_id|
-      {
-        subject_type: 'Plan',
-        subject_id: self.id,
-        user_id: follower_id,
-        action_type: 'new_plan',
-        created_at: Time.current,
-        updated_at: Time.current
-      }
-    end
+    if follower_ids.any?
+      notifications = follower_ids.map do |follower_id|
+        {
+          subject_type: 'Plan',
+          subject_id: self.id,
+          user_id: follower_id,
+          action_type: 'new_plan',
+          created_at: Time.current,
+          updated_at: Time.current
+        }
+      end
 
-    Notification.insert_all(notifications)
+      Notification.insert_all(notifications)
+    end
   end
 end

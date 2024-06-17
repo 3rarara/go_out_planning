@@ -11,7 +11,7 @@ class Public::PlansController < ApplicationController
   end
 
   def index
-    @plans = Plan.includes(:user).where(users: { is_active: true })
+    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
     @tags = Tag.all
 
     respond_to do |format|
@@ -33,11 +33,15 @@ class Public::PlansController < ApplicationController
 
   def create
     @plan = current_user.plans.new(plan_params)
+    @plan.is_draft = params[:commit] == "下書き保存"
     tag_list = params[:plan][:tags].split(',') if params[:plan][:tags]
     if @plan.save
       @plan.save_plan_tags(tag_list)
-      flash[:notice] = "プランを投稿しました"
-      redirect_to plan_path(@plan)
+      if @plan.is_draft
+        redirect_to drafts_user_path(current_user), notice: "下書きが保存されました"
+      else
+      redirect_to plan_path(@plan), notice: "プランを投稿しました"
+      end
     else
       flash.now[:alert] = "プランを投稿できませんでした"
       render 'new'
@@ -49,12 +53,16 @@ class Public::PlansController < ApplicationController
   end
 
   def update
+    @plan.is_draft = params[:commit] == "下書き保存"
     tag_list = params[:plan][:tags].split(',') if params[:plan][:tags]
     if @plan.update(plan_params)
       @plan.tags.destroy_all
       @plan.save_plan_tags(tag_list)
-      flash[:notice] = "プランを編集しました"
-      redirect_to plan_path(@plan)
+      if @plan.is_draft
+        redirect_to drafts_user_path(current_user), notice: "下書きが保存されました"
+      else
+      redirect_to plan_path(@plan), notice: "プランを編集しました"
+      end
     else
       flash.now[:alert] = "プランを編集できませんでした"
       render 'edit'
@@ -63,8 +71,7 @@ class Public::PlansController < ApplicationController
 
   def destroy
     if @plan.destroy
-      flash[:notice] = "プランを削除しました"
-      redirect_to mypage_path
+      redirect_to mypage_path, notice: "プランを削除しました"
     else
       flash.now[:alert] = "プランを削除できませんでした"
       render 'show'
@@ -94,13 +101,12 @@ class Public::PlansController < ApplicationController
     user = @plan.user
     if user.is_active?
     else
-      flash[:alert] = "指定のユーザーは退会済みです"
-      redirect_to mypage_path
+      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
     end
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
+    params.require(:plan).permit(:title, :body, :is_draft, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
   end
 
 end

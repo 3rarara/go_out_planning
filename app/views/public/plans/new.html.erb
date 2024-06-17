@@ -4,6 +4,7 @@
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
       <%= render "layouts/errors", object: @plan %>
       <%= form_with model: @plan do |f| %>
+      <%= link_to '下書き一覧', drafts_user_path(current_user) , class: "btn btn-sm btn-warning"%>
       <div class="row">
         <div class="col">
           <h4>プラン概要</h4>
@@ -39,6 +40,7 @@
           <button type="submit" class="btn btn-primary mx-auto px-4">
             <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
           </button>
+          <%= f.submit '下書き保存', class: 'btn btn-warning mx-auto px-4' %>
         </div>
       </div>
       <% end %>

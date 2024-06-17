@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Admin データの作成
 Admin.find_or_create_by!(email: ENV['ADMIN_EMAIL']) do |admin|
   admin.password = ENV['ADMIN_PASSWORD']
 end
@@ -27,49 +29,77 @@ lucas = User.find_or_create_by!(email: "lucas@example.com") do |user|
   user.profile_image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/sample-user3.jpg"), filename:"sample-user3.jpg")
 end
 
-# Plan.find_or_create_by!(title: "大阪旅行") do |plan|
-#   plan.body = "大阪旅行で御朱印巡りをしました！おすすめのお寺や神社を紹介してます！移動手段は電車です！。"
-#   plan.user = olivia
+# タグのサンプルデータ作成
+Tag.find_or_create_by!(name: "大阪")
+Tag.find_or_create_by!(name: "東京")
+Tag.find_or_create_by!(name: "鎌倉")
+Tag.find_or_create_by!(name: "カフェ")
+Tag.find_or_create_by!(name: "デート")
+Tag.find_or_create_by!(name: "旅行")
+Tag.find_or_create_by!(name: "観光")
+Tag.find_or_create_by!(name: "食べ物")
+Tag.find_or_create_by!(name: "アクティビティ")
 
-#   plan.plan_details.build(
-#     title: "大阪駅 到着",
-#     body: "10:00集合 徒歩10分移動"
-#   )
+# Plans データの作成
+Plan.find_or_create_by!(title: "大阪旅行") do |plan|
+  plan.body = "大阪旅行で御朱印巡りをしました！おすすめのお寺や神社を紹介してます！移動手段は電車です！。"
+  plan.user = olivia
 
-#   plan.plan_details.build(
-#     title: "＊＊神社 到着",
-#     body: "10:10早速御朱印を１つゲット"
-#   )
-# end
+  # タグの関連付け
+  plan.tags << Tag.find_by(name: "大阪")
+  plan.tags << Tag.find_by(name: "旅行")
+  plan.tags << Tag.find_by(name: "観光")
 
-# Plan.find_or_create_by!(title: "東京デートおすすめスポット️") do |plan|
-#   plan.body = "東京でのカフェ巡り！いろんなカフェを紹介してます！デートにおすすめです。"
-#   plan.user = james
+  plan.plan_details.build(
+    title: "大阪駅 到着",
+    body: "10:00集合 徒歩10分移動"
+  )
 
-#   plan.plan_details.build(
-#     title: "東京駅 到着",
-#     body: "11:00集合 徒歩5分移動"
-#   )
+  plan.plan_details.build(
+    title: "＊＊神社 到着",
+    body: "10:10早速御朱印を１つゲット",
+    address: "大阪府大阪市中央区１−１"
+  )
+end
 
-#   plan.plan_details.build(
-#     title: "＊＊カフェ 到着",
-#     body: "11:05 早めのランチ"
-#   )
-# end
+Plan.find_or_create_by!(title: "東京デートおすすめスポット️") do |plan|
+  plan.body = "東京でのカフェ巡り！いろんなカフェを紹介してます！デートにおすすめです。"
+  plan.user = james
 
-# Plan.find_or_create_by!(title: "鎌倉のお寺へ行くぞ️") do |plan|
-#   plan.body = "鎌倉でまったりデートしました。"
-#   plan.user = lucas
+  # タグの関連付け
+  plan.tags << Tag.find_by(name: "東京")
+  plan.tags << Tag.find_by(name: "カフェ")
 
-#   plan.plan_details.build(
-#     title: "鎌倉駅 到着",
-#     body: "11:00集合 徒歩20分移動"
-#   )
+  plan.plan_details.build(
+    title: "東京駅 到着",
+    body: "11:00集合 徒歩5分移動"
+  )
 
-#   plan.plan_details.build(
-#     title: "＊＊寺 到着",
-#     body: "11:05 11:00御朱印ゲット！"
-#   )
-# end
+  plan.plan_details.build(
+    title: "＊＊カフェ 到着",
+    body: "11:05 早めのランチ",
+    address: "東京都千代田区丸の内１丁目"
+  )
+end
+
+Plan.find_or_create_by!(title: "鎌倉のお寺へ行くぞ️") do |plan|
+  plan.body = "鎌倉でまったりデートしました。"
+  plan.user = lucas
+
+  # タグの関連付け
+  plan.tags << Tag.find_by(name: "鎌倉")
+  plan.tags << Tag.find_by(name: "デート")
+
+  plan.plan_details.build(
+    title: "鎌倉駅 到着",
+    body: "11:00集合 徒歩20分移動"
+  )
+
+  plan.plan_details.build(
+    title: "＊＊寺 到着",
+    body: "11:05 11:00御朱印ゲット！",
+    address: "神奈川県鎌倉市１丁目１−１"
+  )
+end
 
 puts '初期データを追加しました'

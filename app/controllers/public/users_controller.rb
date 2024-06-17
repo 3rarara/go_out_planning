@@ -17,8 +17,7 @@ class Public::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "ユーザー情報を編集しました"
-      redirect_to mypage_path
+      redirect_to mypage_path, notice: "ユーザー情報を編集しました"
     else
       flash.now[:alert] = "ユーザー情報を編集できませんでした"
       render 'edit'
@@ -31,8 +30,7 @@ class Public::UsersController < ApplicationController
   def close_account
     if @user.update(is_active: false)
       reset_session
-      flash[:notice] = "退会処理を実行しました"
-      redirect_to new_user_registration_path
+      redirect_to new_user_registration_path, notice: "退会処理を実行しました"
     else
       flash.now[:alert] = "退会処理を実行できませんでした"
       render 'edit'
@@ -52,6 +50,10 @@ class Public::UsersController < ApplicationController
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
     @like_plans = Plan.find(likes)
     @plan = Plan.find(params[:id])
+  end
+
+  def drafts
+   @drafts = current_user.plans.where(is_draft: true)
   end
 
   private
@@ -75,8 +77,7 @@ class Public::UsersController < ApplicationController
     user = User.find(params[:id])
     if user.is_active?
     else
-      flash[:alert] = "指定のユーザーは退会済みです"
-      redirect_to mypage_path
+      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
     end
   end
 
