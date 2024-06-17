@@ -59,7 +59,7 @@ class Public::PlansController < ApplicationController
       @plan.tags.destroy_all
       @plan.save_plan_tags(tag_list)
       if @plan.is_draft
-        redirect_to drafts_admin_user_path(current_user), notice: "下書きが保存されました"
+        redirect_to drafts_user_path(current_user), notice: "下書きが保存されました"
       else
       redirect_to plan_path(@plan), notice: "プランを編集しました"
       end
