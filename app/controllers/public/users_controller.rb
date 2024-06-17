@@ -17,9 +17,9 @@ class Public::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to mypage_path, notice: "ユーザー情報を編集しました"
+      redirect_to mypage_path, notice: "ユーザー情報を変更しました"
     else
-      flash.now[:alert] = "ユーザー情報を編集できませんでした"
+      flash.now[:alert] = "ユーザー情報を変更できませんでした"
       render 'edit'
     end
   end
