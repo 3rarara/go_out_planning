@@ -46,8 +46,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'plans#index'
-    resources :users, only: [:index, :show, :edit, :update, :destroy]
-    resources :plans, only: [:show, :edit, :update, :destroy] do
+    resources :users, only: [:index, :edit, :update, :destroy] do
+      member do
+        get :drafts
+      end
+    end
+    resources :plans, only: [:edit, :update, :destroy] do
       resources :comments, only: [:destroy]
     end
     get 'search' => 'searches#search'

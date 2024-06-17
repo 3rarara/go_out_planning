@@ -23,6 +23,10 @@
   padding: 8px;
 }
 
+#plan_is_draft {
+  padding: 8px;
+}
+
 #range {
   padding: 4px 0;
 }

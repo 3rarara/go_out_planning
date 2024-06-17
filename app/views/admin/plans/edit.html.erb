@@ -30,7 +30,12 @@
 
       <div class="row">
         <div class="col text-center my-3">
-          <%#= link_to "編集", "#", class: "btn btn-warning mx-auto" %>
+
+          <%= form_with model: @plan, url: admin_plan_path(@plan), method: :patch do |f| %>
+            <%= f.select :is_draft, [['非表示',true],['公開',false]] %>
+          <%= f.submit "変更", class: "btn btn-warning mb-1" %>
+          <% end %>
+
           <%= link_to admin_plan_path, method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } do %>
             <i class="fa-solid fa-trash fa-lg mx-3" style="color: #ffffff;"></i>
           <% end %>
