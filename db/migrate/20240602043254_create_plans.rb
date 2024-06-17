@@ -4,6 +4,7 @@ class CreatePlans < ActiveRecord::Migration[6.1]
       t.integer :user_id, null: false
       t.string :title, null: false
       t.string :body
+      t.boolean :is_draft, null: false, default: false
       t.timestamps
     end
   end

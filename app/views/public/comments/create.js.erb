@@ -1,3 +1,4 @@
 $('.comment_textarea').val("");
 $('.comment-index').html("<%= j(render "public/comments/index", plan: @comment.plan) %>");
 $('.comment_counter').html("<%= @plan.comments.count %>コメント")
+$('.flash-message').html("<%= j(render 'layouts/flash') %>");

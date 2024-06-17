@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         get 'followers' => 'relationships#followers', as: 'followers'
 
       member do
+        get :drafts
         get :likes
       end
     end
