@@ -11,7 +11,7 @@ class PlanDetail < ApplicationRecord
     self.plan.is_draft?
   end
 
-  # Google.map API
+  # GoogleMap API
   # addressカラムを緯度経度に変換
   geocoded_by :address
   # latitudeカラム・longitudeカラムに緯度・経度の値を入力

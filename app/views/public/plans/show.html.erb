@@ -50,7 +50,7 @@
     </div>
 
     <div class="map">
-      <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;" data-plan-details='<%= @plan_details.to_json(include: { plan: { include: { user: { only: [:name] } } } }, only: [:latitude, :longitude, :title, :address]) %>'></div>
+      <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;"></div>
     </div>
 
     <!-- コメント一覧非同期化テンプレート -->
@@ -65,34 +65,41 @@
 
 </div>
 
-<!--<script>
+<script>
   function initMap(){
     // 地図の位置情報(緯度・経度)を取得
-    let mapPosition = {lat: <%#= @plan_details.latitude || 0 %> , lng: <%#= @plan_details.longitude || 0 %> };
+    <% map = true %>
+    <% @plan_details.each do |pd| %>
+      <% next if pd.address.blank? %>
+    let mapPosition<%= pd.id %> = {lat: <%= pd.latitude %> , lng: <%= pd.longitude %> };
+
+    <% if map %>
     let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: mapPosition
+      zoom: 12,
+      center: mapPosition<%= pd.id %>
     });
     let transitLayer = new google.maps.TransitLayer();
     transitLayer.setMap(map);
+    <% map = false %>
+    <% end %>
 
-    let contentString = '【住所】<%#= @post.address %>';
-    let infowindow = new google.maps.InfoWindow({
-      content: contentString
+    let contentString<%= pd.id %> = '【住所】<%= pd.address %>';
+    let infowindow<%= pd.id %> = new google.maps.InfoWindow({
+      content: contentString<%= pd.id %>
     });
 
-    let marker = new google.maps.Marker({
-      position: mapPosition,
+    let marker<%= pd.id %> = new google.maps.Marker({
+      position: mapPosition<%= pd.id %>,
       map: map,
-      title: contentString
+      title: contentString<%= pd.id %>
     });
 
-    marker.addListener('click', function(){
-      infowindow.open(map, marker);
+    marker<%= pd.id %>.addListener('click', function(){
+      infowindow<%= pd.id %>.open(map, marker<%= pd.id %>);
     });
+
+    <% end %>
   }
-</script>-->
+</script>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap" async defer></script>-->
-
-<%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap" async defer></script>
