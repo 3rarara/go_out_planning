@@ -40,6 +40,7 @@ $(document).ready(function() {
         '</div>' +
         '<div class="col-12">' +
           '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
+          '<input type="text" class="form-control my-3" name="plan[plan_details_attributes][' + x + '][address]" placeholder="住所">' +
         '</div>' +
         '<input type="hidden" name="plan[plan_details_attributes][' + x + '][_destroy]" class="destroy-field" value="false">' +
       '</div>';

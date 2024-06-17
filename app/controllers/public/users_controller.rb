@@ -7,9 +7,10 @@ class Public::UsersController < ApplicationController
   before_action :ensure_guest_user, only: [:edit]
 
   def mypage
-    @plans = current_user.plans.all
+    @plans = current_user.plans.where(is_draft: false)
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
-    @like_plans = Plan.find(likes)
+    @like_plans = Plan.where(id: likes, is_draft: false)
+    likes = Like.where(user_id: @user.id).pluck(:plan_id)
   end
 
   def edit
@@ -38,7 +39,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @plans = @user.plans.all
+    @plans = @user.plans.where(is_draft: false)
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
     @like_plans = Plan.find(likes)
     if current_user == @user
@@ -48,7 +49,7 @@ class Public::UsersController < ApplicationController
 
   def likes
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
-    @like_plans = Plan.find(likes)
+    @like_plans = Plan.where(id: likes, is_draft: false)
     @plan = Plan.find(params[:id])
   end
 

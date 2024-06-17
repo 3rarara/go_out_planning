@@ -12,7 +12,8 @@
           <%= render 'layouts/search', object: admin_search_path %>
           <li class="nav-item mx-3">
             <%= link_to destroy_admin_session_path, method: :delete do %>
-              <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
+              <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-1" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
             <% end %>
           </li>
 
@@ -20,24 +21,22 @@
           <%= render 'layouts/search', object: search_path %>
           <li class="nav-item mx-3">
             <%= link_to destroy_user_session_path, method: :delete do %>
-              <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
+              <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-1" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
             <% end %>
           </li>
 
           <% else %>
           <li class="nav-item mx-3">
             <%= link_to new_user_registration_path do %>
-              <i class="fa-solid fa-user-plus" style="color: #FFD43B;"> 新規登録</i>
+              <i class="fa-solid fa-user-plus fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-1" style="color: #FFD43B; font-size: 10px;">新規登録</p>
             <% end %>
           </li>
           <li class="nav-item mx-3">
             <%= link_to user_session_path do %>
-              <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ログイン</i>
-            <% end %>
-          </li>
-          <li class="nav-item mx-3">
-            <%= link_to users_guest_sign_in_path, method: :post do %>
-              <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ゲストログイン</i>
+              <i class="fa-solid fa-right-to-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-1" style="color: #FFD43B; font-size: 10px;">ログイン</p>
             <% end %>
           </li>
           <% end %>

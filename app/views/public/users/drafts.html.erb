@@ -1,5 +1,6 @@
 <div class="container mx-auto">
 
+  <% if @drafts.present? %>
     <% @drafts.each do |plan| %>
     <div class="row">
 
@@ -44,6 +45,11 @@
 
       </div>
     </div>
+    <% end %>
+  <% else %>
+  <div class="text-center mt-5">
+    下書きがありません
+  </div>
   <% end %>
 
 </div>
