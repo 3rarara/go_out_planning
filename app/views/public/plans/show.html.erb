@@ -6,21 +6,21 @@
           <%= image_tag @plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
           <div class="text-center mb-1"><%= link_to @plan.user.name, user_path(@plan.user) %></div>
         </div>
-        <div class="col my-auto">
+        <div class="col fsize_13-18 my-auto">
           <h5><%= @plan.title %></h5>
           <%=safe_join(@plan.body.split("\n"),tag(:br)) %>
         </div>
       </div>
 
       <% @plan_details.each do |plan_detail| %>
-        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
-        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
-        <div class="col p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.address %></div>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= plan_detail.address %></div>
       <% end %>
 
       <div class="row">
         <% @plan_tags.each do |tag| %>
-          <div class="col text-center mx-4">
+          <div class="col text-center">
             <i class="fa-sharp fa-solid fa-tag"></i>
             <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
           </div>
@@ -30,9 +30,11 @@
 
       <div class="row">
         <!--コメントカウント非同期化テンプレート-->
-        <div class="col-6 text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
+        <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
         <!--いいね非同期化テンプレート-->
-        <div class="col-6 text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+        <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+
+        <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
       </div>
 
       <% if @plan.user == current_user %>

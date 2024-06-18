@@ -33,6 +33,9 @@ class Public::PlansController < ApplicationController
     @comment = Comment.new
     @tag_list = @plan.tags.pluck(:name).join(',')
     @plan_tags = @plan.tags
+    unless ViewCount.find_by(user: current_user, plan: @plan)
+      current_user.view_counts.create(plan: @plan)
+    end
   end
 
   def create

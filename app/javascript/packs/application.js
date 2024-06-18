@@ -71,7 +71,7 @@ $(document).ready(function() {
 });
 
 
-// mypageのタブメニューの記述
+// タブメニューの記述
 $(document).on('turbolinks:load', function() {
   $('#tab-contents .tab').not('#tab1').hide();
 
