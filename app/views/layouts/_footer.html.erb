@@ -1,5 +1,5 @@
 
-<footer class="footer fixed-bottom page-footer" style="background-color: #3B4674; height: 80px;">
+<footer class="footer fixed-bottom" style="background-color: #3B4674; height: 80px;">
   <div class="container mt-3">
     <nav class="row d-flex justify-content-center">
 
@@ -7,13 +7,13 @@
 
           <% if admin_signed_in? %>
           <li class="nav-item mx-3">
-            <%= link_to admin_root_path , style: "display:flex; align-items: center;" do %>
+            <%= link_to admin_root_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
           <li class="nav-item mx-3">
-            <%= link_to admin_users_path, style: "display:flex; align-items: center;" do %>
+            <%= link_to admin_users_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">ユーザー</p>
             <% end %>
@@ -49,9 +49,9 @@
 
           <% else %>
           <li class="nav-item mx-3">
-            <%= link_to plans_path do %>
+            <%= link_to plans_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">プラン</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
           <% end %>
