@@ -13,8 +13,12 @@ class Public::PlansController < ApplicationController
 
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
-    followed_user = current_user.followings
-    @followed_plans = Plan.includes(:user).where(users: { is_active: true }, user: followed_user, is_draft: false)
+    if user_signed_in?
+      followed_user = current_user.followings
+      @followed_plans = Plan.includes(:user).where(users: { is_active: true }, user: followed_user, is_draft: false)
+    else
+      @followed_plans = []
+    end
 
     @tags = Tag.all
     @plan_details = PlanDetail.all

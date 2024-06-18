@@ -43,6 +43,14 @@
   text-decoration: none !important;
 }
 
+.navbar-nav {
+  flex-direction: row !important;
+}
+.navbar-nav .nav-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 /*フォントサイズ指定*/
 .fsize_13-18 {
   font-size: clamp(14px, 3vw, 18px);;
