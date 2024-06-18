@@ -8,10 +8,14 @@ class Public::PlansController < ApplicationController
     @plan = Plan.new
     # PlanDetailsモデルのインスタンス作成
     @plan_detail = @plan.plan_details.build
+    @drafts = current_user.plans.where(is_draft: true)
   end
 
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
+    followed_user = current_user.followings
+    @followed_plans = Plan.includes(:user).where(users: { is_active: true }, user: followed_user, is_draft: false)
+
     @tags = Tag.all
 
     respond_to do |format|
