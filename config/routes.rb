@@ -40,9 +40,16 @@ Rails.application.routes.draw do
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"
     resources :chats, only: [:create, :show]
-    resources :notifications, only: [:index, :destroy]
+    resources :notifications, only: [:index, :destroy] do
+      collection do
+        post 'mark_all_as_read', to: 'notifications#mark_all_as_read'
+      end
+      member do
+        patch 'mark_as_read'
+      end
     resource :map, only: [:show]
   end
+end
 
   namespace :admin do
     root to: 'plans#index'
