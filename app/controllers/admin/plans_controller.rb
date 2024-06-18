@@ -15,7 +15,8 @@ class Admin::PlansController < ApplicationController
     @plan.is_draft = params[:commit] == "非表示"
     if @plan.update(plan_params)
       @plan.is_draft
-      redirect_to edit_admin_plan_path(@plan), notice: "投稿が非表示にされました"
+      create_notifications
+      redirect_to edit_admin_plan_path(@plan), notice: "投稿を非表示にしました"
     else
       flash.now[:alert] = "プランを編集できませんでした"
       render 'edit'
@@ -40,4 +41,7 @@ class Admin::PlansController < ApplicationController
    params.require(:plan).permit(:is_draft)
   end
 
+  def create_notifications
+    Notification.create(subject: @plan, user: @plan.user, action_type: :hidden_plan)
+  end
 end
