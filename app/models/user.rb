@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :user_rooms
   has_many :chats
   has_many :notifications, dependent: :destroy
+  has_many :view_counts, dependent: :destroy
 
   # バリデーション
   validates :name, presence: true, uniqueness: true

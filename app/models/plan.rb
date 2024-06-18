@@ -8,6 +8,7 @@ class Plan < ApplicationRecord
   has_many :plan_tags, dependent: :destroy
   has_many :tags, through: :plan_tags
   has_many :notifications, as: :subject, dependent: :destroy
+  has_many :view_counts, dependent: :destroy
 
   # 子モデル（plan_details）の属性を受入れ、更新や削除を許可する
   accepts_nested_attributes_for :plan_details, allow_destroy: true
