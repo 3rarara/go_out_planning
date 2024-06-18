@@ -46,10 +46,6 @@ class Public::UsersController < ApplicationController
     end
   end
 
-  def drafts
-   @drafts = current_user.plans.where(is_draft: true)
-  end
-
   private
 
   def set_user

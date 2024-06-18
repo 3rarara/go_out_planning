@@ -1,2 +1,20 @@
-<!--プラン一覧を表示-->
-<%= render 'index', plans: @plans, tags: @tags %>
+<!--タブメニュー-->
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">すべて</a></li>
+    <li><a href="#tab2" class="">フォロー中</a></li>
+  </ul>
+
+  <div id="tab-contents">
+    <div id="tab1" class="tab">
+      <!--プラン一覧を表示-->
+      <%= render 'index', plans: @plans, tags: @tags %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--フォローユーザープラン一覧を表示-->
+      <%= render 'index', plans: @followed_plans, tags: @tags %>
+    </div>
+
+  </div>
+</div>
