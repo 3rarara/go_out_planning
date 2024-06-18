@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_18_121258) do
+ActiveRecord::Schema.define(version: 2024_06_18_131732) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -98,6 +98,8 @@ ActiveRecord::Schema.define(version: 2024_06_18_121258) do
     t.string "address", default: "", null: false
     t.float "latitude", default: 0.0, null: false
     t.float "longitude", default: 0.0, null: false
+    t.index ["body"], name: "index_plan_details_on_body"
+    t.index ["title"], name: "index_plan_details_on_title"
   end
 
   create_table "plan_tags", force: :cascade do |t|
@@ -117,6 +119,8 @@ ActiveRecord::Schema.define(version: 2024_06_18_121258) do
     t.boolean "is_draft", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["body"], name: "index_plans_on_body"
+    t.index ["title"], name: "index_plans_on_title"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -158,6 +162,7 @@ ActiveRecord::Schema.define(version: 2024_06_18_121258) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

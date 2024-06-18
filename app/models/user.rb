@@ -54,9 +54,7 @@ class User < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(search, word)
-    if search == "partial"
-      @user = User.where("name LIKE?","%#{word}%")
-    end
+    @user = User.where("name LIKE?","%#{word}%")
   end
 
   # フォローフォロワー機能

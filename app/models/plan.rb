@@ -23,9 +23,9 @@ class Plan < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(search, word)
-    if search == "partial"
-      @plan = Plan.where("title LIKE?","%#{word}%")
-    end
+    joins(:plan_details)
+      .where("plans.title LIKE :word OR plans.body LIKE :word OR plan_details.title LIKE :word OR plan_details.body LIKE :word", word: "%#{word}%")
+      .distinct
   end
 
   # タグ機能
