@@ -12,6 +12,8 @@ module Public::NotificationsHelper
       user_path(notification.subject.follower)
     when :new_message
       user_path(notification.subject.user)
+    when :hidden_plan
+      plan_path(notification.subject)
     end
   end
 

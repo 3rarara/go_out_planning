@@ -1,60 +1,62 @@
-<footer class="footer fixed-bottom" style="background-color: #3B4674;">
+
+<footer class="footer fixed-bottom" style="background-color: #3B4674; height: 80px;">
   <div class="container mt-3">
-    <nav class="row">
-      <div class="col">
-        <ul class="d-flex justify-content-center list-unstyled mt-1">
+    <nav class="row d-flex justify-content-center">
+
+        <ul class="nav d-flex justify-content-center list-unstyled mt-3">
 
           <% if admin_signed_in? %>
-          <li class="mx-3">
-            <%= link_to admin_root_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to admin_root_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">プラン</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
-          <li class="mx-3">
-            <%= link_to admin_users_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to admin_users_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">ユーザー</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">ユーザー</p>
             <% end %>
           </li>
 
           <% elsif user_signed_in? %>
-          <li class="mx-3">
-            <%= link_to plans_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to plans_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">プラン</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
-          <li class="mx-3">
-            <%= link_to new_plan_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to new_plan_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-plus fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">投稿</p>
-            <% end %>
-          </li>
-          <li class="mx-3">
-            <%= link_to mypage_path do %>
-              <i class="fa-solid fa-circle-user fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">マイページ</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">投稿</p>
             <% end %>
           </li>
 
-          <li class="mx-3">
-            <%= link_to notifications_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to notifications_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
             <i class="fa-solid fa-bell fa-xl" style="color: #FFD43B;"></i>
-            <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">通知</p>
+            <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">通知</p>
+            <% end %>
+          </li>
+
+          <li class="nav-item mx-3">
+            <%= link_to mypage_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
+              <i class="fa-solid fa-circle-user fa-xl" style="color: #FFD43B;"></i>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">マイページ</p>
             <% end %>
           </li>
 
           <% else %>
-          <li class="mx-3">
-            <%= link_to plans_path do %>
+          <li class="nav-item mx-3">
+            <%= link_to plans_path, style: "display:flex; align-items: center; flex-direction: column;" do %>
               <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-1" style="color: #FFD43B; font-size: 10px;">プラン</p>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
           <% end %>
         </ul>
-      </div>
+
 
     </nav>
   </div>
