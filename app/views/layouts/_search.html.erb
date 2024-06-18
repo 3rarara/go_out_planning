@@ -1,9 +1,12 @@
-<li class="nav-item mx-3">
+<li class="nav-item list-unstyled d-flex justify-content-center mb-3">
   <div class="search_form">
     <%= form_with url: object, local: true, method: :get do |f| %>
       <%= f.text_field :word, placeholder: 'Search' %>
       <%= f.select :range, options_for_select([['User'], ['Plan']]) %>
-      <%= f.submit "検索", class: "btn btn-primary btn-sm mb-1" %>
+      <button type="submit" class="btn btn-secondary btn-sm mb-1">
+        <i class="fas fa-search" style="color: #ffffff;"></i>
+      </button>
     <% end %>
   </div>
 </li>
+

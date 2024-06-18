@@ -1,12 +1,12 @@
 <header class="header" style="background-color: #3B4674;">
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand" href="/"><%= image_tag "go_out_planning_header_logo.jpg" ,size: "245x70", class: "img-fluid" %></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav ml-auto mt-3 d-flex justify-content-center">
+      <a class="navbar-brand" href="/"><%= image_tag "go_out_planning_header_logo.jpg" ,size: "210x70", class: "img-fluid" %></a>
+        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--  <span class="navbar-toggler-icon"></span>-->
+        <!--</button>-->
+        <!--<div class="collapse navbar-collapse" id="navbarNavDropdown">-->
+          <ul class="navbar-nav ml-auto mt-3 d-flex justify-content-end">
 
           <% if admin_signed_in? %>
           <%= render 'layouts/search', object: admin_search_path %>
@@ -18,8 +18,8 @@
           </li>
 
           <% elsif user_signed_in? %>
-          <%= render 'layouts/search', object: search_path %>
-          <li class="nav-item mx-3">
+
+          <li class="nav-item ml-auto">
             <%= link_to destroy_user_session_path, method: :delete, class: "menu-icon" do %>
               <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
               <p class="mt-3" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
