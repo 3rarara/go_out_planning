@@ -31,6 +31,19 @@
   padding: 4px 0;
 }
 
+.unread {
+  font-weight: bold;
+}
+
+/*ヘッターフッターアイコン*/
+.menu-icon {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none !important;
+}
+
+
 /*フォントサイズ指定*/
 .fsize_13-18 {
   font-size: clamp(14px, 3vw, 18px);;
