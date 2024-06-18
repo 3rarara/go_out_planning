@@ -10,7 +10,6 @@ class Public::UsersController < ApplicationController
     @plans = current_user.plans.where(is_draft: false)
     likes = Like.where(user_id: @user.id).pluck(:plan_id)
     @like_plans = Plan.where(id: likes, is_draft: false)
-    likes = Like.where(user_id: @user.id).pluck(:plan_id)
   end
 
   def edit
@@ -45,12 +44,6 @@ class Public::UsersController < ApplicationController
     if current_user == @user
       redirect_to mypage_path
     end
-  end
-
-  def likes
-    likes = Like.where(user_id: @user.id).pluck(:plan_id)
-    @like_plans = Plan.where(id: likes, is_draft: false)
-    @plan = Plan.find(params[:id])
   end
 
   def drafts
