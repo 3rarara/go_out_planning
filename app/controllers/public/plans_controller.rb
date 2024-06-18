@@ -17,15 +17,7 @@ class Public::PlansController < ApplicationController
     @followed_plans = Plan.includes(:user).where(users: { is_active: true }, user: followed_user, is_draft: false)
 
     @tags = Tag.all
-
-    respond_to do |format|
-      format.html do
-        @plan_details = PlanDetail.all
-      end
-      format.json do
-        @plan_details = PlanDetail.all
-      end
-    end
+    @plan_details = PlanDetail.all
   end
 
   def show

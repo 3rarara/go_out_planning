@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div class="mx-auto">
+    <div class="row">
+      <div class="col">
+
+        <div class="map">
+          <div id="map" style="width: 100%; height: calc(100vh - 88px - 179px);"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMap(){
+    // 地図の位置情報(緯度・経度)を取得
+
+    let map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: { lat: 35.681236, lng: 139.767125 },
+    });
+    let transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    <% @plan_details.each do |pd| %>
+      <% next if pd.address.blank? %>
+    let mapPosition<%= pd.id %> = {lat: <%= pd.latitude %> , lng: <%= pd.longitude %> };
+
+    let contentString<%= pd.id %> = '<%= link_to pd.title, plan_path(pd.plan) %></br>【住所】<%= pd.address %>';
+    let infowindow<%= pd.id %> = new google.maps.InfoWindow({
+      content: contentString<%= pd.id %>
+    });
+
+    let marker<%= pd.id %> = new google.maps.Marker({
+      position: mapPosition<%= pd.id %>,
+      map: map,
+      title: contentString<%= pd.id %>
+    });
+
+    marker<%= pd.id %>.addListener('click', function(){
+      infowindow<%= pd.id %>.open(map, marker<%= pd.id %>);
+    });
+
+    <% end %>
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap" async defer></script>
