@@ -21,10 +21,18 @@ class Public::ChatsController < ApplicationController
 
   def create
     @chat = current_user.chats.new(chat_params)
-    if @chat.save
+    @chat.save
       redirect_to request.referer
-    else
-      redirect_to request.referer, alert: "メッセージを送信できませんでした"
+    # else
+      # redirect_to request.referer, alert: "メッセージを送信できませんでした"
+    # end
+  end
+
+  # チャットルーム一覧
+  def index
+    @user_rooms  = current_user.rooms.includes(:users).map do |room|
+    other_user = room.users.where.not(id: current_user.id).first
+      { room: room, other_user: other_user }
     end
   end
 

@@ -155,3 +155,9 @@
   -webkit-transform: rotate(145deg);
   transform: rotate(145deg);
 }
+
+/*チャットフォーム*/
+.fixed-bottom-form {
+  position: fixed;
+  bottom: 100px;
+}

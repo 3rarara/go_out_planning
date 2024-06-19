@@ -41,6 +41,13 @@
           </li>
 
           <li class="nav-item mx-3">
+            <%= link_to chats_path, class: "menu-icon" do %>
+            <i class="fa-solid fa-envelope fa-xl" style="color: #FFD43B;"></i>
+            <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">DM</p>
+            <% end %>
+          </li>
+
+          <li class="nav-item mx-3">
             <%= link_to mypage_path, class: "menu-icon" do %>
               <i class="fa-solid fa-circle-user fa-xl" style="color: #FFD43B;"></i>
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">マイページ</p>

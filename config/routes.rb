@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"
-    resources :chats, only: [:create, :show]
+    resources :chats, only: [:index, :create, :show]
     resources :notifications, only: [:index, :destroy] do
       collection do
         post 'mark_all_as_read', to: 'notifications#mark_all_as_read'
