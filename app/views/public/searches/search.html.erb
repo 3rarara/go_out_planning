@@ -1,6 +1,7 @@
 <div class="container mx-auto">
   <div class="row">
     <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
+      <%= render 'layouts/search', object: search_path %>
 
       <!--検索対象モデルがUserの時 -->
       <% if @range == "User" %>
