@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto rounded">
+    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
       <div class="text-center">
         <%= image_tag @user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
         <%= @user.name %>
@@ -25,23 +25,26 @@
           <% end %>
         <% end %>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="row justify-content-center">
-        <div class="col-10">
-          <%= form_with model: @chat, local: true do |f| %>
-            <div class="input-group">
-              <%= f.hidden_field :room_id %>
-              <%= f.text_field :message, class: "form-control", placeholder: "コメントを送信" %>
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
-                </button>
-              </div>
+<div class="container fluid fixed-bottom-form">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-10 col-lg-8">
+      <div class="col-md-8 mx-auto">
+        <%= form_with model: @chat, local: true do |f| %>
+          <div class="input-group">
+            <%= f.hidden_field :room_id %>
+            <%= f.text_field :message, class: "form-control", placeholder: "コメントを送信" %>
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
+              </button>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-
     </div>
   </div>
 </div>

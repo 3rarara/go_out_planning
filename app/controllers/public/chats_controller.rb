@@ -28,6 +28,14 @@ class Public::ChatsController < ApplicationController
     end
   end
 
+  # チャットルーム一覧
+  def index
+    @user_rooms  = current_user.rooms.includes(:users).map do |room|
+    other_user = room.users.where.not(id: current_user.id).first
+      { room: room, other_user: other_user }
+    end
+  end
+
   private
 
   def chat_params
