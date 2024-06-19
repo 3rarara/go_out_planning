@@ -20,9 +20,11 @@ class Public::ChatsController < ApplicationController
   end
 
   def create
+    room = Room.find(params[:chat][:room_id])
+    @chats = room.chats
     @chat = current_user.chats.new(chat_params)
     @chat.save
-      redirect_to request.referer
+      # redirect_to request.referer
     # else
       # redirect_to request.referer, alert: "メッセージを送信できませんでした"
     # end
