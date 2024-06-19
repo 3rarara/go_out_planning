@@ -7,13 +7,8 @@ class Public::CommentsController < ApplicationController
     @comment.plan_id = @plan.id
     if @comment.save
       flash.now[:notice] = "コメントを投稿しました"
-      # redirect_to request.referer
     else
       flash.now[:alert] = "コメントを投稿できませんでした"
-      # @plan = Plan.find(params[:plan_id])
-      # @plan_details = @plan.plan_details
-      # @comment = Comment.new
-      # render 'public/plans/show'
     end
   end
 
@@ -22,13 +17,8 @@ class Public::CommentsController < ApplicationController
     @plan = @comment.plan
     if @comment.destroy
       flash.now[:notice] = "コメントを削除しました"
-      # redirect_to request.referer
     else
-      # @plan = Plan.find(params[:plan_id])
-      # @plan_details = @plan.plan_details
-      # @comment = Comment.new
       flash.now[:alert] = "コメントを削除できませんでした"
-      # render 'public/plans/show'
     end
   end
 

@@ -159,6 +159,7 @@
 /*チャットフォーム*/
 .fixed-bottom-form {
   position: fixed;
-  bottom: 100px;
-  left: 120px;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
 }

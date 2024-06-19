@@ -1,7 +1,7 @@
 <%= link_to transition_path(notification) do %>
   <div>
     <% if notification.subject.follower.guest_user? %>
-      ゲストユーザー
+      <%= link_to "guestuser", transition_path(notification) %>
     <% else %>
       <%= link_to notification.subject.follower.name, user_path(notification.subject.follower) %>
     <% end %>
