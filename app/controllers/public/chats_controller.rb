@@ -21,11 +21,11 @@ class Public::ChatsController < ApplicationController
 
   def create
     @chat = current_user.chats.new(chat_params)
-    if @chat.save
+    @chat.save
       redirect_to request.referer
-    else
-      redirect_to request.referer, alert: "メッセージを送信できませんでした"
-    end
+    # else
+      # redirect_to request.referer, alert: "メッセージを送信できませんでした"
+    # end
   end
 
   # チャットルーム一覧

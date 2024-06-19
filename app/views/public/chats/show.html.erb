@@ -6,25 +6,11 @@
         <%= @user.name %>
       </div>
 
-      <div class="row justify-content-center">
-        <% @chats.each do |chat| %>
-          <% if chat.user == current_user %>
-            <div class="col-10 text-right mb-3">
-              <div class="says px-3">
-                <p><%= safe_join(chat.message.split("\n"), tag(:br)) %></p>
-              </div>
-              <span class="text-muted"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-            </div>
-          <% else %>
-            <div class="col-10 text-left mb-3">
-              <div class="other-user-says px-3">
-                <p><%= safe_join(chat.message.split("\n"), tag(:br)) %></p>
-              </div>
-              <span class="text-muted"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-            </div>
-          <% end %>
-        <% end %>
+      <!-- チャット一覧テンプレート -->
+      <div class="row chat-index mx-auto">
+        <%= render 'public/chats/chats', chats: @chats %>
       </div>
+
     </div>
   </div>
 </div>
@@ -36,7 +22,7 @@
         <%= form_with model: @chat, local: true do |f| %>
           <div class="input-group">
             <%= f.hidden_field :room_id %>
-            <%= f.text_field :message, class: "form-control", placeholder: "コメントを送信" %>
+            <%= f.text_field :message, class: "form-control chat_textfield", placeholder: "コメントを送信" %>
             <div class="input-group-append">
               <button type="submit" class="btn btn-primary">
                 <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
