@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_18_131732) do
+ActiveRecord::Schema.define(version: 2024_06_20_034113) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 2024_06_18_131732) do
   create_table "likes", force: :cascade do |t|
     t.integer "plan_id", null: false
     t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -167,12 +175,14 @@ ActiveRecord::Schema.define(version: 2024_06_18_131732) do
   end
 
   create_table "view_counts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.integer "plan_id", null: false
+    t.string "user_or_ip", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["plan_id"], name: "index_view_counts_on_plan_id"
     t.index ["user_id"], name: "index_view_counts_on_user_id"
+    t.index ["user_or_ip", "plan_id"], name: "index_view_counts_on_user_or_ip_and_plan_id", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

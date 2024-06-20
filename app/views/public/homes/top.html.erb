@@ -22,7 +22,9 @@
       <h4 class="text-center pb-10" style="color: #3B4674">プランを投稿してみよう！</h4>
       <p class="text-center pb-10" style="color: #3B4674">旅行やデートのプランを共有してみましょう</p>
 
-      <%= image_tag "search.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <%= link_to plans_path do %>
+        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <% end %>
       <h4 class="text-center pb-10" style="color: #3B4674">プランを検索してみよう！</h4>
       <p class="text-center pb-10" style="color: #3B4674">旅行やデートのプランを検索してみましょう</p>
 

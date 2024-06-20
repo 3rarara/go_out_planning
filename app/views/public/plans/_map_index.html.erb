@@ -1,28 +1,32 @@
-<div class="container">
-  <div class="mx-auto">
-    <div class="row">
-      <div class="col">
+<div class="row">
+  <div class="col">
 
-        <div class="map">
-          <div id="map" style="width: 100%; height: calc(100vh - 88px - 179px);"></div>
-        </div>
-
-      </div>
+    <div class="d-flex justify-content-center mb-3">
+      <input id="address" type="textbox" value="" placeholder="駅名・施設名など">
+      <button type="button"class="btn btn-secondary btn-sm" onclick="codeAddress()">
+        <i class="fas fa-search" style="color: #ffffff;"></i>
+      </button>
     </div>
+
+    <div id="map" style="width: 100%; height: calc(100vh - 88px - 179px);"></div>
+
   </div>
 </div>
 
 <script>
-  function initMap(){
-    // 地図の位置情報(緯度・経度)を取得
+let map // Google Mapsの地図オブジェクトを保持する変数
 
-    let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: { lat: 35.681236, lng: 139.767125 },
+// Google Mapの初期化と表示関数
+function initMap() {
+    geocoder = new google.maps.Geocoder() // ジオコーダーの初期化
+
+    // mapの初期位置, 縮尺を定義
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 35.681236, lng: 139.767125 },
+        zoom: 15,
     });
-    let transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
 
+    // plan_detailsテーブルにあるそれぞれのレコードをmap上に表示
     <% @plan_details.each do |pd| %>
       <% next if pd.address.blank? %>
     let mapPosition<%= pd.id %> = {lat: <%= pd.latitude %> , lng: <%= pd.longitude %> };
@@ -43,6 +47,28 @@
     });
 
     <% end %>
+  }
+
+  let geocoder
+
+  // 地図検索関数
+  function codeAddress() {
+      let inputAddress = document.getElementById('address').value;
+
+      geocoder.geocode({
+          'address': inputAddress
+      }, function (results, status) {
+          if (status == 'OK') {
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                  map: map,
+                  position: results[0].geometry.location
+              });
+
+          } else {
+              alert('該当する結果がありませんでした：' + status);
+          }
+      });
   }
 </script>
 

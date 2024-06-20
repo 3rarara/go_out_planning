@@ -14,12 +14,12 @@
       </div>
 
       <h4>スケジュール</h4>
-      <%= f.fields_for :plan_details do |plan_detail| %>
+      <%= f.fields_for :plan_details do |pd| %>
       <div class="row">
         <div class="col">
-          <%= plan_detail.text_field :title, class: "form-control my-3", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
-          <%= plan_detail.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動" %>
-          <%= plan_detail.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
+          <%= pd.text_field :title, class: "form-control my-3", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
+          <%= pd.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動" %>
+          <%= pd.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
         </div>
       </div>
       <% end %>
@@ -32,7 +32,7 @@
       </div>
 
       <h4>タグ</h4>
-      <%= f.text_field :tags, value: @plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録可能" %>
+      <%= f.text_field :tags, value: plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録可能" %>
 
       <div class="row">
         <div class="col text-center my-3">

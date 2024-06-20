@@ -29,8 +29,11 @@ class Public::PlansController < ApplicationController
     @comment = Comment.new
     @tag_list = @plan.tags.pluck(:name).join(',')
     @plan_tags = @plan.tags
-    unless ViewCount.find_by(user: current_user, plan: @plan)
-      current_user.view_counts.create(plan: @plan)
+
+    # 閲覧数カウント
+    user_or_ip = current_user ? current_user.id.to_s : request.remote_ip
+    unless ViewCount.find_by(user_or_ip: user_or_ip, plan: @plan)
+      ViewCount.create(user_or_ip: user_or_ip, plan: @plan, user: current_user)
     end
   end
 

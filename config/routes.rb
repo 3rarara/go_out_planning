@@ -42,9 +42,9 @@ Rails.application.routes.draw do
       member do
         patch 'mark_as_read'
       end
-    resource :map, only: [:show]
+    end
+    resources :maps, only: [:index, :create, :destroy]
   end
-end
 
   namespace :admin do
     root to: 'plans#index'

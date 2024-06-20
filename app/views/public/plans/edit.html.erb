@@ -12,10 +12,10 @@
         </div>
 
         <h4>スケジュール</h4>
-        <%= f.fields_for :plan_details do |plan_detail| %>
+        <%= f.fields_for :plan_details do |pd| %>
           <div class="row nested-fields">
             <div class="col-10">
-              <%= plan_detail.text_field :title, class: "form-control my-3", data: { plan_detail_id: plan_detail.object.id }, placeholder: "詳細タイトル" %>
+              <%= pd.text_field :title, class: "form-control my-3", data: { plan_detail_id: pd.object.id }, placeholder: "詳細タイトル" %>
             </div>
             <div class="col-2 d-flex align-items-center">
               <%= link_to "#", class: "remove_field btn btn-danger my-3" do %>
@@ -23,10 +23,10 @@
               <% end %>
             </div>
             <div class="col-12">
-              <%= plan_detail.text_area :body, class: "form-control my-3", placeholder: "詳細説明" %>
-              <%= plan_detail.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
+              <%= pd.text_area :body, class: "form-control my-3", placeholder: "詳細説明" %>
+              <%= pd.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
             </div>
-            <%= plan_detail.hidden_field :_destroy, class: 'destroy-field' %>
+            <%= pd.hidden_field :_destroy, class: 'destroy-field' %>
           </div>
         <% end %>
 
