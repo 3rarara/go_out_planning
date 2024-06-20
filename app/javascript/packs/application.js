@@ -28,22 +28,23 @@ $(document).ready(function() {
     e.preventDefault();
     x++;
 
-    var formHtml =
-      '<div class="row nested-fields">' +
-        '<div class="col-10">' +
-          '<input type="text" class="form-control mt-4" name="plan[plan_details_attributes][' + x + '][title]" placeholder="詳細タイトル">' +
-        '</div>' +
-        '<div class="col-2 d-flex align-items-center">' +
-          '<a href="#" class="remove_field btn btn-danger my-3">' +
-          '<i class="fa-solid fa-trash" style="color: #ffffff;"></i>' +
-          '</a>' +
-        '</div>' +
-        '<div class="col-12">' +
-          '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
-          '<input type="text" class="form-control my-3" name="plan[plan_details_attributes][' + x + '][address]" placeholder="住所">' +
-        '</div>' +
-        '<input type="hidden" name="plan[plan_details_attributes][' + x + '][_destroy]" class="destroy-field" value="false">' +
-      '</div>';
+  var formHtml = `
+    <div class="row nested-fields">
+      <div class="col-10">
+        <input type="text" class="form-control mt-4" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+      </div>
+      <div class="col-2 d-flex align-items-center">
+        <a href="#" class="remove_field btn btn-danger my-3">
+          <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+        </a>
+      </div>
+      <div class="col-12">
+        <textarea class="form-control mt-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
+        <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][address]" placeholder="住所">
+      </div>
+      <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
+    </div>
+  `;
 
     $(wrapper).append(formHtml);
   });
