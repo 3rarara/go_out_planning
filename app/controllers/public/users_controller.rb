@@ -1,18 +1,17 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :likes]
   before_action :set_current_user, except: [:show]
-  before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
-  before_action :ensure_guest_user, only: [:edit]
 
   def mypage
-    @plans = current_user.plans.where(is_draft: false)
-    likes = Like.where(user_id: @user.id).pluck(:plan_id)
-    @like_plans = Plan.where(id: likes, is_draft: false)
+    # ユーザーデータの取得
+    fetch_user_data
   end
 
   def edit
+    if @user.guest_user?
+      redirect_to user_path(@user) , notice: "ゲストユーザーはプロフィールを編集できません"
+    end
   end
 
   def update
@@ -28,7 +27,7 @@ class Public::UsersController < ApplicationController
   end
 
   def close_account
-    if @user.update(is_active: false)
+    if @user.close_account
       reset_session
       redirect_to new_user_registration_path, notice: "退会処理を実行しました"
     else
@@ -38,44 +37,31 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @plans = @user.plans.where(is_draft: false)
-    likes = Like.where(user_id: @user.id).pluck(:plan_id)
-    @like_plans = Plan.find(likes)
-    if current_user == @user
-      redirect_to mypage_path
+    @user = User.find(params[:id])
+    # ユーザーデータの取得
+    fetch_user_data
+
+    if @user.is_active?
+      redirect_to mypage_path if current_user == @user
+    else
+      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
     end
   end
 
   private
-
-  def set_user
-    @user = User.find(params[:id])
-  end
 
   def set_current_user
     @user = current_user
   end
 
   def ensure_current_user
-    user = current_user
-    unless user == current_user
-      redirect_to plans_path
-    end
+    redirect_to plans_path unless @user == current_user
   end
 
-  def user_is_active
-    user = User.find(params[:id])
-    if user.is_active?
-    else
-      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
-    end
-  end
-
-  def ensure_guest_user
-    set_current_user
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
-    end
+  def fetch_user_data
+    @plans = @user.plans.where(is_draft: false)
+    liked_ids = @user.likes.pluck(:plan_id)
+    @like_plans = Plan.where(id: liked_ids, is_draft: false)
   end
 
   def user_params

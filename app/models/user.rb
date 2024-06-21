@@ -71,4 +71,9 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+  # 退会機能
+  def close_account
+    update(is_active: false)
+  end
+
 end
