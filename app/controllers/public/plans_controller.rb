@@ -13,15 +13,17 @@ class Public::PlansController < ApplicationController
 
   def index
     @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
-    if user_signed_in?
-      followed_user = current_user.followings
-      @followed_plans = Plan.includes(:user).where(users: { is_active: true }, user: followed_user, is_draft: false)
-    else
-      @followed_plans = []
-    end
+    @plan_details = @plans.flat_map(&:plan_details)
+
+    # ユーザーがサインインしている場合、フォロー中のユーザーのPlanに絞り込む
+    @followed_plans = if user_signed_in?
+                        followed_users = current_user.followings
+                        @plans.where(user: followed_users)
+                      else
+                        []
+                      end
 
     @tags = Tag.all
-    @plan_details = PlanDetail.all
   end
 
   def show
@@ -44,7 +46,7 @@ class Public::PlansController < ApplicationController
     if @plan.save
       @plan.save_plan_tags(tag_list)
       if @plan.is_draft
-        redirect_to drafts_user_path(current_user), notice: "下書きが保存されました"
+        redirect_to new_plan_path, notice: "下書きが保存されました"
       else
       redirect_to plan_path(@plan), notice: "プランを投稿しました"
       end
@@ -65,7 +67,7 @@ class Public::PlansController < ApplicationController
       @plan.tags.destroy_all
       @plan.save_plan_tags(tag_list)
       if @plan.is_draft
-        redirect_to drafts_user_path(current_user), notice: "下書きが保存されました"
+        redirect_to new_plan_path, notice: "下書きが保存されました"
       else
       redirect_to plan_path(@plan), notice: "プランを編集しました"
       end
