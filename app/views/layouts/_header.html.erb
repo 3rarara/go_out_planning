@@ -1,43 +1,42 @@
 <header class="header" style="background-color: #3B4674;">
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand" href="/"><%= image_tag "go_out_planning_header_logo.jpg" ,size: "245x70", class: "img-fluid" %></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav ml-auto">
+      <a class="navbar-brand" href="/"><%= image_tag "go_out_planning_header_logo.jpg" ,size: "210x70", class: "img-fluid" %></a>
+        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--  <span class="navbar-toggler-icon"></span>-->
+        <!--</button>-->
+        <!--<div class="collapse navbar-collapse" id="navbarNavDropdown">-->
+          <ul class="navbar-nav ml-auto mt-3 d-flex justify-content-end">
 
           <% if admin_signed_in? %>
           <%= render 'layouts/search', object: admin_search_path %>
           <li class="nav-item mx-3">
-            <%= link_to destroy_admin_session_path, method: :delete do %>
-              <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
+            <%= link_to destroy_admin_session_path, method: :delete, class: "menu-icon" do %>
+              <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-3" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
             <% end %>
           </li>
 
           <% elsif user_signed_in? %>
-          <%= render 'layouts/search', object: search_path %>
-          <li class="nav-item mx-3">
-            <%= link_to destroy_user_session_path, method: :delete do %>
-              <i class="fa-solid fa-right-from-bracket" style="color: #FFD43B;"> ログアウト</i>
+
+          <li class="nav-item ml-auto">
+            <%= link_to destroy_user_session_path, method: :delete, class: "menu-icon" do %>
+              <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-3" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
             <% end %>
           </li>
 
           <% else %>
           <li class="nav-item mx-3">
-            <%= link_to new_user_registration_path do %>
-              <i class="fa-solid fa-user-plus" style="color: #FFD43B;"> 新規登録</i>
+            <%= link_to new_user_registration_path, class: "menu-icon" do %>
+              <i class="fa-solid fa-user-plus fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-3" style="color: #FFD43B; font-size: 10px;">新規登録</p>
             <% end %>
           </li>
           <li class="nav-item mx-3">
-            <%= link_to user_session_path do %>
-              <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ログイン</i>
-            <% end %>
-          </li>
-          <li class="nav-item mx-3">
-            <%= link_to users_guest_sign_in_path, method: :post do %>
-              <i class="fa-solid fa-right-to-bracket" style="color: #FFD43B;"> ゲストログイン</i>
+            <%= link_to user_session_path, class: "menu-icon" do %>
+              <i class="fa-solid fa-right-to-bracket fa-xl" style="color: #FFD43B;"></i>
+              <p class="mt-3" style="color: #FFD43B; font-size: 10px;">ログイン</p>
             <% end %>
           </li>
           <% end %>

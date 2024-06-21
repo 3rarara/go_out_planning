@@ -1,77 +1,107 @@
-<div class="container mx-auto">
-  <div class="row">
+<div class="container">
 
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-
       <div class="row">
         <div class="col-4">
           <%= image_tag @plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
           <div class="text-center mb-1"><%= link_to @plan.user.name, user_path(@plan.user) %></div>
         </div>
-        <div class="col my-auto">
+        <div class="col fsize_13-18 my-auto">
           <h5><%= @plan.title %></h5>
           <%=safe_join(@plan.body.split("\n"),tag(:br)) %>
         </div>
       </div>
 
-      <% @plan_details.each do |plan_detail| %>
-      <div class="row my-3">
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.title %></div>
-        <div class="col p-3" style="background-color: #CDD3E8;"><%= plan_detail.body %></div>
-      </div>
+      <% @plan_details.each do |pd| %>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.title %></div>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.body %></div>
+        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.address %></div>
       <% end %>
 
       <div class="row">
-        <div class="col"><%= @plan.comments.count %>コメント</div>
-        <% if @plan.liked_by?(current_user) %>
-        <div class="col">
-          <%= link_to plan_like_path(@plan), method: :delete do %>
-            <i class="fa-solid fa-star fa-lg" style="color: #FFD43B;"></i><%= @plan.likes.count %>
-          <% end %>
-        </div>
-        <% else %>
-        <div class="col">
-          <%= link_to plan_like_path(@plan), method: :post do %>
-            <i class="fa-regular fa-star fa-lg" style="color: #3b4674;"></i><%= @plan.likes.count %>
-          <% end %>
+        <% @plan_tags.each do |tag| %>
+          <div class="col text-center">
+            <i class="fa-sharp fa-solid fa-tag"></i>
+            <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+          </div>
         <% end %>
-        </div>
+
       </div>
 
+      <div class="row">
+        <!--コメントカウント非同期化テンプレート-->
+        <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
+        <!--いいね非同期化テンプレート-->
+        <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+
+        <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
+      </div>
 
       <% if @plan.user == current_user %>
-      <div class="row">
-        <div class="col text-center my-3">
-          <%= link_to "編集", edit_plan_path(@plan), class: "btn btn-warning mx-auto" %>
-          <%= link_to "削除", plan_path(@plan), method: :delete, class: "btn btn-danger mx-auto", data: { confirm: "投稿を削除しますか？" } %>
+      <div class="row mt-3">
+        <div class="col text-center">
+          <%= link_to edit_plan_path(@plan), class: "btn btn-warning mx-2" do %>
+            <i class="fa-solid fa-pen-to-square fa-lg px-3 mx-2"></i>
+          <% end %>
+          <%= link_to plan_path(@plan), method: :delete, class: "btn btn-danger mx-2", data: { confirm: "投稿を削除しますか？" } do %>
+            <i class="fa-solid fa-trash fa-lg px-2 mx-2" style="color: #ffffff;"></i>
+          <% end %>
         </div>
       </div>
       <% end %>
     </div>
 
-    <!-- コメント一覧 -->
-    <% @plan.comments.each do |comment| %>
-    <div class="col-sm-8 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <div class="row">
-        <div class="col-3 text-center">
-          <%= image_tag comment.user.get_profile_image(60, 60), class: "rounded-circle mx-auto d-block" %>
-          <%= comment.user.name %><br>
-          <%= comment.created_at.strftime('%Y/%m/%d') %>
-        </div>
-        <div class="col text-center my-auto"><%=safe_join(comment.comment.split("\n"),tag(:br)) %></div>
-        <% if comment.user == current_user %>
-          <%= link_to "削除", plan_comment_path(comment.plan, comment), method: :delete, class: "btn btn-danger my-auto mr-3", data: { confirm: "コメントを削除しますか？" } %>
-        <% end %>
-      </div>
-    </div>
+    <% if @plan_details.any? { |pd| pd.address.present? } %>
+    <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;"></div>
     <% end %>
 
-    <!-- コメント送信画面 -->
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <%= form_with model: [@plan, @comment] do |f| %>
-        <%= f.text_area :comment, rows: '3', class: "form-control", placeholder: "コメントを返信" %>
-        <div class="text-center mt-2"><%= f.submit "送信", class: "btn btn-warning" %></div>
-      <% end %>
+    <!-- コメント一覧非同期化テンプレート -->
+    <div class="row comment-index mx-auto">
+      <%= render 'public/comments/index', plan: @plan %>
     </div>
-  </div>
+
+    <!-- コメント送信非同期化テンプレート -->
+    <div class="row mx-auto">
+      <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
+    </div>
+
 </div>
+
+<script>
+  function initMap(){
+    // 地図の位置情報(緯度・経度)を取得
+    <% map = true %>
+    <% @plan_details.each do |pd| %>
+      <% next if pd.address.blank? %>
+    let mapPosition<%= pd.id %> = {lat: <%= pd.latitude %> , lng: <%= pd.longitude %> };
+
+    <% if map %>
+    let map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: mapPosition<%= pd.id %>
+    });
+    let transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+    <% map = false %>
+    <% end %>
+
+    let contentString<%= pd.id %> = '【住所】<%= pd.address %>';
+    let infowindow<%= pd.id %> = new google.maps.InfoWindow({
+      content: contentString<%= pd.id %>
+    });
+
+    let marker<%= pd.id %> = new google.maps.Marker({
+      position: mapPosition<%= pd.id %>,
+      map: map,
+      title: contentString<%= pd.id %>
+    });
+
+    marker<%= pd.id %>.addListener('click', function(){
+      infowindow<%= pd.id %>.open(map, marker<%= pd.id %>);
+    });
+
+    <% end %>
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap" async defer></script>

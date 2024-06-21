@@ -1,0 +1,12 @@
+<div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
+  <div class="col bg-white my-3 p-4 shadow-lg mx-auto rounded">
+    <%= form_with model: [plan, comment], local: false do |f| %>
+      <%= f.text_area :comment, rows: '3', class: "form-control comment_textarea", placeholder: "コメントを返信" %>
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-primary mx-auto px-4">
+          <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>

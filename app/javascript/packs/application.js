@@ -18,6 +18,7 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
+// plans/showでplan_detailsの入力フォームを追加するための記述
 $(document).ready(function() {
   var wrapper = '#plan_details_wrapper';
   var addButton = '#add_plan_details';
@@ -27,28 +28,32 @@ $(document).ready(function() {
     e.preventDefault();
     x++;
 
-    var formHtml =
-      '<div class="row nested-fields">' +
-        '<div class="col-10">' +
-          '<input type="text" class="form-control mt-4" name="plan[plan_details_attributes][' + x + '][title]" placeholder="詳細タイトル">' +
-        '</div>' +
-        '<div class="col-2 d-flex align-items-center">' +
-          '<a href="#" class="remove_field btn btn-danger my-3">' +
-          '<i class="fa-solid fa-trash" style="color: #ffffff;"></i>' +
-          '</a>' +
-        '</div>' +
-        '<div class="col-12">' +
-          '<textarea class="form-control mt-3" name="plan[plan_details_attributes][' + x + '][body]" placeholder="詳細説明"></textarea>' +
-        '</div>' +
-        '<input type="hidden" name="plan[plan_details_attributes][' + x + '][_destroy]" class="destroy-field" value="false">' +
-      '</div>';
+  var formHtml = `
+    <div class="row nested-fields">
+      <div class="col-10">
+        <input type="text" class="form-control mt-4" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+      </div>
+      <div class="col-2 d-flex align-items-center">
+        <a href="#" class="remove_field btn btn-danger my-3">
+          <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+        </a>
+      </div>
+      <div class="col-12">
+        <textarea class="form-control mt-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
+        <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][address]" placeholder="住所">
+      </div>
+      <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
+    </div>
+  `;
 
     $(wrapper).append(formHtml);
   });
 
+// plans/showでplan_detailsの入力フォームを削除するための記述
   $(document).on("click", ".remove_field", function(e) {
     e.preventDefault();
 
+// plans/editでplan_detailsの入力フォームを削除するための記述
     if(confirm('この詳細を削除してもよろしいですか？')) {
       var removeButton = $(e.target);
       var destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
@@ -63,5 +68,19 @@ $(document).ready(function() {
     } else {
       console.log('Status: cancelled - The item was not deleted.');
     }
+  });
+});
+
+
+// タブメニューの記述
+$(document).on('turbolinks:load', function() {
+  $('#tab-contents .tab').not('#tab1').hide();
+
+  $('#tab-menu').on('click', 'a', function(event) {
+    $('#tab-contents .tab').hide();
+    $('#tab-menu .active').removeClass('active');
+    $(this).addClass('active');
+    $($(this).attr('href')).show();
+    event.preventDefault();
   });
 });

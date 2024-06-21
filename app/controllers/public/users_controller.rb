@@ -1,23 +1,24 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_current_user, except: [:show]
-  before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
-  before_action :ensure_guest_user, only: [:edit]
 
   def mypage
-    @plans = current_user.plans.all
+    # ユーザーデータの取得
+    fetch_user_data
   end
 
   def edit
+    if @user.guest_user?
+      redirect_to user_path(@user) , notice: "ゲストユーザーはプロフィールを編集できません"
+    end
   end
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "ユーザー情報を編集しました"
-      redirect_to mypage_path
+      redirect_to mypage_path, notice: "ユーザー情報を変更しました"
     else
-      flash.now[:alert] = "ユーザー情報を編集できませんでした"
+      flash.now[:alert] = "ユーザー情報を変更できませんでした"
       render 'edit'
     end
   end
@@ -26,10 +27,9 @@ class Public::UsersController < ApplicationController
   end
 
   def close_account
-    if @user.update(is_active: false)
+    if @user.close_account
       reset_session
-      flash[:notice] = "退会処理を実行しました"
-      redirect_to new_user_registration_path
+      redirect_to new_user_registration_path, notice: "退会処理を実行しました"
     else
       flash.now[:alert] = "退会処理を実行できませんでした"
       render 'edit'
@@ -38,7 +38,14 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @plans = @user.plans.all
+    # ユーザーデータの取得
+    fetch_user_data
+
+    if @user.is_active?
+      redirect_to mypage_path if current_user == @user
+    else
+      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
+    end
   end
 
   private
@@ -47,30 +54,18 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
+  def ensure_current_user
+    redirect_to plans_path unless @user == current_user
+  end
+
+  def fetch_user_data
+    @plans = @user.plans.where(is_draft: false)
+    liked_ids = @user.likes.pluck(:plan_id)
+    @like_plans = Plan.where(id: liked_ids, is_draft: false)
+  end
+
   def user_params
     params.require(:user).permit(:name, :email, :profile_image)
   end
 
-  def ensure_current_user
-    user = current_user
-    unless user.id == current_user.id
-      redirect_to plans_path
-    end
-  end
-
-  def user_is_active
-    user = User.find(params[:id])
-    if user.is_active?
-    else
-      flash[:alert] = "指定のユーザーは退会済みです"
-      redirect_to mypage_path
-    end
-  end
-
-  def ensure_guest_user
-    @user = current_user
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
-    end
-  end
 end

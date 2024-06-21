@@ -1,0 +1,20 @@
+<!--タブメニュー-->
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">未読通知</a></li>
+    <li><a href="#tab2" class="">全通知</a></li>
+  </ul>
+
+  <div id="tab-contents">
+    <div id="tab1" class="tab">
+      <!--未読通知一覧を表示-->
+      <%= render 'public/notifications/index', notifications: @notifications_read %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--全通知一覧を表示-->
+      <%= render 'public/notifications/index', notifications: @notifications %>
+    </div>
+
+  </div>
+</div>

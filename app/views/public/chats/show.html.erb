@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
+      <div class="text-center">
+        <%= image_tag @user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
+        <%= @user.name %>
+      </div>
+
+      <!-- チャット一覧テンプレート -->
+      <div class="row chat-index mx-auto">
+        <%= render 'public/chats/chats', chats: @chats %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- チャット送信テンプレート -->
+<div class="row mx-auto">
+  <%= render 'public/chats/form', chat: @chat %>
+</div>

@@ -22,7 +22,7 @@ require 'rails_helper'
         fill_in 'user[password_confirmation]', with: user_attributes[:password]
 
         expect { click_button '登録' }.to change(User, :count).by(1)
-        expect(page).to have_content 'Welcome! You have signed up successfully.'
+        expect(page).to have_content 'アカウント登録が完了しました'
       end
       it '誤った情報で登録処理が失敗すること' do
         fill_in 'user[name]', with: ''
@@ -31,17 +31,17 @@ require 'rails_helper'
         fill_in 'user[password_confirmation]', with: ''
 
         expect { click_button '登録' }.not_to change(User, :count)
-        expect(page).to have_content 'errors prohibited this user from being saved:'
+        expect(page).to have_content 'エラーが発生したため'
       end
     end
   end
 
   describe 'ゲストログイン機能のテスト' do
     before do
-      visit root_path
+      visit new_user_session_path
     end
     context 'ゲストログインボタンの表示' do
-      it 'トップ画面にゲストログインが表示されていること' do
+      it 'ログイン画面にゲストログインが表示されていること' do
         expect(page).to have_link 'ゲストログイン', href: '/users/guest_sign_in'
       end
     end
@@ -99,7 +99,7 @@ require 'rails_helper'
         expect(current_path).to eq('/plans/new')
       end
       it '投稿ボタンが表示されているか' do
-        expect(page).to have_button '投稿'
+        expect(page).to have_selector('button[type="submit"]')
       end
     end
     context '投稿処理のテスト' do
@@ -108,7 +108,7 @@ require 'rails_helper'
         fill_in 'plan[body]', with: Faker::Lorem.characters(number:20)
         fill_in 'plan[plan_details_attributes][0][title]', with: Faker::Lorem.sentence
         fill_in 'plan[plan_details_attributes][0][body]', with: Faker::Lorem.sentence
-        click_button '投稿'
+        find('button[type="submit"]').click
         expect(page).to have_current_path plan_path(Plan.last)
       end
     end
@@ -123,10 +123,10 @@ require 'rails_helper'
         visit plan_path(plan)
       end
       it '削除リンクが存在しているか' do
-        expect(page).to have_link '削除'
+        expect(page).to have_selector("a[href='/plans/#{plan.id}'][data-method='delete']")
       end
       it '編集リンクが存在しているか' do
-        expect(page).to have_link '編集'
+        expect(page).to have_selector("a[href='/plans/#{plan.id}/edit']")
       end
       context 'リンクの遷移先の確認' do
         let(:user) { create(:user) }
@@ -136,7 +136,7 @@ require 'rails_helper'
           visit edit_plan_path(plan)
         end
         it '編集後の遷移先は詳細画面か' do
-          click_button '変更'
+          click_button '投稿'
           expect(current_path).to eq("/plans/#{plan.id}")
         end
       end
@@ -164,7 +164,7 @@ require 'rails_helper'
         expect(page).to have_field 'plan[plan_details_attributes][0][body]', with: PlanDetail.last.body
       end
       it '保存ボタンが表示される' do
-        expect(page).to have_button '変更'
+        expect(page).to have_button '投稿'
       end
       context '更新処理に関するテスト' do
         it '更新後のリダイレクト先は正しいか' do
@@ -172,7 +172,7 @@ require 'rails_helper'
             fill_in 'plan[body]', with: Faker::Lorem.characters(number:20)
             fill_in 'plan[plan_details_attributes][0][title]', with: Faker::Lorem.sentence
             fill_in 'plan[plan_details_attributes][0][body]', with: Faker::Lorem.sentence
-            click_button '変更'
+            click_button '投稿'
             expect(page).to have_current_path plan_path(plan)
         end
       end

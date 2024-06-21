@@ -10,15 +10,21 @@
 
       <p class="text-center pb-5" style="color: #3B4674">おでかけプランニングは、旅行やデートのお店や施設ではなく、</br>プランを共有するSNSサービスです。</p>
 
-      <%= image_tag "home.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <%= link_to plans_path do %>
+        <%= image_tag "home.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <% end %>
       <h4 class="text-center pb-10" style="color: #3B4674">みんなのプランを見てみよう！</h4>
       <p class="text-center pb-10" style="color: #3B4674">投稿一覧と投稿は新規登録なしで閲覧可能</p>
 
-      <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <%= link_to new_plan_path do %>
+        <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <% end %>
       <h4 class="text-center pb-10" style="color: #3B4674">プランを投稿してみよう！</h4>
       <p class="text-center pb-10" style="color: #3B4674">旅行やデートのプランを共有してみましょう</p>
 
-      <%= image_tag "search.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <%= link_to plans_path do %>
+        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto d-block mb-5" %>
+      <% end %>
       <h4 class="text-center pb-10" style="color: #3B4674">プランを検索してみよう！</h4>
       <p class="text-center pb-10" style="color: #3B4674">旅行やデートのプランを検索してみましょう</p>
 

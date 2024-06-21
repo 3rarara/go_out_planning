@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <% chats.each do |chat| %>
+    <% if chat.user == current_user %>
+      <div class="col-10 text-right mb-3">
+        <div class="says px-3">
+          <p><%= safe_join(chat.message.split("\n"), tag(:br)) %></p>
+        </div>
+        <span class="text-muted"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+      </div>
+    <% else %>
+      <div class="col-10 text-left mb-3">
+        <div class="other-user-says px-3">
+          <p><%= safe_join(chat.message.split("\n"), tag(:br)) %></p>
+        </div>
+        <span class="text-muted"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+      </div>
+    <% end %>
+  <% end %>
+</div>

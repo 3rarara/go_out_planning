@@ -1,5 +1,23 @@
-<!--プラン情報を表示-->
+<!--ユーザー情報を表示-->
 <%= render 'user_page', user: @user %>
 
-<!--プラン一覧を表示-->
-<%= render 'public/plans/index', plans: @plans %>
+<!--タブメニュー-->
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">プラン</a></li>
+    <li><a href="#tab2" class="">いいね</a></li>
+  </ul>
+
+  <div id="tab-contents">
+    <div id="tab1" class="tab">
+      <!--プラン一覧を表示-->
+      <%= render 'public/plans/index', plans: @plans %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--いいね一覧を表示-->
+      <%= render 'public/plans/index', plans: @like_plans %>
+    </div>
+
+  </div>
+</div>

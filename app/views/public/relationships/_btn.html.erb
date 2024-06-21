@@ -1,0 +1,12 @@
+<% if current_user != user %>
+  <% if current_user.following?(user) %>
+    <%= link_to "フォロー解除", user_relationships_path(user), method: :delete, remote: true, class: "btn btn-info btn-sm" %>
+      <% if (current_user.following? @user) && (@user.following? current_user) %>
+        <%= link_to chat_path(user), class: "btn btn-warning btn-sm px-2 ml-2" do %>
+          <i class="fa-solid fa-envelope fa-lg" style="color: #ffffff;"></i>
+        <% end %>
+      <% end %>
+  <% else %>
+    <%= link_to "フォロー", user_relationships_path(user), method: :post, remote: true, class: "btn btn-success btn-sm px-4" %>
+  <% end %>
+<% end %>

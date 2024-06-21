@@ -12,11 +12,11 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "ユーザー情報を変更しました。"
-      redirect_to edit_admin_user_path
+      flash[:notice] = "ユーザー情報を変更しました"
+      redirect_to edit_admin_user_path, notice: "ユーザー情報を変更しました"
     else
       @plans = @user.plans.all
-      flash.now[:alert] = "ユーザー情報を変更できませんでした。"
+      flash.now[:alert] = "ユーザー情報を変更できませんでした"
       render 'edit'
     end
   end
@@ -24,11 +24,10 @@ class Admin::UsersController < ApplicationController
   def destroy
     if @user.is_active == false
       @user.destroy
-      flash[:notice] = "ユーザーを削除しました。"
-      redirect_to root_path
+      redirect_to root_path, notice: "ユーザーを削除しました"
     else
       @plans = @user.plans.all
-      flash.now[:alert] = "ユーザーを削除できませんでした。"
+      flash.now[:alert] = "ユーザーを削除できませんでした"
       render 'edit'
     end
   end
