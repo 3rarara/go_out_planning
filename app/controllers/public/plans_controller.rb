@@ -118,7 +118,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :is_draft, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
+    params.require(:plan).permit(:title, :body, :is_draft, :plan_image, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
   end
 
 end

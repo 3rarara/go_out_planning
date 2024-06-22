@@ -1,15 +1,15 @@
 <% if user_signed_in? %>
 
   <% if plan.liked_by?(current_user) %>
-    <%= link_to plan_like_path(plan), method: :delete, remote: true do %>
+    <%= link_to plan_like_path(plan), method: :delete, remote: true, class: "text-decoration-none" do %>
       <i class="fa-solid fa-star fa-lg" style="color: #FFD43B;"></i>
     <% end %>
-    <%= link_to plan.likes.count, liked_users_plan_path(plan) %>
+    <%= link_to plan.likes.count, liked_users_plan_path(plan), class: "text-decoration-none" %>
   <% else %>
-    <%= link_to plan_like_path(plan), method: :post, remote: true do %>
+    <%= link_to plan_like_path(plan), method: :post, remote: true, class: "text-decoration-none" do %>
       <i class="fa-regular fa-star fa-lg" style="color: #3b4674;"></i>
     <% end %>
-    <%= link_to plan.likes.count, liked_users_plan_path(plan) %>
+    <%= link_to plan.likes.count, liked_users_plan_path(plan), class: "text-decoration-none" %>
   <% end %>
 
 <% else %>
