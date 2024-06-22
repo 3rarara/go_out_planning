@@ -31,14 +31,24 @@ class Plan < ApplicationRecord
   end
 
   # 検索方法分岐
-  def self.looks(search, word)
-    joins(:plan_details)
-      .joins(:user)
-      .joins(:tags)
-      .where("plans.title LIKE :word OR plans.body LIKE :word OR plan_details.title LIKE :word OR plan_details.body LIKE :word OR tags.name LIKE :word", word: "%#{word}%")
-      .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
-      .where(plans: { is_draft: false }) # 下書き投稿を除く
-      .distinct
+  def self.looks(range, words)
+    query = joins(:plan_details)
+              .joins(:user)
+              .joins(:tags)
+              .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
+              .where(plans: { is_draft: false }) # 下書き投稿を除く
+
+    # ,で区切った複数の文字列を検索
+    if words.present?
+      conditions = []
+      words.split(',').each do |word|
+        word.strip!
+        conditions << "(plans.title LIKE '%#{word}%' OR plans.body LIKE '%#{word}%' OR plan_details.title LIKE '%#{word}%' OR plan_details.body LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
+      end
+      query = query.where(conditions.join(" AND "))
+    end
+
+    query.distinct
   end
 
   # タグ機能
