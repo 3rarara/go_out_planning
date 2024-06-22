@@ -1,4 +1,5 @@
-<% users.each do |user| %>
+<% if users.present? %>
+  <% users.each do |user| %>
 
     <div class="col-sm-8 col-md-6 col-lg-4 bg-white my-3 p-4 mx-auto rounded-pill">
       <div class="row">
@@ -19,4 +20,9 @@
       </div>
     </div>
 
+  <% end %>
+<% else %>
+  <div class="text-center mt-5">
+    ユーザーがいません
+  </div>
 <% end %>
