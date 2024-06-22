@@ -8,11 +8,11 @@ class Public::PlansController < ApplicationController
     @plan = Plan.new
     # PlanDetailsモデルのインスタンス作成
     @plan_detail = @plan.plan_details.build
-    @drafts = current_user.plans.where(is_draft: true)
+    @drafts = current_user.plans.where(is_draft: true).order(created_at: :desc)
   end
 
   def index
-    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
+    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false).order(created_at: :desc)
     @plan_details = @plans.flat_map(&:plan_details)
 
     # ユーザーがサインインしている場合、フォロー中のユーザーのPlanに絞り込む
