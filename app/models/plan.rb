@@ -18,15 +18,12 @@ class Plan < ApplicationRecord
   validates :title, presence: true, unless: :is_draft?
 
   # 投稿画像
-  # has_one_attached :plan_image
+  has_one_attached :plan_image
 
-  # def get_plan_image(width, height)
-  #   unless plan_image.attached?
-  #     file_path = Rails.root.join('app/assets/images/no_image.jpg')
-  #     plan_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
-  #   end
-  #   plan_image.variant(resize_to_fill: [width, height]).processed
-  # end
+  def get_plan_image(width, height)
+    return unless plan_image.attached?
+    plan_image.variant(resize_to_fill: [width, height]).processed
+  end
 
   # いいねの確認
   def liked_by?(user)

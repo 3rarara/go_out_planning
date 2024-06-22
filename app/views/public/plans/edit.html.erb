@@ -8,6 +8,7 @@
           <div class="col">
             <%= f.text_field :title, class: "form-control my-3", data: { plan_id: @plan.id }, placeholder: "プランタイトル" %>
             <%= f.text_area :body, class: "form-control my-3", placeholder: "プラン説明" %>
+            <%= f.file_field :plan_image, accept: "image/*" %>
           </div>
         </div>
 

@@ -14,8 +14,16 @@
 
       <% @plan_details.each do |pd| %>
         <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.title %></div>
-        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.body %></div>
-        <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.address %></div>
+        <% if pd.body.present? %>
+          <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.body %></div>
+        <% end %>
+        <% if pd.address.present? %>
+          <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.address %></div>
+        <% end %>
+      <% end %>
+
+      <% if @plan.plan_image.attached? %>
+        <%= image_tag @plan.get_plan_image(700, 400), class: "img-fluid my-1 rounded" %>
       <% end %>
 
       <div class="row">
