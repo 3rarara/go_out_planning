@@ -1,6 +1,6 @@
 class Public::PlansController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :liked_users]
   before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update, :destroy]
 
@@ -90,6 +90,10 @@ class Public::PlansController < ApplicationController
     @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @plans = @tag.plans
+  end
+
+  def liked_users
+    @liked_users = @plan.liked_users
   end
 
   private

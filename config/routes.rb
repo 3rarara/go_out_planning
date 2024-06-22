@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
+      member do
+        get :liked_users
+      end
     end
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"
