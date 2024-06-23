@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_18_131732) do
+ActiveRecord::Schema.define(version: 2024_06_23_124033) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -117,9 +117,11 @@ ActiveRecord::Schema.define(version: 2024_06_18_131732) do
     t.string "title", null: false
     t.string "body"
     t.boolean "is_draft", default: false, null: false
+    t.string "plan_search", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["body"], name: "index_plans_on_body"
+    t.index ["plan_search"], name: "index_plans_on_plan_search"
     t.index ["title"], name: "index_plans_on_title"
   end
 

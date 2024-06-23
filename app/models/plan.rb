@@ -53,9 +53,9 @@ class Plan < ApplicationRecord
     query.distinct
   end
 
-  before_save :plan_search
-  def plan_search
-    seach = "#{plans.title} #{plans.body} #{plan_details.title} #{plan_details.body} #{tags.name}"
+  before_save :update_plan_search
+  def update_plan_search
+    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')} #{tags.map(&:name).join(' ')}"
   end
 
   # タグ機能
