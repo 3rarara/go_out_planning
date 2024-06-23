@@ -84,3 +84,22 @@ $(document).on('turbolinks:load', function() {
     event.preventDefault();
   });
 });
+
+// ヘッターの記述
+document.addEventListener('turbolinks:load', () => {
+  const header = document.querySelector('header');
+  let prevY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    console.log('scrolling', { prevY, currentY });
+    if (currentY < prevY) {
+      header.classList.remove('hidden');
+    } else {
+      if (currentY > 0) {
+        header.classList.add('hidden');
+      }
+    }
+    prevY = currentY;
+  });
+});
