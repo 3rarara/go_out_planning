@@ -103,3 +103,39 @@ document.addEventListener('turbolinks:load', () => {
     prevY = currentY;
   });
 });
+
+// タグ入力保管機能
+// document.addEventListener('DOMContentLoaded', function() {
+//   const tagInput = document.querySelector('input[list="tag-list"]');
+//   const dataList = document.getElementById('tag-list');
+
+//   tagInput.addEventListener('input', function() {
+//     const input = this.value.trim();
+//     const tags = input.split(',').map(tag => tag.trim());
+//     const options = dataList.querySelectorAll('option');
+
+//     options.forEach(option => {
+//       const optionValue = option.value.toLowerCase();
+//       const optionDisplay = option.style.display;
+
+//       // タグ入力中の最後のタグを取得
+//       const lastTag = tags[tags.length - 1].toLowerCase();
+
+//       // 最後のタグがoptionの値に含まれているかどうかをチェックして表示を設定
+//       if (optionValue.includes(lastTag) && optionDisplay === 'none') {
+//         option.style.display = '';
+//       } else if (!optionValue.includes(lastTag) && optionDisplay !== 'none') {
+//         option.style.display = 'none';
+//       }
+//     });
+//   });
+
+//   tagInput.addEventListener('focus', function() {
+//     // フォーカス時にdatalistの表示をリセット
+//     const options = dataList.querySelectorAll('option');
+//     options.forEach(option => {
+//       option.style.display = '';
+//     });
+//   });
+// });
+

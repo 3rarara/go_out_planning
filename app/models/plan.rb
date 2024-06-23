@@ -32,23 +32,30 @@ class Plan < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(range, words)
-    query = joins(:plan_details)
-              .joins(:user)
-              .joins(:tags)
+    query = joins(:user)
+              # .joins(:user)
+    #           .joins(:tags)
               .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
               .where(plans: { is_draft: false }) # 下書き投稿を除く
 
     # ,で区切った複数の文字列を検索
     if words.present?
       conditions = []
+      # map使用できるかも
       words.split(',').each do |word|
         word.strip!
-        conditions << "(plans.title LIKE '%#{word}%' OR plans.body LIKE '%#{word}%' OR plan_details.title LIKE '%#{word}%' OR plan_details.body LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
+        # conditions << "(plans.title LIKE '%#{word}%' OR plans.body LIKE '%#{word}%' OR plan_details.title LIKE '%#{word}%' OR plan_details.body LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
+        conditions << "(plans.plan_search LIKE '%#{word}%')"
       end
       query = query.where(conditions.join(" AND "))
     end
 
     query.distinct
+  end
+
+  before_save :join_karam
+  def join_karam
+    seach = "#{plans.title} #{plans.body}"
   end
 
   # タグ機能
