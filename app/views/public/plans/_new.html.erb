@@ -33,7 +33,12 @@
       </div>
 
       <h4>タグ</h4>
-      <%= f.text_field :tags, value: plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録可能" %>
+      <%= f.text_field :tags, value: plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録可能", list: "tag-list" %>
+      <datalist id="tag-list">
+        <% Tag.all.each do |tag| %>
+          <option value="<%= tag.name %>">
+        <% end %>
+      </datalist>
 
       <div class="row">
         <div class="col text-center my-3">

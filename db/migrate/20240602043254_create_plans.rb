@@ -5,6 +5,7 @@ class CreatePlans < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.string :body
       t.boolean :is_draft, null: false, default: false
+      t.string :plan_search
       t.timestamps
     end
   end
