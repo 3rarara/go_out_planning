@@ -39,11 +39,8 @@ class Plan < ApplicationRecord
 
     # ,で区切った複数の文字列を検索
     if words.present?
-      conditions = []
-      # map使用できるかも
-      words.split(',').each do |word|
-        word.strip!
-        conditions << "(plans.plan_search LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
+      conditions = words.split(',').map(&:strip).compact.reject(&:empty?).map do |word|
+        "(plans.plan_search LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
       end
       query = query.where(conditions.join(" AND "))
     end
