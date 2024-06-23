@@ -33,8 +33,7 @@ class Plan < ApplicationRecord
   # 検索方法分岐
   def self.looks(range, words)
     query = joins(:user)
-              # .joins(:user)
-    #           .joins(:tags)
+              .joins(:tags)
               .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
               .where(plans: { is_draft: false }) # 下書き投稿を除く
 
@@ -44,8 +43,7 @@ class Plan < ApplicationRecord
       # map使用できるかも
       words.split(',').each do |word|
         word.strip!
-        # conditions << "(plans.title LIKE '%#{word}%' OR plans.body LIKE '%#{word}%' OR plan_details.title LIKE '%#{word}%' OR plan_details.body LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
-        conditions << "(plans.plan_search LIKE '%#{word}%')"
+        conditions << "(plans.plan_search LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
       end
       query = query.where(conditions.join(" AND "))
     end
@@ -55,7 +53,7 @@ class Plan < ApplicationRecord
 
   before_save :update_plan_search
   def update_plan_search
-    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')} #{tags.map(&:name).join(' ')}"
+    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
   end
 
   # タグ機能

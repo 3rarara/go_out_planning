@@ -62,7 +62,7 @@ Plan.find_or_create_by!(title: "大阪旅行") do |plan|
   )
 
   # plan_search カラムの設定
-  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')} #{plan.tags.map(&:name).join(' ')}"
+  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')}"
 end
 
 Plan.find_or_create_by!(title: "東京デートおすすめスポット️") do |plan|
@@ -85,7 +85,7 @@ Plan.find_or_create_by!(title: "東京デートおすすめスポット️") do 
   )
 
   # plan_search カラムの設定
-  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')} #{plan.tags.map(&:name).join(' ')}"
+  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')}"
 end
 
 Plan.find_or_create_by!(title: "鎌倉のお寺へ行くぞ️") do |plan|
@@ -108,7 +108,7 @@ Plan.find_or_create_by!(title: "鎌倉のお寺へ行くぞ️") do |plan|
   )
 
   # plan_search カラムの設定
-  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')} #{plan.tags.map(&:name).join(' ')}"
+  plan.plan_search = "#{plan.title} #{plan.body} #{plan.plan_details.map(&:title).join(' ')} #{plan.plan_details.map(&:body).join(' ')} #{plan.plan_details.map(&:address).join(' ')}"
 end
 
 puts '初期データを追加しました'
