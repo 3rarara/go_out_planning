@@ -48,6 +48,7 @@ class Plan < ApplicationRecord
     query.distinct
   end
 
+  # after_save :convert_to_progressive
   before_save :update_plan_search
   def update_plan_search
     self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
@@ -92,4 +93,9 @@ class Plan < ApplicationRecord
       Notification.insert_all(notifications)
     end
   end
+
+  # def convert_to_progressive
+  #   ConvertToProgressiveJob.perform_later(self.id)
+  # end
+
 end
