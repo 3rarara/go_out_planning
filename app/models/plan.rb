@@ -53,9 +53,9 @@ class Plan < ApplicationRecord
     query.distinct
   end
 
-  before_save :join_karam
-  def join_karam
-    seach = "#{plans.title} #{plans.body}"
+  before_save :plan_search
+  def plan_search
+    seach = "#{plans.title} #{plans.body} #{plan_details.title} #{plan_details.body} #{tags.name}"
   end
 
   # タグ機能
