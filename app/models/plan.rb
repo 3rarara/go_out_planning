@@ -17,6 +17,12 @@ class Plan < ApplicationRecord
   # バリデーション
   validates :title, presence: true, unless: :is_draft?
 
+  # コールバック
+  before_save :update_plan_search
+  # after_commit :process_plan_image, on: [:create, :update], if: -> { plan_image.attached? }
+  after_create_commit :notify_followers
+
+
   # 投稿画像
   has_one_attached :plan_image
 
@@ -48,8 +54,7 @@ class Plan < ApplicationRecord
     query.distinct
   end
 
-  # after_save :convert_to_progressive
-  before_save :update_plan_search
+  # 検索用カラム保存
   def update_plan_search
     self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
   end
@@ -71,11 +76,31 @@ class Plan < ApplicationRecord
     self.tags.where(name: tags_to_delete).destroy_all
   end
 
-  # 通知機能
-  after_create_commit :notify_followers
-
   private
 
+  # 画像プログレッシブ圧縮の実装
+  # def process_plan_image
+  #   begin
+  #     image = MiniMagick::Image.read(plan_image.download)
+  #     image.auto_orient
+  #     image.strip
+  #     image.quality("85")
+  #     image.interlace("Plane")
+
+  #     unique_filename = "#{SecureRandom.uuid}_#{plan_image.filename.to_s}"
+  #     temp_file_path = Rails.root.join("tmp/#{unique_filename}")
+  #     image.write(temp_file_path)
+
+  #     plan_image.attach(io: File.open(temp_file_path), filename: plan_image.filename.to_s, content_type: plan_image.content_type)
+
+  #     File.delete(temp_file_path) if File.exist?(temp_file_path)
+  #   rescue MiniMagick::Error => e
+  #     Rails.logger.error "MiniMagick::Error: #{e.message}"
+  #     raise
+  #   end
+  # end
+
+  # 通知機能
   def notify_followers
     follower_ids = user.followers.pluck(:id)
     if follower_ids.any?
@@ -93,9 +118,5 @@ class Plan < ApplicationRecord
       Notification.insert_all(notifications)
     end
   end
-
-  # def convert_to_progressive
-  #   ConvertToProgressiveJob.perform_later(self.id)
-  # end
 
 end
