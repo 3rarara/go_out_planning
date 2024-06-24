@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
+      <% if @rooms.present? %>
+        <% @rooms.each do |room| %>
+          <div class="row mb-3 bg-light p-3 rounded">
+
+            <div class="col">
+              <% room.users.each do |user| %>
+                <div class="text-center"><%= link_to user.name, edit_admin_user_path(user) %></div>
+              <% end %>
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <%= link_to "Room ##{room.id}", admin_chat_path(room), class: 'text-decoration-none' %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center mt-5">
+          チャットルームがありません
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

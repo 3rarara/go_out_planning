@@ -3,7 +3,8 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @active_users = User.where(users: { is_active: true })
+    @close_account_users = User.where(users: { is_active: false })
   end
 
   def edit

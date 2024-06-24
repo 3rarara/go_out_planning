@@ -87,7 +87,6 @@ class Public::PlansController < ApplicationController
   end
 
   def search_tag
-    @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @plans = @tag.plans
   end

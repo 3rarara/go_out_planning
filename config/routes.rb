@@ -60,6 +60,8 @@ Rails.application.routes.draw do
       resources :comments, only: [:destroy]
     end
     get 'search' => 'searches#search'
+    resources :tags, only: [:index, :destroy]
+    resources :chats, only: [:index, :show]
   end
 
 end

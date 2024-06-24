@@ -2,12 +2,15 @@ class Admin::PlansController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
+    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false).order(created_at: :desc)
+    @draft_plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: true).order(created_at: :desc)
   end
 
   def edit
     @plan = Plan.find(params[:id])
     @plan_details = @plan.plan_details
+    @tag_list = @plan.tags.pluck(:name).join(',')
+    @plan_tags = @plan.tags
   end
 
   def update
