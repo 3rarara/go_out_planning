@@ -12,10 +12,25 @@
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
             <% end %>
           </li>
+
+          <li class="nav-item mx-3">
+            <%= link_to admin_tags_path, class: "menu-icon" do %>
+              <i class="fa-solid fa-tag fa-xl" style="color: #FFD43B;"></i>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">タグ</p>
+            <% end %>
+          </li>
+
           <li class="nav-item mx-3">
             <%= link_to admin_users_path, class: "menu-icon" do %>
               <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">ユーザー</p>
+            <% end %>
+          </li>
+
+          <li class="nav-item mx-3">
+            <%= link_to admin_chats_path, class: "menu-icon" do %>
+              <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">DM</p>
             <% end %>
           </li>
 

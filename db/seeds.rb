@@ -37,8 +37,6 @@ Tag.find_or_create_by!(name: "カフェ")
 Tag.find_or_create_by!(name: "デート")
 Tag.find_or_create_by!(name: "旅行")
 Tag.find_or_create_by!(name: "観光")
-Tag.find_or_create_by!(name: "食べ物")
-Tag.find_or_create_by!(name: "アクティビティ")
 
 # Plans データの作成
 Plan.find_or_create_by!(title: "大阪旅行") do |plan|

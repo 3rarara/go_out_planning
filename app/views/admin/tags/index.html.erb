@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
+
+      <div class="text-center mb-3">
+        <%= link_to '投稿数が多い順', admin_tags_path(sort: 'desc'), class: "btn btn-primary" %>
+        <%= link_to '投稿数が少ない順', admin_tags_path(sort: 'asc'), class: "btn btn-primary" %>
+      </div>
+
+      <% if @tags.present? %>
+        <table class="table table-striped bg-light">
+          <thead>
+            <tr>
+              <th scope="col">タグ名</th>
+              <th scope="col">投稿数</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tags.each do |tag| %>
+              <tr>
+                <td><%= tag.name %></td>
+                <td><%= tag.plans.count %></td>
+                <td>
+                  <%= link_to '削除', admin_tag_path(tag), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger btn-sm" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="text-center mt-5">
+          タグがありません
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+

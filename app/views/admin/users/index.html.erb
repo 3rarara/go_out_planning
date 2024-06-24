@@ -1,2 +1,23 @@
-<!--ユーザー一覧のテンプレート使用-->
-<%= render 'admin/users/index', users: @users %>
+<!--タブメニュー-->
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">有効</a></li>
+    <li><a href="#tab2" class="">退会</a></li>
+  </ul>
+
+  <div id="tab-contents">
+
+    <div id="tab1" class="tab">
+      <!--有効ユーザー一覧を表示-->
+      <%= render 'layouts/search', object: admin_search_path %>
+      <%= render 'admin/users/index', users: @active_users %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--無効ユーザー一覧を表示-->
+      <%= render 'layouts/search', object: admin_search_path %>
+      <%= render 'admin/users/index', users: @close_account_users %>
+    </div>
+
+  </div>
+</div>

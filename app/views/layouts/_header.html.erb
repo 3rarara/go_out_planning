@@ -9,7 +9,6 @@
           <ul class="navbar-nav ml-auto mt-3 d-flex justify-content-end">
 
           <% if admin_signed_in? %>
-          <%#= render 'layouts/search', object: admin_search_path %>
           <li class="nav-item mx-2">
             <%= link_to destroy_admin_session_path, method: :delete, class: "menu-icon" do %>
               <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>

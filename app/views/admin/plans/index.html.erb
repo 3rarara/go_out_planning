@@ -1,2 +1,23 @@
-<!--プラン一覧を表示-->
-<%= render 'index', plans: @plans %>
+<!--タブメニュー-->
+<div class="wrap">
+  <ul id="tab-menu">
+    <li><a href="#tab1" class="active">有効</a></li>
+    <li><a href="#tab2" class="">非表示</a></li>
+  </ul>
+
+  <div id="tab-contents">
+
+    <div id="tab1" class="tab">
+      <!--有効投稿一覧を表示-->
+      <%= render 'layouts/search', object: admin_search_path %>
+      <%= render 'admin/plans/index', plans: @plans %>
+    </div>
+
+    <div id="tab2" class="tab">
+      <!--非表示投稿ー一覧を表示-->
+      <%= render 'layouts/search', object: admin_search_path %>
+      <%= render 'admin/plans/index', plans: @draft_plans %>
+    </div>
+
+  </div>
+</div>
