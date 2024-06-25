@@ -36,6 +36,8 @@
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Cloud9
+- RSpecテスト
+- Githubアクション（デプロイとRSpecテストの自動化)
 ​
 ## 使用素材
 
