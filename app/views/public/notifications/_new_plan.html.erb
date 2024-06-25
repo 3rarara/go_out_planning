@@ -1,9 +1,9 @@
 <%= link_to transition_path(notification) do %>
-  <div>
+  <div class="fsize_13-18">
     <%= link_to notification.subject.user.name, user_path(notification.subject.user) %>
-    が新しい
+    が
     <%= link_to '投稿', plan_path(notification.subject) %>
-    をしました
+    しました
     <%= " (#{time_ago_in_words(notification.created_at)}前)" %>
   </div>
 <% end %>

@@ -1,9 +1,9 @@
 <%= link_to transition_path(notification) do %>
-  <div>
+  <div class="fsize_13-18">
     <%= link_to notification.subject.user.name, user_path(notification.subject.user) %>
-    さんから
-    <%= link_to 'メッセージ', chat_path(notification.subject.user) %>
-    が届いています
+    から
+    <%= link_to 'DM', chat_path(notification.subject.user) %>
+    が届きました
     <%= " (#{time_ago_in_words(notification.created_at)}前)" %>
   </div>
 <% end %>

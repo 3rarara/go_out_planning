@@ -1,4 +1,5 @@
 # おでかけplanning
+![Top画像](app/assets/images/top.png)
 
 ## サイト概要
 
@@ -23,8 +24,12 @@
 ・これから旅行やデートのプランを計画するとき
 ​
 ## 設計書
-後ほど作成予定
-​
+・[ER図](https://drive.google.com/file/d/15grhLVoA1iR_CYBgvsUeSlVAfuTyn3RA/view?usp=sharing)</br>
+・[画面設計](https://drive.google.com/file/d/19TVS05AIfo-sN2PRwYX-TYETVygn0dYe/view?usp=sharing)</br>
+・[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1p9jUsW6a9UnPhSnJ3AfXj1xXQd-eMaf7PlJjr3T-3lw/edit?usp=sharing)</br>
+・[テーブル定義書](https://docs.google.com/spreadsheets/d/1bhWUa6Sghs4GUdHWi-0VtcoirksRVA8r4CJDG-33rck/edit?usp=sharing)</br>
+・[画面遷移図](https://www.figma.com/design/te6oY9hhH464bylYuSoaZj/go_out_planning?node-id=0-1&t=4VhfMvfmlsP8mZMi-1)
+
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
@@ -36,6 +41,10 @@
 
 ・Canva</br>
 ・https://www.canva.com/ja_jp/learn/commercial-use/#commercial-use</br>
+
+・ICOOON MONO</br>
+・https://icooon-mono.com/license/</br>
+
 ・引用元の指示に従って利用します</br>
 
 著作権を考慮し、架空のデータを扱う予定です。</br>

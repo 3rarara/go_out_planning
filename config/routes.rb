@@ -31,6 +31,12 @@ Rails.application.routes.draw do
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
+      member do
+        get :liked_users
+      end
+      collection do
+        get :tags_list
+      end
     end
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"
@@ -57,6 +63,8 @@ Rails.application.routes.draw do
       resources :comments, only: [:destroy]
     end
     get 'search' => 'searches#search'
+    resources :tags, only: [:index, :destroy]
+    resources :chats, only: [:index, :show]
   end
 
 end

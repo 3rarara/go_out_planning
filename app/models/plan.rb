@@ -9,6 +9,7 @@ class Plan < ApplicationRecord
   has_many :tags, through: :plan_tags
   has_many :notifications, as: :subject, dependent: :destroy
   has_many :view_counts, dependent: :destroy
+  has_many :liked_users, through: :likes, source: :user
 
   # 子モデル（plan_details）の属性を受入れ、更新や削除を許可する
   accepts_nested_attributes_for :plan_details, allow_destroy: true
@@ -16,16 +17,19 @@ class Plan < ApplicationRecord
   # バリデーション
   validates :title, presence: true, unless: :is_draft?
 
-  # 投稿画像
-  # has_one_attached :plan_image
+  # コールバック
+  before_save :update_plan_search
+  # after_commit :process_plan_image, on: [:create, :update], if: -> { plan_image.attached? }
+  after_create_commit :notify_followers
 
-  # def get_plan_image(width, height)
-  #   unless plan_image.attached?
-  #     file_path = Rails.root.join('app/assets/images/no_image.jpg')
-  #     plan_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
-  #   end
-  #   plan_image.variant(resize_to_fill: [width, height]).processed
-  # end
+
+  # 投稿画像
+  has_one_attached :plan_image
+
+  def get_plan_image(width, height)
+    return unless plan_image.attached?
+    plan_image.variant(resize_to_fill: [width, height]).processed
+  end
 
   # いいねの確認
   def liked_by?(user)
@@ -33,10 +37,26 @@ class Plan < ApplicationRecord
   end
 
   # 検索方法分岐
-  def self.looks(search, word)
-    joins(:plan_details)
-      .where("plans.title LIKE :word OR plans.body LIKE :word OR plan_details.title LIKE :word OR plan_details.body LIKE :word", word: "%#{word}%")
-      .distinct
+  def self.looks(range, words)
+    query = joins(:user)
+              .joins(:tags)
+              .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
+              .where(plans: { is_draft: false }) # 下書き投稿を除く
+
+    # ,で区切った複数の文字列を検索
+    if words.present?
+      conditions = words.split(',').map(&:strip).compact.reject(&:empty?).map do |word|
+        "(plans.plan_search LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
+      end
+      query = query.where(conditions.join(" AND "))
+    end
+
+    query.distinct
+  end
+
+  # 検索用カラム保存
+  def update_plan_search
+    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
   end
 
   # タグ機能
@@ -56,11 +76,31 @@ class Plan < ApplicationRecord
     self.tags.where(name: tags_to_delete).destroy_all
   end
 
-  # 通知機能
-  after_create_commit :notify_followers
-
   private
 
+  # 画像プログレッシブ圧縮の実装
+  # def process_plan_image
+  #   begin
+  #     image = MiniMagick::Image.read(plan_image.download)
+  #     image.auto_orient
+  #     image.strip
+  #     image.quality("85")
+  #     image.interlace("Plane")
+
+  #     unique_filename = "#{SecureRandom.uuid}_#{plan_image.filename.to_s}"
+  #     temp_file_path = Rails.root.join("tmp/#{unique_filename}")
+  #     image.write(temp_file_path)
+
+  #     plan_image.attach(io: File.open(temp_file_path), filename: plan_image.filename.to_s, content_type: plan_image.content_type)
+
+  #     File.delete(temp_file_path) if File.exist?(temp_file_path)
+  #   rescue MiniMagick::Error => e
+  #     Rails.logger.error "MiniMagick::Error: #{e.message}"
+  #     raise
+  #   end
+  # end
+
+  # 通知機能
   def notify_followers
     follower_ids = user.followers.pluck(:id)
     if follower_ids.any?
@@ -78,4 +118,5 @@ class Plan < ApplicationRecord
       Notification.insert_all(notifications)
     end
   end
+
 end

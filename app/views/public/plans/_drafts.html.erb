@@ -35,16 +35,24 @@
           <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: plan %></div>
           <!--いいね機能非同期化テンプレート-->
           <div class="col text-center like_buttons_<%= plan.id %>"><%= render 'public/likes/like', plan: plan %></div>
+        </div>
+
+        <div class="row mt-3">
 
           <% if plan.user == current_user %>
-            <div class="col">
-            <%= link_to edit_plan_path(plan), class: "btn btn-warning mx-2" do %>
+            <div class="col text-center">
+            <%= link_to edit_plan_path(plan), class: "btn btn-warning btn-sm mx-2" do %>
               <i class="fa-solid fa-pen-to-square fa-lg px-3 mx-2"></i>
             <% end %>
+
+              <%= link_to plan_path(plan), method: :delete, class: "btn btn-danger btn-sm mx-2", data: { confirm: "投稿を削除しますか？" } do %>
+                <i class="fa-solid fa-trash fa-lg px-2 mx-2" style="color: #ffffff;"></i>
+              <% end %>
             </div>
           <% end %>
-
         </div>
+
+
       </div>
     </div>
     <% end %>

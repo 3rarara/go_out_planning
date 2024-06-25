@@ -1,6 +1,6 @@
 class Public::PlansController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :liked_users]
   before_action :user_is_active, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update, :destroy]
 
@@ -8,11 +8,11 @@ class Public::PlansController < ApplicationController
     @plan = Plan.new
     # PlanDetailsモデルのインスタンス作成
     @plan_detail = @plan.plan_details.build
-    @drafts = current_user.plans.where(is_draft: true)
+    @drafts = current_user.plans.where(is_draft: true).order(created_at: :desc)
   end
 
   def index
-    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false)
+    @plans = Plan.includes(:user).where(users: { is_active: true }, is_draft: false).order(created_at: :desc)
     @plan_details = @plans.flat_map(&:plan_details)
 
     # ユーザーがサインインしている場合、フォロー中のユーザーのPlanに絞り込む
@@ -87,9 +87,17 @@ class Public::PlansController < ApplicationController
   end
 
   def search_tag
-    @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @plans = @tag.plans
+  end
+
+  def liked_users
+    @liked_users = @plan.liked_users
+  end
+
+  def tags_list
+    tags = Tag.where('name LIKE ?', "%#{params[:q]}%").map { |tag| { id: tag.id, text: tag.name } }
+    render json: tags
   end
 
   private
@@ -114,7 +122,7 @@ class Public::PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :body, :is_draft, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
+    params.require(:plan).permit(:title, :body, :is_draft, :plan_image, :description, plan_details_attributes: [:id, :title, :body, :_destroy, :address, :latitude, :longitude])
   end
 
 end

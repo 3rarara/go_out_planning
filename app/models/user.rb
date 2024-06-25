@@ -55,7 +55,8 @@ class User < ApplicationRecord
 
   # 検索方法分岐
   def self.looks(search, word)
-    @user = User.where("name LIKE?","%#{word}%")
+    # 退会ユーザーの投稿を除く
+    @user = User.where("name LIKE ? AND is_active = ?", "%#{word}%", true)
   end
 
   # フォローフォロワー機能

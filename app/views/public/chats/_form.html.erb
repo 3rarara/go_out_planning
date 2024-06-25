@@ -5,7 +5,7 @@
         <%= form_with model: chat, local: false do |f| %>
           <div class="input-group">
             <%= f.hidden_field :room_id %>
-            <%= f.text_field :message, class: "form-control chat_textfield", placeholder: "コメントを送信" %>
+            <%= f.text_area :message, class: "form-control chat_textfield", placeholder: "コメントを送信", rows: 1 %>
             <div class="input-group-append">
               <button type="submit" class="btn btn-primary">
                 <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>

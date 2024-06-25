@@ -1,8 +1,8 @@
 <li class="nav-item list-unstyled d-flex justify-content-center mb-2">
   <div class="search_form">
     <%= form_with url: object, local: true, method: :get do |f| %>
-      <%= f.text_field :word, placeholder: 'Search' %>
-      <%= f.select :range, options_for_select([['User'], ['Plan']]) %>
+      <%= f.text_field :word, placeholder: ' 東京, カフェ' %>
+      <%= f.select :range, options_for_select([['Plan'],['User']]) %>
       <button type="submit" class="btn btn-secondary btn-sm mb-1">
         <i class="fas fa-search" style="color: #ffffff;"></i>
       </button>
