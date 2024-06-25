@@ -235,6 +235,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    select2-rails (4.0.13)
     selenium-webdriver (4.21.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -311,6 +312,7 @@ DEPENDENCIES
   rails (~> 6.1.7, >= 6.1.7.7)
   rspec-rails
   sass-rails (>= 6)
+  select2-rails
   selenium-webdriver (>= 4.0.0.rc1)
   spring
   sqlite3 (~> 1.4)

@@ -95,6 +95,11 @@ class Public::PlansController < ApplicationController
     @liked_users = @plan.liked_users
   end
 
+  def tags_list
+    tags = Tag.where('name LIKE ?', "%#{params[:q]}%").map { |tag| { id: tag.id, text: tag.name } }
+    render json: tags
+  end
+
   private
 
   def set_plan
