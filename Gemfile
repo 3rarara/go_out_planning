@@ -74,5 +74,3 @@ gem 'net-imap'
 
 gem 'geocoder'
 gem 'gmaps4rails'
-
-# gem 'mini_magick'
