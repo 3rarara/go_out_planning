@@ -34,6 +34,9 @@ Rails.application.routes.draw do
       member do
         get :liked_users
       end
+      collection do
+        get :tags_list
+      end
     end
     get 'search' => 'searches#search'
     get "search_tag" => "plans#search_tag"

@@ -13,3 +13,101 @@
  *= require_tree .
  *= require_self
  */
+
+ .logo {
+  width: 250px;
+  height: 250px;
+}
+
+#user_is_active {
+  padding: 8px;
+}
+
+#plan_is_draft {
+  padding: 8px;
+}
+
+#range {
+  padding: 4px 0;
+}
+
+/*未読メッセージ*/
+.unread {
+  font-weight: bold;
+}
+
+/*ヘッターフッターアイコン*/
+.menu-icon {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none !important;
+}
+
+.navbar-nav {
+  flex-direction: row !important;
+}
+.navbar-nav .nav-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+/*フォントサイズ指定*/
+.fsize_13-18 {
+  font-size: clamp(14px, 3vw, 18px);;
+}
+
+/*自分以外のメッセージの吹き出し*/
+.other-user-says {
+  float: left;
+  position: relative;
+  width: calc(100% - 56px);
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 15px;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.other-user-says:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 3px;
+  left: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid #ffffff;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+
+/*自分のメッセージの吹き出し*/
+.says {
+  float: right;
+  position: relative;
+  width: calc(100% - 56px);
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 15px;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.says:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 3px;
+  right: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid #ffffff;
+  -webkit-transform: rotate(145deg);
+  transform: rotate(145deg);
+}
+
+/*チャットフォーム*/
+.fixed-bottom-form {
+  position: fixed;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+}
