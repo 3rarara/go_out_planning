@@ -25,7 +25,8 @@
       <% end %>
 
       <% if @plan.plan_image.attached? %>
-        <%= image_tag @plan.get_plan_image(700, 400), class: "img-fluid my-1 rounded" %>
+        <%#= image_tag @plan.get_plan_image(700, 400), class: "img-fluid my-1 rounded" %>
+        <%= image_tag @plan.plan_image, class: "img-fluid my-1 rounded" %>
       <% end %>
 
       <div class="row">

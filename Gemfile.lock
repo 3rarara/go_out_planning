@@ -235,7 +235,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    select2-rails (4.0.13)
     selenium-webdriver (4.21.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -300,7 +299,6 @@ DEPENDENCIES
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  mini_magick
   mysql2
   net-imap
   net-pop
@@ -312,7 +310,6 @@ DEPENDENCIES
   rails (~> 6.1.7, >= 6.1.7.7)
   rspec-rails
   sass-rails (>= 6)
-  select2-rails
   selenium-webdriver (>= 4.0.0.rc1)
   spring
   sqlite3 (~> 1.4)
