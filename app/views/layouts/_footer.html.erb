@@ -48,10 +48,15 @@
             <% end %>
           </li>
 
-          <li class="nav-item mx-3">
+          <li class="nav-item mx-3" style="position: relative;">
             <%= link_to notifications_path, class: "menu-icon" do %>
-            <i class="fa-solid fa-bell fa-xl" style="color: #FFD43B;"></i>
-            <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">通知</p>
+              <i class="fa-solid fa-bell fa-xl" style="color: #FFD43B;"></i>
+              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">通知</p>
+              <% if @unread_notifications_count.to_i > 0 %>
+                <span class="badge" style="position: absolute; top: -20px; right: -8px; background-color: red; color: #FFD43B; border-radius: 50%; padding: 2px 5px; font-size: 12px;">
+                  <%= @unread_notifications_count %>
+                </span>
+              <% end %>
             <% end %>
           </li>
 
@@ -62,7 +67,7 @@
             <% end %>
           </li>
 
-          <li class="nav-item mx-3">
+          <li class="nav-item mr-3 ml-1">
             <%= link_to mypage_path, class: "menu-icon" do %>
               <i class="fa-solid fa-circle-user fa-xl" style="color: #FFD43B;"></i>
               <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">マイページ</p>
