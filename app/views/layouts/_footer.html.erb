@@ -60,10 +60,15 @@
             <% end %>
           </li>
 
-          <li class="nav-item mx-3">
+          <li class="nav-item mx-3" style="position: relative;">
             <%= link_to chats_path, class: "menu-icon" do %>
             <i class="fa-solid fa-envelope fa-xl" style="color: #FFD43B;"></i>
             <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">DM</p>
+              <% if @unread_chats_count.to_i > 0 %>
+                <span class="badge" style="position: absolute; top: -20px; right: -8px; background-color: red; color: #FFD43B; border-radius: 50%; padding: 2px 5px; font-size: 12px;">
+                  <%= @unread_chats_count %>
+                </span>
+              <% end %>
             <% end %>
           </li>
 

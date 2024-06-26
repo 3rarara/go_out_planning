@@ -16,6 +16,9 @@ class Public::ChatsController < ApplicationController
     end
 
     @chats = @room.chats
+    @chats.each do |chat|
+      chat.update(read: true) unless chat.user_id == current_user.id
+    end
     @chat = Chat.new(room_id: @room.id)
   end
 
@@ -30,12 +33,13 @@ class Public::ChatsController < ApplicationController
   end
 
   # チャットルーム一覧
-  def index
-    @user_rooms  = current_user.rooms.includes(:users).map do |room|
+def index
+  @user_rooms = current_user.rooms.includes(:users).map do |room|
     other_user = room.users.where.not(id: current_user.id).first
-      { room: room, other_user: other_user }
-    end
+    unread_chats_count = Chat.where(room_id: room.id, read: false).where.not(user_id: current_user.id).count
+    { room: room, other_user: other_user, unread_chats_count: unread_chats_count }
   end
+end
 
   private
 

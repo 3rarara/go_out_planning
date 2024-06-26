@@ -6,7 +6,13 @@
         <% @user_rooms.each do |user_room| %>
           <% room = user_room[:room] %>
           <% other_user = user_room[:other_user] %>
-          <div class="row mb-3 bg-light p-3 rounded">
+          <% unread_chats_count = user_room[:unread_chats_count] %>
+          <div class="row mb-3 bg-light p-3 rounded" style="position: relative;">
+            <% if unread_chats_count > 0 %>
+              <span class="badge" style="position: absolute; top: -8px; right: -8px; background-color: red; color: #FFD43B; border-radius: 50%; padding: 5px 10px; font-size: 20px;">
+                <%= unread_chats_count %>
+              </span>
+            <% end %>
             <div class="col">
               <%= link_to user_path(other_user) do %>
                 <%= image_tag other_user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
