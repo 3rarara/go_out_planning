@@ -22,7 +22,7 @@
           </div>
 
           <% if user.id == current_user.id && user.email != "guest@example.com" %>
-          <div class="row"><%= user.email %></div>
+          <div class="row"><%= user.email.truncate(20) %></div>
         </div>
 
           <div class="col-3 my-auto mx-auto">

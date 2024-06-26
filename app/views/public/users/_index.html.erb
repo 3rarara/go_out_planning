@@ -3,17 +3,23 @@
 
     <div class="col-sm-8 col-md-6 col-lg-4 bg-white my-3 p-4 mx-auto rounded-pill">
       <div class="row">
-        <div class="col mx-2 my-auto ">
-          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle ml-auto d-block" %>
+        <div class="col mx-2 my-auto">
+          <%= link_to user_path(user) do %>
+            <%= image_tag user.get_profile_image(80, 80), class: "rounded-circle mx-auto d-block" %>
+            <div class="text-center"><%= user.name %></div>
+          <% end %>
         </div>
 
         <div class="col mx-2 my-auto">
-          <div class="row"><%= link_to  user.name, user_path(user) %></div>
+
           <div class="row">
             フォロー：<%= link_to user.followings.count, user_followings_path(user) %>
           </div>
           <div class="row">
             フォロワー：<%= link_to user.followers.count, user_followers_path(user) %>
+          </div>
+          <div class="row text-left relationship_btns_<%= user.id %>">
+            <%= render "public/relationships/btn", user: user %>
           </div>
         </div>
 
