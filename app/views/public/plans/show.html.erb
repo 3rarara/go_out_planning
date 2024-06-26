@@ -38,14 +38,14 @@
         <% end %>
       </div>
 
-      <div class="row">
-        <!--コメントカウント非同期化テンプレート-->
-        <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
-        <!--いいね非同期化テンプレート-->
-        <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+        <div class="row">
+          <!--コメントカウント非同期化テンプレート-->
+          <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
+          <!--いいね非同期化テンプレート-->
+          <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
 
-        <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
-      </div>
+          <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
+        </div>
 
       <% if @plan.user == current_user %>
       <div class="row mt-3">
@@ -65,15 +65,15 @@
     <div id="map" class="col-sm-12 col-md-10 col-lg-8 mx-auto" style="height: 300px;"></div>
     <% end %>
 
-    <!-- コメント一覧非同期化テンプレート -->
-    <div class="row comment-index mx-auto">
-      <%= render 'public/comments/index', plan: @plan %>
-    </div>
+      <!-- コメント一覧非同期化テンプレート -->
+      <div class="row comment-index mx-auto">
+        <%= render 'public/comments/index', plan: @plan %>
+      </div>
 
-    <!-- コメント送信非同期化テンプレート -->
-    <div class="row mx-auto">
-      <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
-    </div>
+      <!-- コメント送信非同期化テンプレート -->
+      <div class="row mx-auto">
+        <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
+      </div>
 
 </div>
 
