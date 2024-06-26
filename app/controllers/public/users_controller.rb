@@ -59,9 +59,10 @@ class Public::UsersController < ApplicationController
   end
 
   def fetch_user_data
-    @plans = @user.plans.where(is_draft: false)
-    liked_ids = @user.likes.pluck(:plan_id)
-    @like_plans = Plan.where(id: liked_ids, is_draft: false)
+    @plans = @user.plans.where(is_draft: false).order(created_at: :desc)
+    @like_plans = Plan.joins(:likes)
+                      .where(likes: { user_id: @user.id }, is_draft: false)
+                      .order('likes.created_at DESC')
   end
 
   def user_params
