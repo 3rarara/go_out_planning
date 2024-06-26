@@ -1,5 +1,6 @@
 # おでかけplanning
 ![Top画像](app/assets/images/top.png)
+![ロゴ](app/assets/images/go_out_planning_header_logo.jpg)
 
 ## サイト概要
 
@@ -25,6 +26,8 @@
 ​
 ## 設計書
 ・[ER図](https://drive.google.com/file/d/15grhLVoA1iR_CYBgvsUeSlVAfuTyn3RA/view?usp=sharing)</br>
+![ER図画像](app/assets/images/ER.png)
+
 ・[画面設計](https://drive.google.com/file/d/19TVS05AIfo-sN2PRwYX-TYETVygn0dYe/view?usp=sharing)</br>
 ・[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1p9jUsW6a9UnPhSnJ3AfXj1xXQd-eMaf7PlJjr3T-3lw/edit?usp=sharing)</br>
 ・[テーブル定義書](https://docs.google.com/spreadsheets/d/1bhWUa6Sghs4GUdHWi-0VtcoirksRVA8r4CJDG-33rck/edit?usp=sharing)</br>
