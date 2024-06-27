@@ -39,18 +39,19 @@ class Plan < ApplicationRecord
   # 検索方法分岐
   def self.looks(range, words)
     query = joins(:user)
-              .joins(:tags)
+              .left_joins(:tags) # タグがない投稿も内部結合する
+              .where(is_draft: false) # 下書き投稿を除く
               .where(users: { is_active: true }) # 退会ユーザーの投稿を除く
-              .where(plans: { is_draft: false }) # 下書き投稿を除く
 
     # ,で区切った複数の文字列を検索
     if words.present?
       conditions = words.split(',').map(&:strip).compact.reject(&:empty?).map do |word|
+
         "(plans.plan_search LIKE '%#{word}%' OR tags.name LIKE '%#{word}%')"
       end
+
       query = query.where(conditions.join(" AND "))
     end
-
     query.distinct
   end
 
