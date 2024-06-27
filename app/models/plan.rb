@@ -102,6 +102,7 @@ class Plan < ApplicationRecord
 
   # 通知機能
   def notify_followers
+    return if self.is_draft
     follower_ids = user.followers.pluck(:id)
     if follower_ids.any?
       notifications = follower_ids.map do |follower_id|

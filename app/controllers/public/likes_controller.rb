@@ -3,6 +3,11 @@ class Public::LikesController < ApplicationController
   before_action :set_plan
 
   def create
+    unless current_user.is_active?
+      reset_session
+      return redirect_to new_user_registration_path, alert: "退会したユーザーはいいねできません"
+    end
+
     @like = current_user.likes.new(plan_id: @plan.id)
     @like.save
   end
