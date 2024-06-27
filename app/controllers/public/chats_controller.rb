@@ -28,7 +28,7 @@ class Public::ChatsController < ApplicationController
     @chat = current_user.chats.new(chat_params)
     if @chat.save
     else
-      flash.now[:alert] = "メッセージを送信できませんでした"
+      flash.now[:alert] = "メッセージを入力してください"
     end
   end
 

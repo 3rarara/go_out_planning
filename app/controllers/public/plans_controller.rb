@@ -27,6 +27,14 @@ class Public::PlansController < ApplicationController
   end
 
   def show
+    if @plan.is_draft
+      if @plan.user != current_user
+        # 他のユーザーの下書き投稿へのアクセスを防ぐ
+        redirect_to root_path, alert: 'このプランは現在閲覧できません。'
+        return
+      end
+    end
+
     @plan_details = @plan.plan_details
     @comment = Comment.new
     @tag_list = @plan.tags.pluck(:name).join(',')
