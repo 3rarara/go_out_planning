@@ -3,12 +3,17 @@ class Public::CommentsController < ApplicationController
 
   def create
     @plan = Plan.find(params[:plan_id])
+    unless current_user.is_active?
+      reset_session
+      return redirect_to new_user_registration_path, alert: "退会したユーザーはコメントを送信できません"
+    end
+
     @comment = current_user.comments.new(comment_params)
     @comment.plan_id = @plan.id
     if @comment.save
-      flash.now[:notice] = "コメントを投稿しました"
+      flash.now[:notice] = "コメントを送信しました"
     else
-      flash.now[:alert] = "コメントを投稿できませんでした"
+      flash.now[:alert] = "コメントを送信できませんでした"
     end
   end
 
