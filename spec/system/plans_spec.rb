@@ -104,6 +104,7 @@ require 'rails_helper'
     end
     context '投稿処理のテスト' do
       it '投稿後のリダイレクト先は正しいか' do
+        # binding.pry
         fill_in 'plan[title]', with: Faker::Lorem.characters(number:5)
         fill_in 'plan[body]', with: Faker::Lorem.characters(number:20)
         fill_in 'plan[plan_details_attributes][0][title]', with: Faker::Lorem.sentence
