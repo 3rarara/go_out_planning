@@ -55,23 +55,22 @@ class Public::PlansController < ApplicationController
     # 不適切なコンテンツのチェック
     if plan_params[:plan_image].present?
       result = Vision.image_analysis(plan_params[:plan_image])
-      if result
-        if @plan.save
-          @plan.save_plan_tags(tag_list)
-
-          if @plan.is_draft
-            redirect_to new_plan_path, notice: "下書きが保存されました"
-          else
-          redirect_to plan_path(@plan), notice: "プランを投稿しました"
-          end
-        else
-          flash.now[:alert] = "プランを投稿できませんでした"
-          render 'new'
-        end
-      else
+      unless result
         flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
         render 'new'
       end
+    end
+
+    if @plan.save
+      @plan.save_plan_tags(tag_list) if tag_list
+      if @plan.is_draft
+        redirect_to new_plan_path, notice: "下書きが保存されました"
+      else
+        redirect_to plan_path(@plan), notice: "プランを投稿しました"
+      end
+    else
+      flash.now[:alert] = "プランを投稿できませんでした"
+      render 'new'
     end
   end
 
@@ -86,23 +85,24 @@ class Public::PlansController < ApplicationController
     # 不適切なコンテンツのチェック
     if plan_params[:plan_image].present?
       result = Vision.image_analysis(plan_params[:plan_image])
-      if result
-        if @plan.update(plan_params)
-          @plan.tags.destroy_all
-          @plan.save_plan_tags(tag_list)
-          if @plan.is_draft
-            redirect_to new_plan_path, notice: "下書きが保存されました"
-          else
-          redirect_to plan_path(@plan), notice: "プランを編集しました"
-          end
-        else
-          flash.now[:alert] = "プランを編集できませんでした"
-          render 'edit'
-        end
-      else
+      unless result
         flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
-        render 'edit'
+        render 'edit' and return
       end
+    end
+
+    if @plan.update(plan_params)
+      @plan.tags.destroy_all if tag_list
+      @plan.save_plan_tags(tag_list) if tag_list
+
+      if @plan.is_draft
+        redirect_to new_plan_path, notice: "下書きが保存されました"
+      else
+        redirect_to plan_path(@plan), notice: "プランを編集しました"
+      end
+    else
+      flash.now[:alert] = "プランを編集できませんでした"
+      render 'edit'
     end
   end
 
