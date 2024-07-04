@@ -57,7 +57,7 @@ class Public::PlansController < ApplicationController
       result = Vision.image_analysis(plan_params[:plan_image])
       unless result
         flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
-        render 'new'
+        render 'new' and return
       end
     end
 
