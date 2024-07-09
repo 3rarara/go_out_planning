@@ -22,10 +22,10 @@
             <%= f.label :プロフィール画像 %>
             <%= f.file_field :profile_image, placeholder: "プロフィール", accept: "image/*" %>
 
-      　　　　　　<div class="row justify-content-center">
+      　　　　　<div class="row justify-content-center">
               <%= f.submit "更新", class: "btn btn-warning m-4" %>
               <%= link_to "退会", confirm_user_path, class: "btn btn-danger m-4" %>
-      　　　　　　</div>
+      　　　　　</div>
 
           <% end %>
 
