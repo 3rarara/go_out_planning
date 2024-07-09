@@ -77,4 +77,10 @@ class User < ApplicationRecord
     update(is_active: false)
   end
 
+  # 有効会員のスコープ
+  scope :active, -> { where(is_active: true).order(created_at: :desc) }
+
+  # 退会済み会員のスコープ
+  scope :inactive, -> { where(is_active: false).order(created_at: :desc) }
+
 end

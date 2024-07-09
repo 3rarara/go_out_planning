@@ -3,20 +3,17 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    @active_users = User.where(users: { is_active: true })
-    @close_account_users = User.where(users: { is_active: false })
+    @active_users = User.active
+    @close_account_users = User.inactive
   end
 
   def edit
-    @plans = @user.plans.all
   end
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "ユーザー情報を変更しました"
       redirect_to edit_admin_user_path, notice: "ユーザー情報を変更しました"
     else
-      @plans = @user.plans.all
       flash.now[:alert] = "ユーザー情報を変更できませんでした"
       render 'edit'
     end
@@ -25,9 +22,8 @@ class Admin::UsersController < ApplicationController
   def destroy
     if @user.is_active == false
       @user.destroy
-      redirect_to root_path, notice: "ユーザーを削除しました"
+      redirect_to admin_users_path, notice: "ユーザーを削除しました"
     else
-      @plans = @user.plans.all
       flash.now[:alert] = "ユーザーを削除できませんでした"
       render 'edit'
     end
@@ -37,6 +33,7 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+    @plans = @user.plans.all
   end
 
   def user_params
