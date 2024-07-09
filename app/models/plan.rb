@@ -59,11 +59,6 @@ class Plan < ApplicationRecord
     query.distinct
   end
 
-  # 検索用カラム保存
-  def update_plan_search
-    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
-  end
-
   # タグ機能
   def save_plan_tags(tags)
     # 現在のタグを取得し、nilの場合は空の配列を代入する
@@ -79,6 +74,13 @@ class Plan < ApplicationRecord
     # 削除されたタグの削除
     tags_to_delete = current_tags - tags
     self.tags.where(name: tags_to_delete).destroy_all
+  end
+
+  private
+
+  # 検索用カラム保存
+  def update_plan_search
+    self.plan_search = "#{title} #{body} #{plan_details.map(&:title).join(' ')} #{plan_details.map(&:body).join(' ')} #{plan_details.map(&:address).join(' ')}"
   end
 
   # 通知機能

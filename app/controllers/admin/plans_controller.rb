@@ -8,8 +8,6 @@ class Admin::PlansController < ApplicationController
   end
 
   def edit
-    @plan_details = @plan.plan_details
-    @plan_tags = @plan.tags
   end
 
   def update
@@ -28,8 +26,6 @@ class Admin::PlansController < ApplicationController
     if @plan.destroy
       redirect_to admin_root_path, notice: "プランを削除しました"
     else
-      @plan_details = @plan.plan_details
-      @plan_tags = @plan.tags
       flash.now[:alert] = "プランを削除できませんでした"
       render 'edit'
     end
@@ -39,6 +35,8 @@ class Admin::PlansController < ApplicationController
 
   def set_plan
     @plan = Plan.find(params[:id])
+    @plan_details = @plan.plan_details
+    @plan_tags = @plan.tags
   end
 
   def create_notifications

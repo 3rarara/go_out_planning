@@ -9,7 +9,8 @@ class Admin::CommentsController < ApplicationController
       flash.now[:alert] = "コメントを削除できませんでした"
       @plan = Plan.find(params[:plan_id])
       @plan_details = @plan.plan_details
-      render 'admin/plans/show'
+      @plan_tags = @plan.tags
+      render 'admin/plans/edit'
     end
   end
 

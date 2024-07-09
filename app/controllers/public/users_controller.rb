@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_current_user, except: [:show]
+  before_action :set_user, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
   before_action :check_user_active, only: [:show]
 
@@ -37,7 +38,6 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     fetch_user_data
 
     if current_user?(@user)
@@ -51,12 +51,17 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def ensure_current_user
-    redirect_to mypage_path unless current_user?(@user)
+    unless current_user?(@user)
+      redirect_to mypage_path
+    end
   end
 
   def check_user_active
-    @user = User.find(params[:id])
     unless @user.is_active?
       redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
     end
