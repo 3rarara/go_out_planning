@@ -4,7 +4,6 @@ class Public::PlansController < ApplicationController
   before_action :ensure_current_user, only: [:edit, :update, :destroy]
   before_action :check_user_active, only: [:show]
   before_action :check_draft_plan, only: [:show]
-  before_action :check_inappropriate_image, only: [:create, :update]
 
   def new
     @plan = Plan.new
@@ -43,6 +42,15 @@ class Public::PlansController < ApplicationController
     @plan.is_draft = params[:commit] == "下書き保存"
     plan_tags = params[:plan][:tags].split(',') if params[:plan][:tags]
 
+    # 不適切なコンテンツのチェック
+    if plan_params[:plan_image].present?
+      result = Vision.image_analysis(plan_params[:plan_image])
+      unless result
+        flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
+        render 'new' and return
+      end
+    end
+
     if @plan.save
       @plan.save_plan_tags(plan_tags) if plan_tags
 
@@ -64,6 +72,15 @@ class Public::PlansController < ApplicationController
   def update
     @plan.is_draft = params[:commit] == "下書き保存"
     plan_tags = params[:plan][:tags].split(',') if params[:plan][:tags]
+
+    # 不適切なコンテンツのチェック
+    if plan_params[:plan_image].present?
+      result = Vision.image_analysis(plan_params[:plan_image])
+      unless result
+        flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
+        render 'edit' and return
+      end
+    end
 
     if @plan.update(plan_params)
       @plan.tags.destroy_all if plan_tags
@@ -124,17 +141,6 @@ class Public::PlansController < ApplicationController
   def check_draft_plan
     if @plan.is_draft && @plan.user != current_user
       redirect_to plans_path, alert: 'このプランは現在閲覧できません'
-    end
-  end
-
-    # 不適切なコンテンツのチェック
-  def check_inappropriate_image
-    if plan_params[:plan_image].present?
-      result = Vision.image_analysis(plan_params[:plan_image])
-      unless result
-        flash.now[:alert] = "アップロードされた画像に不適切なコンテンツが含まれています"
-        render 'new' and return
-      end
     end
   end
 
