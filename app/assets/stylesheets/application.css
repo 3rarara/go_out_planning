@@ -115,3 +115,9 @@ a {
   left: 50%;
   transform: translateX(-50%);
 }
+
+/*プレビュー画像サイズ*/
+.new-img{
+  width: calc(100% - 56px);
+  object-fit: cover;
+}

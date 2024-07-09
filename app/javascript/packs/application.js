@@ -105,28 +105,36 @@ document.addEventListener('turbolinks:load', () => {
   });
 });
 
-// タグ入力保管機能
-// $(document).on('turbolinks:load', function() {
-//     $('#tags-input').select2({
-//         tags: true,
-//         tokenSeparators: [','],
-//         placeholder: 'コンマで区切ってタグを追加してください',
-//         ajax: {
-//             url: '/tags_list', // タグ一覧を取得するエンドポイント
-//             dataType: 'json',
-//             delay: 250,
-//             data: function(params) {
-//                 return {
-//                     q: params.term // 検索クエリを'q'として送信
-//                 };
-//             },
-//             processResults: function(data) {
-//                 return {
-//                     results: data
-//                 };
-//             },
-//             cache: true
-//         }
-//     });
-// });
+// 画像プレビューの記述
+document.addEventListener('turbolinks:load', () => {
+  // 画像プレビューを作成する関数
+  const createImageHTML = (blob) => {
+    const imageElement = document.getElementById('new-image');
+    const blobImage = document.createElement('img');
+    blobImage.setAttribute('class', 'new-img');
+    blobImage.setAttribute('src', blob);
+
+    imageElement.appendChild(blobImage);
+  };
+
+  // 画像選択時のイベントリスナーを設定する関数
+  const setImagePreviewListener = () => {
+    document.getElementById('plan_plan_image').addEventListener('change', (e) => {
+      const imageContent = document.querySelector('.new-img');
+      if (imageContent) {
+        imageContent.remove();
+      }
+
+      const file = e.target.files[0];
+      const blob = window.URL.createObjectURL(file);
+      createImageHTML(blob);
+    });
+  };
+
+  // URLがnewまたはeditにマッチする場合に画像プレビューを有効にする
+  if (document.URL.match(/new/) || document.URL.match(/edit/)) {
+    setImagePreviewListener();
+  }
+});
+
 
