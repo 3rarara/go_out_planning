@@ -73,8 +73,8 @@ main{
   line-height: 2.5;
 }
 
-/*プレビュー画像サイズ*/
-.new-img{
+/* プレビュー画像のスタイル */
+.preview-img {
   width: calc(100% - 56px);
   object-fit: cover;
 }
@@ -86,15 +86,16 @@ main{
 
 /* カスタムファイル選択ボタンのスタイル */
 .custom-file-upload {
-  border: 2px solid #007bff;
   display: inline-block;
   padding: 10px 20px;
+  background-color: #007bff; /* ボタンの背景色 */
+  color: #fff; /* ボタンの文字色 */
+  border: none;
+  border-radius: 5px; /* ボタンの角を丸くする */
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  border-radius: 5px;
-  font-size: 16px;
   text-align: center;
+  font-size: 16px; /* 文字サイズ */
+  font-weight: bold; /* 文字の太さ */
 }
 
 .custom-file-upload:hover {
