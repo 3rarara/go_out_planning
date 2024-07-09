@@ -11,18 +11,18 @@
     <div id="tab1" class="tab">
       <!--プラン一覧を表示-->
       <%= render 'layouts/search', object: search_path %>
-      <%= render 'index', plans: @plans, tags: @tags %>
+      <%= render 'public/plans/index', plans: @plans, tags: @tags %>
     </div>
 
     <div id="tab2" class="tab">
       <!--フォローユーザープラン一覧を表示-->
       <%= render 'layouts/search', object: search_path %>
-      <%= render 'index', plans: @followed_plans, tags: @tags %>
+      <%= render 'public/plans/index', plans: @followed_plans, tags: @tags %>
     </div>
 
     <div id="tab3" class="tab">
       <!--Mapを表示-->
-      <%= render 'map_index', plan_details: @plan_details %>
+      <%= render 'public/plans/map_index', plan_details: @plan_details %>
     </div>
 
   </div>
