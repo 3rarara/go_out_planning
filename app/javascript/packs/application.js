@@ -105,37 +105,40 @@ document.addEventListener('turbolinks:load', () => {
   });
 });
 
-// 画像プレビューの記述
 document.addEventListener('turbolinks:load', () => {
-  // 画像プレビューを作成する関数
-  const createImageHTML = (blob) => {
-    const imageElement = document.getElementById('new-image');
+  const planImageInput = document.getElementById('plan_plan_image');
+  const imagePreview = document.getElementById('image-preview');
+
+  const updateImagePreview = (blob) => {
+    // プレビュー画像が既に表示されている場合は削除
+    const existingImage = imagePreview.querySelector('img');
+    if (existingImage) {
+      existingImage.remove();
+    }
+
+    // 新しい画像を表示
     const blobImage = document.createElement('img');
-    blobImage.setAttribute('class', 'new-img');
+    blobImage.setAttribute('class', 'preview-img');
     blobImage.setAttribute('src', blob);
-
-    imageElement.appendChild(blobImage);
+    imagePreview.appendChild(blobImage);
   };
 
-  // 画像選択時のイベントリスナーを設定する関数
-  const setImagePreviewListener = () => {
-    document.getElementById('plan_plan_image').addEventListener('change', (e) => {
-      const imageContent = document.querySelector('.new-img');
-      if (imageContent) {
-        imageContent.remove();
-      }
-
-      const file = e.target.files[0];
+  planImageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
       const blob = window.URL.createObjectURL(file);
-      createImageHTML(blob);
-    });
-  };
+      updateImagePreview(blob);
+    }
+  });
 
-  // URLがnewまたはeditにマッチする場合に画像プレビューを有効にする
-  if (document.URL.match(/new/) || document.URL.match(/edit/)) {
-    setImagePreviewListener();
+  // ページ読み込み時に画像が選択されている場合のプレビュー
+  if (planImageInput.files.length > 0) {
+    const file = planImageInput.files[0];
+    const blob = window.URL.createObjectURL(file);
+    updateImagePreview(blob);
   }
 });
+
 
 
 // プロフィール画像プレビューの記述

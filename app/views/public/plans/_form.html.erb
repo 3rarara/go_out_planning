@@ -32,9 +32,13 @@
     <label for="plan_plan_image" class="custom-file-upload">
       <i class="fas fa-cloud-upload-alt"></i> 画像を選択
     </label>
-    <%= f.file_field :plan_image, accept: "image/*", class: 'file-input' %>
+    <%= f.file_field :plan_image, accept: "image/*", class: 'file-input', id: 'plan_plan_image' %>
   </div>
-  <div id="new-image" class="mt-4"></div>
+  <div id="image-preview" class="mt-4">
+    <% if @plan.plan_image.attached? %>
+      <%= image_tag @plan.plan_image, class: 'preview-img', id: 'current-image' %>
+    <% end %>
+  </div>
 
   <h5 class="mt-4">タグ</h5>
   <%= f.text_field :tags, value: plan.tags.map(&:name).join(", "), class: "form-control", placeholder: ",で区切ると複数タグ登録可能", list: "tag-list" %>
