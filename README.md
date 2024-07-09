@@ -63,6 +63,7 @@ __コミットメッセージの記法__
 `add:追加`
 `delete:削除`
 `fix:不具合修正`
+`update:更新`
 `close #:Issuesをclose`
 
 ## 使用技術
