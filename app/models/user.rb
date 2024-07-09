@@ -28,6 +28,10 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 
+  # スコープ
+  scope :active, -> { where(is_active: true) }
+  scope :inactive, -> { where(is_active: false) }
+
   # プロフィール画像
   has_one_attached :profile_image
 
@@ -76,11 +80,5 @@ class User < ApplicationRecord
   def close_account
     update(is_active: false)
   end
-
-  # 有効会員のスコープ
-  scope :active, -> { where(is_active: true).order(created_at: :desc) }
-
-  # 退会済み会員のスコープ
-  scope :inactive, -> { where(is_active: false).order(created_at: :desc) }
 
 end

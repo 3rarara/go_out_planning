@@ -22,6 +22,10 @@ class Plan < ApplicationRecord
   # after_commit :process_plan_image, on: [:create, :update], if: -> { plan_image.attached? }
   after_create_commit :notify_followers
 
+  # スコープ
+  scope :published, -> { where(is_draft: false) }
+  scope :draft, -> { where(is_draft: true) }
+  scope :active_users, -> { joins(:user).merge(User.active) }
 
   # 投稿画像
   has_one_attached :plan_image
@@ -76,30 +80,6 @@ class Plan < ApplicationRecord
     tags_to_delete = current_tags - tags
     self.tags.where(name: tags_to_delete).destroy_all
   end
-
-  private
-
-  # 画像プログレッシブ圧縮の実装
-  # def process_plan_image
-  #   begin
-  #     image = MiniMagick::Image.read(plan_image.download)
-  #     image.auto_orient
-  #     image.strip
-  #     image.quality("85")
-  #     image.interlace("Plane")
-
-  #     unique_filename = "#{SecureRandom.uuid}_#{plan_image.filename.to_s}"
-  #     temp_file_path = Rails.root.join("tmp/#{unique_filename}")
-  #     image.write(temp_file_path)
-
-  #     plan_image.attach(io: File.open(temp_file_path), filename: plan_image.filename.to_s, content_type: plan_image.content_type)
-
-  #     File.delete(temp_file_path) if File.exist?(temp_file_path)
-  #   rescue MiniMagick::Error => e
-  #     Rails.logger.error "MiniMagick::Error: #{e.message}"
-  #     raise
-  #   end
-  # end
 
   # 通知機能
   def notify_followers

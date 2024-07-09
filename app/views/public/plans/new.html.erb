@@ -8,12 +8,18 @@
   <div id="tab-contents">
     <div id="tab1" class="tab">
       <!--新規投稿欄-->
-      <%= render 'new', plan: @plan %>
+      <div class="container mx-auto">
+        <div class="row">
+          <div class="col bg-white p-4 shadow-lg mx-auto rounded my-3">
+            <%= render 'public/plans/form', plan: @plan %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="tab2" class="tab">
       <!--下書き一覧-->
-      <%= render 'drafts', plans: @drafts %>
+      <%= render 'public/plans/drafts', plans: @drafts %>
     </div>
 
   </div>

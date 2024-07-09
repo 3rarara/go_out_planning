@@ -3,8 +3,8 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    @active_users = User.active
-    @close_account_users = User.inactive
+    @active_users = User.active.order(created_at: :desc)
+    @close_account_users = User.inactive.order(created_at: :desc)
   end
 
   def edit
