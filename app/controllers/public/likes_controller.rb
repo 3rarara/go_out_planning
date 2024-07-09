@@ -3,6 +3,8 @@ class Public::LikesController < ApplicationController
   before_action :set_plan
 
   def create
+    
+    # 管理者が強制退会を実行した時に実行
     unless current_user.is_active?
       reset_session
       return redirect_to new_user_registration_path, alert: "退会したユーザーはいいねできません"

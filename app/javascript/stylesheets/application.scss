@@ -72,3 +72,73 @@ main{
   color: #000;
   line-height: 2.5;
 }
+
+/* プレビュー画像のスタイル */
+.preview-img {
+  width: calc(100% - 56px);
+  object-fit: cover;
+}
+
+/* デフォルトのファイル入力ボタンを非表示 */
+.file-input {
+  display: none;
+}
+
+/* カスタムファイル選択ボタンのスタイル */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* ボタンの背景色 */
+  color: #fff; /* ボタンの文字色 */
+  border: none;
+  border-radius: 5px; /* ボタンの角を丸くする */
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px; /* 文字サイズ */
+  font-weight: bold; /* 文字の太さ */
+}
+
+.custom-file-upload:hover {
+  background-color: #0056b3;
+}
+
+/* アイコンのスタイル (例: Font Awesome アイコン) */
+.custom-file-upload i {
+  margin-right: 5px;
+}
+
+/* プロフィール画像のコンテナ */
+.profile-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 90px;
+  height: 90px;
+}
+
+/* プロフィール画像のプレビュー */
+.profile-image-preview-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* カスタムファイル選択ボタンのスタイル */
+.profile-image-upload {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #3B4674;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  bottom: -15px;
+  right: -5px;
+}

@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-10 col-lg-8 my-3 p-4 mx-auto">
       <h2>"<%= @tag.name %><%="(#{@tag.plans.count})" %>"</h2>
 
-        <%= render 'index', plans: @plans, tags: @tags %>
+        <%= render 'public/plans/index', plans: @plans, tags: @tags %>
 
     </div>
   </div>

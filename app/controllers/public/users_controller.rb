@@ -1,10 +1,11 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_current_user, except: [:show]
+  before_action :set_user, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
+  before_action :check_user_active, only: [:show]
 
   def mypage
-    # ユーザーデータの取得
     fetch_user_data
   end
 
@@ -37,14 +38,10 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    # ユーザーデータの取得
     fetch_user_data
 
-    if @user.is_active?
-      redirect_to mypage_path if current_user == @user
-    else
-      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
+    if current_user?(@user)
+      redirect_to mypage_path
     end
   end
 
@@ -54,15 +51,32 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def ensure_current_user
-    redirect_to plans_path unless @user == current_user
+    unless current_user?(@user)
+      redirect_to mypage_path
+    end
+  end
+
+  def check_user_active
+    unless @user.is_active?
+      redirect_to mypage_path, alert: "指定のユーザーは退会済みです"
+    end
   end
 
   def fetch_user_data
-    @plans = @user.plans.where(is_draft: false).order(created_at: :desc)
+    @plans = @user.plans.published.order(created_at: :desc)
     @like_plans = Plan.joins(:likes)
-                      .where(likes: { user_id: @user.id }, is_draft: false)
+                      .where(likes: { user_id: @user.id })
+                      .published
                       .order('likes.created_at DESC')
+  end
+
+  def current_user?(user)
+    user == current_user
   end
 
   def user_params
