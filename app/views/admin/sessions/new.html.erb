@@ -2,21 +2,19 @@
   <div class="row">
 
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <h5 class="mb-3"><b>管理者ログイン</b></h2>
+      <h5 class="mb-3">管理者ログイン</h2>
 
       <div class="row">
         <div class="col mx-2">
 
         <%= form_with model: @admin, url: admin_session_path do |f| %>
 
-        <%= f.label :メールアドレス %>
           <div class="mb-2">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
           </div>
 
-          <%= f.label :パスワード %>
           <div class="mb-4">
-            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "パスワード" %>
           </div>
 
           <div class="row justify-content-cente" >
