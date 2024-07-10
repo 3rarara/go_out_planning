@@ -1,95 +1,21 @@
+<footer class="mb-20">
+    <div class="col text-center">
+      <%= link_to "利用規約", terms_of_use_path, class: "fsize_13-18" %>
+    </div>
+    <div class="col text-center">
+      <%= link_to "プライバシーポリシー", privacy_policy_path, class: "fsize_13-18" %>
+    </div>
+    <div class="col text-center">
+      <%= link_to "お問い合わせ", 'https://forms.gle/NajR4B8tSa2WQof46', target: :_blank, class: "fsize_13-18" %>
+    </div>
 
-<footer class="footer fixed-bottom" style="background-color: #3B4674; height: 80px;">
-  <div class="container mt-3">
-    <nav class="row d-flex justify-content-center">
-
-        <ul class="nav d-flex justify-content-center list-unstyled mt-3">
-
-          <% if admin_signed_in? %>
-          <li class="nav-item mx-3">
-            <%= link_to admin_root_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
-            <% end %>
-          </li>
-
-          <li class="nav-item mx-3">
-            <%= link_to admin_tags_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-tag fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">タグ</p>
-            <% end %>
-          </li>
-
-          <li class="nav-item mx-3">
-            <%= link_to admin_users_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">ユーザー</p>
-            <% end %>
-          </li>
-
-          <li class="nav-item mx-3">
-            <%= link_to admin_chats_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-users fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">DM</p>
-            <% end %>
-          </li>
-
-          <% elsif user_signed_in? %>
-          <li class="nav-item mx-3">
-            <%= link_to plans_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
-            <% end %>
-          </li>
-          <li class="nav-item mx-3">
-            <%= link_to new_plan_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-plus fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">投稿</p>
-            <% end %>
-          </li>
-
-          <li class="nav-item mx-3" style="position: relative;">
-            <%= link_to notifications_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-bell fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">通知</p>
-              <% if @unread_notifications_count.to_i > 0 %>
-                <span class="badge" style="position: absolute; top: -20px; right: -8px; background-color: red; color: #FFD43B; border-radius: 50%; padding: 2px 5px; font-size: 12px;">
-                  <%= @unread_notifications_count %>
-                </span>
-              <% end %>
-            <% end %>
-          </li>
-
-          <li class="nav-item mx-3" style="position: relative;">
-            <%= link_to chats_path, class: "menu-icon" do %>
-            <i class="fa-solid fa-envelope fa-xl" style="color: #FFD43B;"></i>
-            <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">DM</p>
-              <% if @unread_chats_count.to_i > 0 %>
-                <span class="badge" style="position: absolute; top: -20px; right: -8px; background-color: red; color: #FFD43B; border-radius: 50%; padding: 2px 5px; font-size: 12px;">
-                  <%= @unread_chats_count %>
-                </span>
-              <% end %>
-            <% end %>
-          </li>
-
-          <li class="nav-item mr-3 ml-1">
-            <%= link_to mypage_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-circle-user fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">マイページ</p>
-            <% end %>
-          </li>
-
-          <% else %>
-          <li class="nav-item mx-3">
-            <%= link_to plans_path, class: "menu-icon" do %>
-              <i class="fa-solid fa-house fa-xl" style="color: #FFD43B;"></i>
-              <p class="text-center mt-3" style="color: #FFD43B; font-size: 10px;">プラン</p>
-            <% end %>
-          </li>
-          <% end %>
-        </ul>
-
-
-    </nav>
+  <div class="text-center mt-2 fsize_13-18 mx-1">
+    © 2024  - GooutPlanning -
+    <%= link_to 'https://twitter.com/3rararara', target: :_blank, class: "fsize_13-18 mx-1" do %>
+      <i class="fa-brands fa-x-twitter" style="color: #000000;"></i>
+    <% end %>
+    <%= link_to 'https://github.com/3rarara/go_out_planning', target: :_blank, class: "fsize_13-18 mx-1" do %>
+      <i class="fa-brands fa-github" style="color: #000000;"></i>
+    <% end %>
   </div>
 </footer>

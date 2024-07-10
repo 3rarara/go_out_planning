@@ -2,31 +2,32 @@
   <div class="row">
 
     <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <h5 class="mb-3"><b>ユーザー登録</b></h5>
+      <h5 class="mb-3">新規登録</h5>
       <%= render "public/shared/error_messages", resource: resource %>
       <div class="row">
         <div class="col mx-2">
+          <p>
+            <%= link_to "利用規約", terms_of_use_path %>および
+            <%= link_to "プライバシーポリシー", privacy_policy_path %>
+            に同意した上で、 以下の「登録」ボタンを押してください。
+          </p>
 
           <%= form_with model: @user, url: user_registration_path do |f| %>
 
-            <%= f.label :ユーザー名 %>
             <div class="mb-2">
-              <%= f.text_field :name, class: "form-control", placeholder: "おでかけ太朗" %>
+              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" %>
             </div>
 
-            <%= f.label :メールアドレス %>
             <div class="mb-2">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "go_out@example.com" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
             </div>
 
-            <%= f.label :パスワード %>
             <div class="mb-2">
-              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "6文字以上" %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "パスワード" %>
             </div>
 
-            <%= f.label :パスワード確認 %>
             <div class="mb-4">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "6文字以上" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)" %>
             </div>
 
             <div class="row justify-content-cente" >
@@ -34,7 +35,16 @@
             </div>
           <% end %>
 
-          <div class="text-center">
+          <div class="row justify-content-center">
+          <%- if devise_mapping.omniauthable? %>
+            <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border' do %>
+            <%= image_tag 'google_logo.png', alt: 'Googleロゴ', class: 'google-logo' %>
+            Googleで登録
+            <% end %>
+          <% end %>
+          </div>
+
+          <div class="text-center mt-3">
             <%= link_to 'ログインはこちら', new_user_session_path %>
           </div>
 
