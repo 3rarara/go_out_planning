@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
+    get 'terms_of_use', to: 'homes#terms_of_use'
+    get 'privacy_policy', to: 'homes#privacy_policy'
     get 'mypage' => 'users#mypage', as: 'mypage'
     get 'mypage/edit' => 'users#edit', as: 'edit_mypage'
     patch 'mypage' => 'users#update'

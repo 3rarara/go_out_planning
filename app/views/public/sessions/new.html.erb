@@ -9,14 +9,12 @@
 
           <%= form_with model: @user, url: user_session_path do |f| %>
 
-            <%= f.label :メールアドレス %>
             <div class="mb-2">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "go_out@example.com" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
             </div>
 
-            <%= f.label :パスワード %>
             <div class="mb-4">
-              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "6文字以上" %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "パスワード" %>
             </div>
 
             <div class="row justify-content-cente" >
