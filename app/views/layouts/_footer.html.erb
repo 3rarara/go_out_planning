@@ -1,13 +1,21 @@
 <footer class="mb-20">
-  <div class="row border-bottom">
     <div class="col text-center">
       <%= link_to "利用規約", terms_of_use_path, class: "fsize_13-18" %>
     </div>
-    <div class="col-7 text-center">
+    <div class="col text-center">
       <%= link_to "プライバシーポリシー", privacy_policy_path, class: "fsize_13-18" %>
     </div>
-  </div>
-  <div class="text-center mt-2">
+    <div class="col text-center">
+      <%= link_to "お問い合わせ", 'https://forms.gle/NajR4B8tSa2WQof46', target: :_blank, class: "fsize_13-18" %>
+    </div>
+
+  <div class="text-center mt-2 fsize_13-18 mx-1">
     © 2024  - GooutPlanning -
+    <%= link_to 'https://twitter.com/3rararara', target: :_blank, class: "fsize_13-18 mx-1" do %>
+      <i class="fa-brands fa-x-twitter" style="color: #000000;"></i>
+    <% end %>
+    <%= link_to 'https://github.com/3rarara/go_out_planning', target: :_blank, class: "fsize_13-18 mx-1" do %>
+      <i class="fa-brands fa-github" style="color: #000000;"></i>
+    <% end %>
   </div>
 </footer>
