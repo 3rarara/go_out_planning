@@ -115,3 +115,15 @@ a {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+}
+.scroll-container img {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.scroll-container img:last-child {
+  margin-right: 0;
+}
