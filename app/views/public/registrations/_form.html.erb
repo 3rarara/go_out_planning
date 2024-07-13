@@ -1,6 +1,6 @@
 <div class="container mx-auto">
   <div class="row">
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-5 shadow-lg mx-auto rounded">
+    <div class="col my-3 p-4 mx-auto">
       <%= render "public/shared/error_messages", resource: resource %>
       <div class="row">
         <div class="col mx-2">
@@ -13,16 +13,16 @@
           <%= form_with model: resource, url: user_registration_path do |f| %>
 
             <div class="mb-2">
-              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" %>
+              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名", required: true %>
             </div>
             <div class="mb-2">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", required: true %>
             </div>
             <div class="mb-2">
-              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "パスワード" %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "パスワード", required: true %>
             </div>
             <div class="mb-4">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)", required: true %>
             </div>
             <div class="row justify-content-center" >
               <%= f.submit "登録", class: "btn btn-warning mx-3 mb-3 btn-form" %>
@@ -38,7 +38,7 @@
           <% end %>
 
           <div class="text-center mt-4">
-            <%= link_to 'ログインはこちら', '#loginModal', data: { toggle: 'modal' } %>
+            <%= link_to 'ログインはこちら', '#loginModal', data: { toggle: 'modal', dismiss: "modal" } %>
           </div>
 
         </div>

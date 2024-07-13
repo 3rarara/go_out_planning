@@ -1,8 +1,8 @@
 <div class="container mx-auto">
   <div class="row">
 
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-5 shadow-lg mx-auto rounded">
-      <%= render "public/shared/error_messages", resource: resource %>
+    <div class="col my-3 p-4 mx-auto">
+      <div class="js-errors"></div>
       <div class="row">
         <div class="col mx-2">
 
@@ -17,28 +17,28 @@
             </div>
 
             <div class="row justify-content-center">
-              <%= f.submit "ログイン", class: "btn btn-warning mx-2 mb-3 btn-form" %>
+              <%= f.submit "ログイン", class: "btn btn-warning mx-3 mb-3 btn-form" %>
             </div>
           <% end %>
 
             <div class="row justify-content-center">
-              <%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class: "btn btn-secondary mx-2 mb-3 btn-form" %>
+              <%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class: "btn btn-secondary mx-3 mb-3 btn-form" %>
             </div>
 
             <div class="row justify-content-center">
               <%- if devise_mapping.omniauthable? %>
-                <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border btn-form mx-2' do %>
-                <%= image_tag 'google_logo.png', alt: 'Googleロゴ',size: "30x30", class: 'google-logo' %>
+                <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border btn-form mx-3' do %>
+                <%= image_tag 'google_logo.png', alt: 'Googleロゴ',size: "30x30", class: 'google-logo mx-3' %>
                 Googleでログイン
                 <% end %>
               <% end %>
             </div>
 
           <div class="text-center mt-4">
-            <%= link_to '新規登録はこちら', '#registrationModal', data: { toggle: 'modal' } %>
+            <%= link_to '新規登録はこちら', '#registrationModal', data: { toggle: 'modal', dismiss: "modal" } %>
           </div>
           <div class="text-center mt-2">
-            <%= link_to '管理者はこちら', '#AdminloginModal', data: { toggle: 'modal' } %>
+            <%= link_to '管理者はこちら', '#AdminloginModal', data: { toggle: 'modal', dismiss: "modal" } %>
           </div>
 
         </div>
