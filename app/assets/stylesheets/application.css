@@ -140,3 +140,145 @@ a {
 .disabled {
   cursor: not-allowed;
 }
+
+/*ヘッターを固定*/
+header{
+  height: 80px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  transition: transform 0.3s 0.3s;
+}
+
+/*ヘッタースクロール時隠れる*/
+header.hidden {
+  transform: translateY(-80px);
+}
+
+main{
+  padding-top: 80px;
+}
+
+/*タブメニューcss*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#tab-menu {
+  display: flex;
+}
+
+#tab-menu li {
+  list-style-type: none;
+  width: 50%;
+}
+
+#tab-menu li a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  background: #CDD3E8;
+}
+
+#tab-menu .active {
+  border-bottom: 3px solid #FFDF5B;
+  color: #000;
+}
+
+#tab-contents {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#tab-contents .tab {
+  width: 100%;
+  padding: 15px;
+  background: #CDD3E8;
+  border-top: none;
+}
+
+#tab-contents p {
+  color: #000;
+  line-height: 2.5;
+}
+
+/* プレビュー画像のスタイル */
+.preview-img {
+  width: calc(100% - 56px);
+  object-fit: cover;
+}
+
+/* デフォルトのファイル入力ボタンを非表示 */
+.file-input {
+  display: none;
+}
+
+/* カスタムファイル選択ボタンのスタイル */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* ボタンの背景色 */
+  color: #fff; /* ボタンの文字色 */
+  border: none;
+  border-radius: 5px; /* ボタンの角を丸くする */
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px; /* 文字サイズ */
+  font-weight: bold; /* 文字の太さ */
+}
+
+.custom-file-upload:hover {
+  background-color: #0056b3;
+}
+
+/* アイコンのスタイル (例: Font Awesome アイコン) */
+.custom-file-upload i {
+  margin-right: 5px;
+}
+
+/* プロフィール画像のコンテナ */
+.profile-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 90px;
+  height: 90px;
+}
+
+/* プロフィール画像のプレビュー */
+.profile-image-preview-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* カスタムファイル選択ボタンのスタイル */
+.profile-image-upload {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #3B4674;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  bottom: -15px;
+  right: -5px;
+}
