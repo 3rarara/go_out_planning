@@ -14,21 +14,6 @@ class Public::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # ログイン失敗後は def failed に飛ぶように変更
-  def create
-      self.resource = warden.authenticate!(auth_options)
-      set_flash_message!(:notice, :signed_in)
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      respond_with resource, location: after_sign_in_path_for(resource)
-  end
-
-  # ログイン失敗の時は直前のURLにリダイレクトする
-  def failed
-    flash[:alert] = "入力情報が正しくありません"
-    redirect_to request.referer
-  end
-
   # DELETE /resource/sign_out
   # def destroy
   #   super
@@ -46,11 +31,6 @@ class Public::SessionsController < Devise::SessionsController
 
   # protected
   private
-
-  # ログイン失敗後の処理指定
-  def auth_options
-    { scope: resource_name, recall: "#{controller_path}#failed" }
-  end
 
   # アクティブ判断メソッド
   def user_status

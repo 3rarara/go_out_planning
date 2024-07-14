@@ -5,8 +5,9 @@
 
       <div class="row">
         <div class="col mx-2">
+          <h5>管理者ログイン</h5>
 
-        <%= form_with model: @admin, url: admin_session_path do |f| %>
+        <%= form_with model: resource, url: admin_session_path do |f| %>
 
           <div class="mb-2">
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>

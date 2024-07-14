@@ -136,3 +136,7 @@ a {
 .modal-logout {
   top: 10%;
 }
+
+.disabled {
+  cursor: not-allowed;
+}

@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:check_email, :check_user]
   before_action :set_current_user, except: [:show]
   before_action :set_user, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
@@ -42,6 +42,23 @@ class Public::UsersController < ApplicationController
 
     if current_user?(@user)
       redirect_to mypage_path
+    end
+  end
+
+  def check_email
+    email = params[:email]
+    user = User.find_by(email: email)
+    render json: user.nil? ? {status: true}.to_json : {status: false}.to_json
+  end
+
+  def check_user
+    user = User.find_by(email: params[:user][:email])
+    if !user.nil? && user.valid_password?(params[:user][:password])
+      sign_in user
+      flash[:notice] = "ログインしました。"
+      render json: {status: true}.to_json
+    else
+      render json: {status: false}.to_json
     end
   end
 

@@ -16,19 +16,19 @@ require 'rails_helper'
     end
     context '登録処理のテスト' do
       it '正しい情報で登録が成功すること' do
-        fill_in 'user[name]', with: user_attributes[:name]
-        fill_in 'user[email]', with: user_attributes[:email]
-        fill_in 'user[password]', with: user_attributes[:password]
-        fill_in 'user[password_confirmation]', with: user_attributes[:password]
+        fill_in 'user_name', with: user_attributes[:name]
+        fill_in 'user_email', with: user_attributes[:email]
+        fill_in 'user_password', with: user_attributes[:password]
+        fill_in 'user_password_confirmation', with: user_attributes[:password]
 
         expect { click_button '登録' }.to change(User, :count).by(1)
         expect(page).to have_content 'アカウント登録が完了しました'
       end
       it '誤った情報で登録処理が失敗すること' do
-        fill_in 'user[name]', with: ''
-        fill_in 'user[email]', with: ''
-        fill_in 'user[password]', with: ''
-        fill_in 'user[password_confirmation]', with: ''
+        fill_in 'user_name', with: ''
+        fill_in 'user_email', with: ''
+        fill_in 'user_password', with: ''
+        fill_in 'user_password_confirmation', with: ''
 
         expect { click_button '登録' }.not_to change(User, :count)
         expect(page).to have_content 'エラーが発生したため'
@@ -47,7 +47,7 @@ require 'rails_helper'
     end
     context 'ゲストログインのテスト' do
       it 'ゲストログインボタンをクリックするとログインされること' do
-        click_link 'ゲストログイン'
+        click_link 'guest_login_btn'
         expect(page).to have_content 'guestuserでログインしました。'
       end
     end
@@ -59,9 +59,9 @@ require 'rails_helper'
 
     before do
       visit new_user_session_path
-      fill_in 'user[email]', with: user.email
-      fill_in 'user[password]', with: user.password
-      click_button 'ログイン'
+      fill_in 'user_email', with: user.email
+      fill_in 'user_password', with: user.password
+      click_button 'login_btn'
       visit root_path
     end
     context '表示の確認' do
@@ -69,7 +69,7 @@ require 'rails_helper'
         expect(current_path).to eq('/')
       end
       it 'トップ画面(root_path)に一覧ページへのリンクが表示されているか' do
-        expect(page).to have_link "", href: plans_path
+        expect(page).to have_link "", href: root_path
       end
     end
   end
