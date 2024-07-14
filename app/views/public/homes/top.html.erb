@@ -10,8 +10,8 @@
       <p class="text-center" style="color: #3B4674">おでかけプランニングは旅行やデートのお店や施設ではなく</br>プランを共有するSNSサービスです</p>
 
       <%= link_to plans_path do %>
-        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
         <h4 class="text-center pb-1" style="color: #3B4674"><b>プランを検索しよう</b></h4>
+        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
         <p class="text-center" style="color: #3B4674">投稿は新規登録なしで閲覧が可能です ,で区切ると複数単語を検索できます</p>
         <p class="text-center mb-3" style="color: #3B4674">マップ検索をすると検索した場所までマップが移動します</p>
 
@@ -25,23 +25,27 @@
 
       <% if user_signed_in? %>
         <%= link_to new_plan_path do %>
+          <h4 class="text-center" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
           <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
+
+          <p class="text-center" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
+          <%= image_tag "iphone3.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
+
         <% end %>
       <% else %>
-        <%= link_to new_user_registration_path do %>
+
+        <%= link_to '#registrationModal', data: { toggle: 'modal' } do %>
+          <h4 class="text-center mt-3" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
           <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
+
+          <p class="text-center" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
+          <%= image_tag "iphone3.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
         <% end %>
       <% end %>
 
-      <h4 class="text-center" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
-      <p class="text-center" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
-      <%= image_tag "iphone3.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
-
-
-
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
-        無料で始める
-      </button>
+      <div class="text-center mt-4">
+        <%= link_to '無料で始める', '#registrationModal', data: { toggle: 'modal' } ,class: "btn btn-primary mb-5" %>
+      </div>
 
       <%= render 'layouts/footer' %>
     </div>
@@ -51,5 +55,4 @@
 <script>
   let scrollContainer = document.querySelector("#scroll-inner");
   let lastElement = scrollContainer.lastElementChild;
-  lastElement.scrollIntoView({ behavior: "smooth", inline: "end" });
 </script>

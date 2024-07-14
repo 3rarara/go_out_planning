@@ -1,15 +1,15 @@
 <div class="container mx-auto">
   <div class="row">
-
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <h5 class="mb-3">新規登録</h5>
+    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-5 shadow-lg mx-auto rounded">
+      <h5>新規登録</h5>
       <%= render "public/shared/error_messages", resource: resource %>
       <div class="row">
         <div class="col mx-2">
           <p>
             <%= link_to "利用規約", terms_of_use_path %>および
             <%= link_to "プライバシーポリシー", privacy_policy_path %>
-            に同意した上で、 以下の「登録」ボタンを押してください。
+            に同意した上で、 <br>
+            以下の「登録」ボタンを押してください。
           </p>
 
           <%= form_with model: @user, url: user_registration_path do |f| %>
@@ -27,25 +27,23 @@
             </div>
 
             <div class="mb-4">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード確認" %>
             </div>
 
             <div class="row justify-content-cente" >
-              <%= f.submit "登録", class: "btn btn-warning mx-auto mb-3" %>
+              <%= f.submit "登録", class: "btn btn-warning mx-3 my-3 btn-form" %>
+
+              <%- if devise_mapping.omniauthable? %>
+                <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border btn-form mx-3 mb-3' do %>
+                  <%= image_tag 'google_logo.png', alt: 'Googleロゴ',size: "30x30", class: 'google-logo' %>
+                  Googleで登録
+                <% end %>
+              <% end %>
             </div>
           <% end %>
 
-          <div class="row justify-content-center">
-          <%- if devise_mapping.omniauthable? %>
-            <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border' do %>
-            <%= image_tag 'google_logo.png', alt: 'Googleロゴ', class: 'google-logo' %>
-            Googleで登録
-            <% end %>
-          <% end %>
-          </div>
-
-          <div class="text-center mt-3">
-            <%= link_to 'ログインはこちら', new_user_session_path %>
+          <div class="text-center">
+            <%= link_to 'ログインはこちら', '#loginModal', data: { toggle: 'modal', dismiss: "modal" } %>
           </div>
 
         </div>

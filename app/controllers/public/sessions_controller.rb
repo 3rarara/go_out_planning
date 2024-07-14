@@ -26,13 +26,15 @@ class Public::SessionsController < Devise::SessionsController
 
   # ログアウト後ログインページへ
   def after_sign_out_path_for(resource)
-    new_user_session_path
+    root_path
   end
 
   # protected
   private
+
   # アクティブ判断メソッド
   def user_status
+    return if params[:user].nil?
     #emailからアカウントを１件取得
     user = User.find_by(email: params[:user][:email])
     return if user.nil?
@@ -40,7 +42,6 @@ class Public::SessionsController < Devise::SessionsController
     return if user.is_active?
     redirect_to new_user_registration_path, alert: "退会済みです。別のメールアドレスをお使いください。"
   end
-
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

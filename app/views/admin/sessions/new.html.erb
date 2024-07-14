@@ -1,13 +1,13 @@
 <div class="container mx-auto">
   <div class="row">
 
-    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-4 shadow-lg mx-auto rounded">
-      <h5 class="mb-3">管理者ログイン</h2>
+    <div class="col-sm-12 col-md-10 col-lg-8 bg-white my-3 p-5 shadow-lg mx-auto rounded">
 
       <div class="row">
         <div class="col mx-2">
+          <h5>管理者ログイン</h5>
 
-        <%= form_with model: @admin, url: admin_session_path do |f| %>
+        <%= form_with model: resource, url: admin_session_path do |f| %>
 
           <div class="mb-2">
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>

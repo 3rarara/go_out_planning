@@ -127,3 +127,16 @@ a {
 .scroll-container img:last-child {
   margin-right: 0;
 }
+
+.btn-form {
+  width: 100%;
+  height: 40px;
+}
+
+.modal-logout {
+  top: 10%;
+}
+
+.disabled {
+  cursor: not-allowed;
+}

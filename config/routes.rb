@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     patch 'mypage' => 'users#update'
     get 'users/confirm' => 'users#confirm', as: 'confirm_user'
     patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
+    get 'users/check_email' => 'users#check_email'
+    post 'users/check_user' => 'users#check_user'
     resources :users, only: [:show] do
       resource :relationships, only: [:create, :destroy]
         get 'followings' => 'relationships#followings', as: 'followings'
