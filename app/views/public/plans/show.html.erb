@@ -25,7 +25,6 @@
       <% end %>
 
       <% if @plan.plan_image.attached? %>
-        <%#= image_tag @plan.get_plan_image(700, 400), class: "img-fluid my-1 rounded" %>
         <%= image_tag @plan.plan_image, class: "img-fluid my-1 rounded" %>
       <% end %>
 
@@ -33,7 +32,11 @@
         <% @plan_tags.each do |tag| %>
           <div class="col text-center">
             <i class="fa-sharp fa-solid fa-tag"></i>
-            <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+            <% if user_signed_in? %>
+              <%= link_to tag.name, search_tag_path(tag_id: tag.id) %>
+            <% else %>
+              <%=  tag.name %>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -71,9 +74,11 @@
       </div>
 
       <!-- コメント送信非同期化テンプレート -->
-      <div class="row mx-auto">
-        <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="row mx-auto">
+          <%= render 'public/comments/form', { plan: @plan, comment: @comment } %>
+        </div>
+      <% end %>
 
 </div>
 

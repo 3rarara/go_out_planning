@@ -13,7 +13,7 @@
 
             <div class="mb-2">
               <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" , id: "registration_user_name"%>
-              <div id="userNameError" class="mt-1" style="display: none; color: red;">ユーザー名を入力してください。</div>
+              <div id="userNameError" class="mt-1" style="display: none; color: red;"></div>
             </div>
 
             <div class="mb-2">
@@ -32,7 +32,7 @@
             </div>
 
             <div class="row justify-content-center" >
-              <%= f.submit "登録", disabled: true, class: "btn btn-warning mx-3 my-3 btn-form disabled", id: "submit_btn" %>
+              <%= f.submit "登録", disabled: true, class: "btn btn-warning mx-3 my-3 btn-form disabled", id: "registration_submit_btn" %>
 
               <%- if devise_mapping.omniauthable? %>
                 <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border btn-form mx-3' do %>
