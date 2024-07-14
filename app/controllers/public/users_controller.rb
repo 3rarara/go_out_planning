@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:check_email, :check_user]
+  before_action :authenticate_user!, except: [:check_name, :check_email, :check_user]
   before_action :set_current_user, except: [:show]
   before_action :set_user, only: [:show]
   before_action :ensure_current_user, only: [:edit, :update]
@@ -43,6 +43,12 @@ class Public::UsersController < ApplicationController
     if current_user?(@user)
       redirect_to mypage_path
     end
+  end
+
+  def check_name
+    name = params[:name]
+    user = User.find_by(name: name)
+    render json: user.nil? ? {status: true}.to_json : {status: false}.to_json
   end
 
   def check_email
