@@ -7,33 +7,52 @@
       <%# = image_tag "go_out_planning_logo.jpg", size: "250x250", class: "rounded-circle mx-auto mb-3 d-block" %>
 
       <h4 class="text-center my-3" style="color: #3B4674"><b>旅行やデートのプランを共有するSNS</b></h4>
-      <p class="text-center pb-5" style="color: #3B4674">おでかけプランニングは旅行やデートのお店や施設ではなく</br>プランを共有するSNSサービスです</p>
+      <p class="text-center" style="color: #3B4674">おでかけプランニングは旅行やデートのお店や施設ではなく</br>プランを共有するSNSサービスです</p>
 
       <%= link_to plans_path do %>
-        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-5" %>
+        <h4 class="text-center pb-1" style="color: #3B4674"><b>プランを検索しよう</b></h4>
+        <%= image_tag "search.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
+        <p class="text-center" style="color: #3B4674">投稿は新規登録なしで閲覧が可能です ,で区切ると複数単語を検索できます</p>
+        <p class="text-center mb-3" style="color: #3B4674">マップ検索をすると検索した場所までマップが移動します</p>
+
+        <div class="mx-3">
+          <div class="scroll-container" id="scroll-inner">
+            <%= image_tag "iphone1.png" ,size: "300x300", class: "img-fluid mb-5" %>
+            <%= image_tag "iphone2.png" ,size: "300x300", class: "img-fluid mb-5" %>
+          </div>
+        </div>
       <% end %>
-      <h4 class="text-center pb-1" style="color: #3B4674"><b>プランを検索しよう</b></h4>
-      <p class="text-center" style="color: #3B4674">投稿は新規登録なしで閲覧が可能です ,で区切ると複数単語を検索できます</p>
-      <%= image_tag "search_example.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
-      <p class="text-center" style="color: #3B4674">マップ検索をすると検索した場所までマップが移動します</p>
-      <%= image_tag "search_example2.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
 
       <% if user_signed_in? %>
         <%= link_to new_plan_path do %>
-          <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-5" %>
+          <h4 class="text-center" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
+          <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
+
+          <p class="text-center" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
+          <%= image_tag "iphone3.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
+
         <% end %>
       <% else %>
-        <%= link_to new_user_registration_path do %>
-          <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-5" %>
+
+        <%= link_to '#registrationModal', data: { toggle: 'modal' } do %>
+          <h4 class="text-center mt-3" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
+          <%= image_tag "plan.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-1" %>
+
+          <p class="text-center" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
+          <%= image_tag "iphone3.png" ,size: "300x300", class: "mx-auto img-fluid d-block mb-5" %>
         <% end %>
       <% end %>
 
-      <h4 class="text-center pb-1" style="color: #3B4674"><b>プランを投稿してみよう</b></h4>
-      <p class="text-center pb-5" style="color: #3B4674">+ボタンでスケジュールフォームを何回でも追加できます</p>
-      <%= image_tag "plan_example.png" ,size: "250x250", class: "mx-auto img-fluid d-block mb-5" %>
-
+      <div class="text-center mt-4">
+        <%= link_to '無料で始める', '#registrationModal', data: { toggle: 'modal' } ,class: "btn btn-primary mb-5" %>
+      </div>
 
       <%= render 'layouts/footer' %>
     </div>
   </div>
 </div>
+
+<script>
+  let scrollContainer = document.querySelector("#scroll-inner");
+  let lastElement = scrollContainer.lastElementChild;
+</script>
