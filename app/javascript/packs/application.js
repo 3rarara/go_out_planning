@@ -260,6 +260,12 @@ document.addEventListener('turbolinks:load', () => {
     updateSubmit();
   });
 
+  // パスワード最低文字数カウント
+  function updatePasswordError() {
+    var remaining = 6 - $('#registration_pass').val().length;
+    $('#remainingChars').text(remaining);
+  }
+
   // パスワード確認フィールドのinputイベントを監視
   $('#registration_pass_confirm').on('input', function() {
     if ($(this).val() !== $('#registration_pass').val()) {
@@ -271,12 +277,6 @@ document.addEventListener('turbolinks:load', () => {
     }
     updateSubmit();
   });
-
-  // パスワード最低文字数カウント
-  function updatePasswordError() {
-    var remaining = 6 - $('#registration_pass').val().length;
-    $('#remainingChars').text(remaining);
-  }
 
   function updateSubmit() {
     if ($('#registration_name').val().trim() === '' ||
