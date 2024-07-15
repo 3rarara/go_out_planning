@@ -1,5 +1,5 @@
 <div class="ml-4"><%= render "layouts/errors", object: plan %></div>
-<%= form_with model: plan do |f| %>
+<%= form_with model: plan, url: plans_path do |f| %>
 
   <div class="row">
     <div class="col">
@@ -16,6 +16,9 @@
       <%= pd.text_field :title, class: "form-control mb-3", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
       <%= pd.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動" %>
       <%= pd.text_field :address, class: "form-control mb-3", placeholder: "住所" %>
+      <%#= pd.text_field :address, id: "address-autocomplete", class: "form-control mb-3", placeholder:"スポット名または住所を入力してね" %>
+      <%#= pd.hidden_field :address, id: "address-input" %>
+
     </div>
   </div>
   <% end %>
@@ -57,3 +60,30 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  // function initAutocomplete() {
+  //   const input = document.getElementById("address-autocomplete");
+  //   const options = {
+  //     fields: ["address_components", "name", "formatted_address"]  // 住所、スポット名、フォーマット済み住所を取得
+  //   };
+  //   const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+  //   autocomplete.addListener("place_changed", function() {
+  //     const place = autocomplete.getPlace();
+  //     if (!place.formatted_address || !place.name) {
+  //       return; // 住所や名前がない場合は処理しない
+  //     }
+  //     // フォーマット済みの住所または名前を取得してフォームにセット
+  //     const address = place.formatted_address || place.name;
+  //     document.getElementById("address-input").value = address;
+  //   });
+  // }
+
+  // // Google MapsのAPIが読み込まれるのを待ってからinitAutocompleteを呼び出す
+  // window.initAutocomplete = initAutocomplete;
+</script>
+
+<!--<script async defer-->
+<!--  src="https://maps.googleapis.com/maps/api/js?key=Place_API_Key&libraries=places&callback=initAutocomplete">-->
+<!--</script>-->
