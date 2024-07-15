@@ -1,5 +1,6 @@
 # おでかけplanning
-![Top画像](app/assets/images/top.png)
+<img alt="search_map.gif" src="https://i.gyazo.com/42362b5c3981c84726c852a25d0c4da5.gif">
+
 ![ロゴ](app/assets/images/go_out_planning_header_logo.jpg)
 
 ## サイト概要
@@ -87,10 +88,10 @@ gem 'gmaps4rails'
 ## 使用素材
 
 - Canva</br>
-- https://www.canva.com/ja_jp/learn/commercial-use/#commercial-use</br>
+https://www.canva.com/ja_jp/learn/commercial-use/#commercial-use</br>
 
-- ICOOON MONO</br>
-- https://icooon-mono.com/license/</br>
+- Loose Drawing</br>
+https://loosedrawing.com/terms/</br>
 
 - 引用元の指示に従って利用します</br>
 
