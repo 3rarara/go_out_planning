@@ -180,36 +180,36 @@ document.addEventListener('turbolinks:load', () => {
 
 // 新規登録バリデーション
 document.addEventListener('turbolinks:load', () => {
-  let emailError = false;
   let nameError = false;
-  let passwordError = false;
-  let passwordConfirmationError = false;
+  let emailError = false;
+  let passError = false;
+  let passConfirmError = false;
 
-  $('#registration_user_email, #registration_user_name, #registration_user_password, #registration_user_password_confirmation').on('input', function() {
-    updateSubmitButton();
+  $('#registration_name, #registration_email, #registration_pass, #registration_pass_confirm').on('input', function() {
+    updateSubmit();
   });
 
   // ユーザー名のinputイベントを監視
-  $('#registration_user_name').on('input', function() {
-    var userName = $(this).val();
-    if (userName.length < 1) {
+  $('#registration_name').on('input', function() {
+    var name = $(this).val();
+    if (name.length < 1) {
       nameError = true;
-      $('#userNameError').text('ユーザー名を入力してください。').show();
-      updateSubmitButton();
+      $('#nameError').text('ユーザー名を入力してください。').show();
+      updateSubmit();
     } else {
       $.ajax({
         url: '/users/check_name',
         method: 'GET',
-        data: { name: userName },
+        data: { name: name },
         success: function(response) {
           if (response.status === false) {
             nameError = true;
-            $('#userNameError').text('このユーザー名は既に登録されています。').show();
+            $('#nameError').text('このユーザー名は既に登録されています。').show();
           } else {
             nameError = false;
-            $('#userNameError').hide();
+            $('#nameError').hide();
           }
-          updateSubmitButton();
+          updateSubmit();
         },
         error: function(xhr, status, error) {
           console.log("AJAXリクエスト失敗:", status, error);
@@ -218,13 +218,13 @@ document.addEventListener('turbolinks:load', () => {
     }
   });
 
-  $('#registration_user_email').on('input', function() {
+  $('#registration_email').on('input', function() {
     var email = $(this).val();
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       emailError = true;
       $('#emailError').text('メールアドレスの形式が正しくありません。').show();
-      updateSubmitButton();
+      updateSubmit();
     } else {
       $.ajax({
         url: '/users/check_email',
@@ -238,7 +238,7 @@ document.addEventListener('turbolinks:load', () => {
             emailError = false;
             $('#emailError').hide();
           }
-          updateSubmitButton();
+          updateSubmit();
         },
         error: function(xhr, status, error) {
           console.log("AJAXリクエスト失敗:", status, error);
@@ -248,48 +248,50 @@ document.addEventListener('turbolinks:load', () => {
   });
 
   // パスワードフィールドのinputイベントを監視
-  $('#registration_user_password').on('input', function() {
+  $('#registration_pass').on('input', function() {
     if ($(this).val().length < 6) {
-      passwordError = true;
+      passError = true;
       updatePasswordError();
-      $('#passwordError').show();
+      $('#passError').show();
     } else {
-      passwordError = false;
-      $('#passwordError').hide();
+      passError = false;
+      $('#passError').hide();
     }
-    updateSubmitButton();
+    updateSubmit();
   });
 
   // パスワード確認フィールドのinputイベントを監視
-  $('#registration_user_password_confirmation').on('input', function() {
-    if ($(this).val() !== $('#registration_user_password').val()) {
-      passwordConfirmationError = true;
-      $('#passwordConfirmationError').show();
+  $('#registration_pass_confirm').on('input', function() {
+    if ($(this).val() !== $('#registration_pass').val()) {
+      passConfirmError = true;
+      $('#passConfirmError').show();
     } else {
-      passwordConfirmationError = false;
-      $('#passwordConfirmationError').hide();
+      passConfirmError = false;
+      $('#passConfirmError').hide();
     }
-    updateSubmitButton();
+    updateSubmit();
   });
 
   // パスワード最低文字数カウント
   function updatePasswordError() {
-    var remaining = 6 - $('#registration_user_password').val().length;
+    var remaining = 6 - $('#registration_pass').val().length;
     $('#remainingChars').text(remaining);
   }
 
-  function updateSubmitButton() {
-    if ($('#registration_user_email').val().trim() === '' ||
-        $('#registration_user_name').val().trim() === '' ||
-        $('#registration_user_password').val().trim() === '' ||
-        $('#registration_user_password_confirmation').val().trim() === '' ||
-        emailError || nameError || passwordError || passwordConfirmationError) {
-      $('#registration_submit_btn').addClass('disabled').attr('disabled', true);
+  function updateSubmit() {
+    if ($('#registration_name').val().trim() === '' ||
+        $('#registration_email').val().trim() === '' ||
+        $('#registration_pass').val().trim() === '' ||
+        $('#registration_pass_confirm').val().trim() === '' ||
+        nameError || emailError || passError || passConfirmError) {
+      $('#registration_submit').addClass('disabled').attr('disabled', true);
     } else {
-      $('#registration_submit_btn').removeClass('disabled').attr('disabled', false);
+      $('#registration_submit').removeClass('disabled').attr('disabled', false);
     }
   }
 });
+
+
 
 
 
@@ -297,20 +299,20 @@ document.addEventListener('turbolinks:load', () => {
 document.addEventListener('turbolinks:load', () => {
   let emailError = false;
   let passwordError = false;
-  let formatError = false;
+  let loginError = false;
 
-  $('#login_user_email, #login_user_password').on('input', function() {
-    if ($('#login_user_email').val().trim() === '' || $('#login_user_password').val().trim() === '') {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
-    } else if (emailError || passwordError || formatError) {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
+  $('#login_email, #login_pass').on('input', function() {
+    if ($('#login_email').val().trim() === '' || $('#login_pass').val().trim() === '') {
+      $('#login_submit').addClass('disabled').attr('disabled', true);
+    } else if (emailError || passwordError || loginError) {
+      $('#login_submit').addClass('disabled').attr('disabled', true);
     } else {
-      $('#login_submit_btn').removeClass('disabled').attr('disabled', false);
+      $('#login_submit').removeClass('disabled').attr('disabled', false);
     }
   });
 
   // メールアドレスのinputイベントを監視
-  $('#login_user_email').on('input', function() {
+  $('#login_email').on('input', function() {
     var email = $(this).val();
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -320,33 +322,33 @@ document.addEventListener('turbolinks:load', () => {
       $('#loginEmailError').hide();
       emailError = false;
     }
-    updateSubmitButton();
+    updateSubmit();
   });
 
   // パスワードフィールドのinputイベントを監視
-  $('#login_user_password').on('input', function() {
+  $('#login_pass').on('input', function() {
     if ($(this).val().length < 6) {
       updateLoginPasswordError();
-      $('#loginPasswordError').show();
+      $('#loginPassError').show();
       passwordError = true;
     } else {
-      $('#loginPasswordError').hide();
+      $('#loginPassError').hide();
       passwordError = false;
     }
-    updateSubmitButton();
+    updateSubmit();
   });
 
   // パスワード最低文字数カウント
   function updateLoginPasswordError() {
-    var remaining = 6 - $('#login_user_password').val().length;
+    var remaining = 6 - $('#login_pass').val().length;
     $('#loginRemainingChars').text(remaining);
   }
 
-  function updateSubmitButton() {
-    if ($('#login_user_email').val().trim() === '' || $('#login_user_password').val().trim() === '' || emailError || passwordError) {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
+  function updateSubmit() {
+    if ($('#login_email').val().trim() === '' || $('#login_pass').val().trim() === '' || emailError || passwordError) {
+      $('#login_submit').addClass('disabled').attr('disabled', true);
     } else {
-      $('#login_submit_btn').removeClass('disabled').attr('disabled', false);
+      $('#login_submit').removeClass('disabled').attr('disabled', false);
     }
   }
 });
