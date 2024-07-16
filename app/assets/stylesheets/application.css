@@ -133,10 +133,6 @@ a {
   height: 40px;
 }
 
-.modal-logout {
-  top: 10%;
-}
-
 .disabled {
   cursor: not-allowed;
 }

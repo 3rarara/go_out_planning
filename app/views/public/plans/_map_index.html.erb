@@ -1,75 +1,73 @@
 <div class="row">
   <div class="col">
-
     <div class="d-flex justify-content-center mb-3">
-      <input id="address" type="textbox" value="" placeholder="駅名・施設名など">
-      <button type="button"class="btn btn-secondary btn-sm" onclick="codeAddress()">
+      <input id="pac-input" style="width:250px;" type="textbox" value="" placeholder="駅名・施設名など">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="codeAddress()">
         <i class="fas fa-search" style="color: #ffffff;"></i>
       </button>
     </div>
-
     <div id="map" style="width: 100%; height: calc(100vh - 88px - 179px);"></div>
-
   </div>
 </div>
 
 <script>
-let map // Google Mapsの地図オブジェクトを保持する変数
+  let map; // Google Mapsの地図オブジェクトを保持する変数
+  let geocoder; // ジオコーダーの変数
 
-// Google Mapの初期化と表示関数
-function initMap() {
-    geocoder = new google.maps.Geocoder() // ジオコーダーの初期化
+  // Google Mapの初期化と表示関数
+  function initMap() {
+    geocoder = new google.maps.Geocoder(); // ジオコーダーの初期化
 
     // mapの初期位置, 縮尺を定義
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 35.681236, lng: 139.767125 },
-        zoom: 15,
+      center: { lat: 35.681236, lng: 139.767125 },
+      zoom: 15,
     });
 
     // plan_detailsテーブルにあるそれぞれのレコードをmap上に表示
     <% @plan_details.each do |pd| %>
       <% next if pd.address.blank? %>
-    let mapPosition<%= pd.id %> = {lat: <%= pd.latitude %> , lng: <%= pd.longitude %> };
+      let mapPosition<%= pd.id %> = { lat: <%= pd.latitude %>, lng: <%= pd.longitude %> };
 
-    let contentString<%= pd.id %> = '<%= link_to pd.title, plan_path(pd.plan) %></br>【住所】<%= pd.address %>';
-    let infowindow<%= pd.id %> = new google.maps.InfoWindow({
-      content: contentString<%= pd.id %>
-    });
+      let contentString<%= pd.id %> = '<%= link_to pd.title, plan_path(pd.plan) %></br>【住所】<%= pd.address %>';
+      let infowindow<%= pd.id %> = new google.maps.InfoWindow({
+        content: contentString<%= pd.id %>
+      });
 
-    let marker<%= pd.id %> = new google.maps.Marker({
-      position: mapPosition<%= pd.id %>,
-      map: map,
-      title: contentString<%= pd.id %>
-    });
+      let marker<%= pd.id %> = new google.maps.Marker({
+        position: mapPosition<%= pd.id %>,
+        map: map,
+        title: contentString<%= pd.id %>
+      });
 
-    marker<%= pd.id %>.addListener('click', function(){
-      infowindow<%= pd.id %>.open(map, marker<%= pd.id %>);
-    });
-
+      marker<%= pd.id %>.addListener('click', function () {
+        infowindow<%= pd.id %>.open(map, marker<%= pd.id %>);
+      });
     <% end %>
-  }
 
-  let geocoder
+    const input = document.getElementById("pac-input");
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo("bounds", map);
+  }
 
   // 地図検索関数
   function codeAddress() {
-      let inputAddress = document.getElementById('address').value;
+    let inputAddress = document.getElementById('pac-input').value;
 
-      geocoder.geocode({
-          'address': inputAddress
-      }, function (results, status) {
-          if (status == 'OK') {
-              map.setCenter(results[0].geometry.location);
-              var marker = new google.maps.Marker({
-                  map: map,
-                  position: results[0].geometry.location
-              });
-
-          } else {
-              alert('該当する結果がありませんでした：' + status);
-          }
-      });
+    geocoder.geocode({
+      'address': inputAddress
+    }, function (results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+      } else {
+        alert('該当する結果がありませんでした：' + status);
+      }
+    });
   }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places&callback=initMap" async defer></script>

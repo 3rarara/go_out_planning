@@ -9,18 +9,18 @@
           <%= form_with model: resource, url: users_check_user_path, local: false, class: 'sessions' do |f| %>
 
             <div class="mb-2">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "login_user_email" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "login_email" %>
               <div id="loginEmailError" class="mt-1" style="display: none; color: red;"></div>
             </div>
 
             <div class="mb-4">
-              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "パスワード", id: "login_user_password" %>
-              <div id="loginPasswordError" class="mt-1" style="display: none; color: red;">パスワードを入力してください（あと<span id="loginRemainingChars"></span>文字）。</div>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "パスワード", id: "login_pass" %>
+              <div id="loginPassError" class="mt-1" style="display: none; color: red;">パスワードを入力してください（あと<span id="loginRemainingChars"></span>文字）。</div>
             </div>
 
 
             <div class="row justify-content-center">
-              <%= f.submit "ログイン", disabled: true, class: "btn btn-warning mx-3 mb-3 btn-form", id: "login_submit_btn" %>
+              <%= f.submit "ログイン", disabled: true, class: "btn btn-warning mx-3 mb-3 btn-form disabled", id: "login_submit" %>
             </div>
           <% end %>
 
