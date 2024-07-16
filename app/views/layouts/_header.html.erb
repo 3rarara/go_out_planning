@@ -80,7 +80,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= link_to "アカウント設定", edit_mypage_path %><br>
+        <%= link_to "アカウント設定", edit_mypage_path, 'data-turbolinks': false %><br>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       </div>
     </div>
