@@ -12,7 +12,6 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
-// import 'select2/dist/js/select2';
 
 Rails.start()
 Turbolinks.start()
