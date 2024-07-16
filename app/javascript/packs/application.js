@@ -12,80 +12,15 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
-// import 'select2/dist/js/select2';
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-// plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
-$(document).ready(function() {
-  var wrapper = '#plan_details_wrapper';
-  var addButton = '#add_plan_details';
-  var x = 1;
 
-  $(document).on("click", addButton, function(e) {
-    e.preventDefault();
-    x++;
-
-  var formHtml = `
-    <div class="row nested-fields">
-      <div class="col-10">
-        <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
-      </div>
-      <div class="col-2 d-flex align-items-center">
-        <a href="#" class="remove_field btn btn-danger my-3">
-          <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
-        </a>
-      </div>
-      <div class="col-12">
-        <textarea class="form-control mb-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
-        <input type="text" class="form-control mb-3" name="plan[plan_details_attributes][${x}][address]" placeholder="住所">
-      </div>
-      <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
-    </div>
-  `;
-
-    $(wrapper).append(formHtml);
-  });
-
-// plans/newでplan_detailsの入力フォームを削除するための記述
-  $(document).on("click", ".remove_field", function(e) {
-    e.preventDefault();
-
-// plans/editでplan_detailsの入力フォームを削除するための記述
-    if(confirm('この詳細を削除してもよろしいですか？')) {
-      var removeButton = $(e.target);
-      var destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
-      if (destroyField.length > 0) {
-        destroyField.val('true');
-        removeButton.closest('.nested-fields').hide();
-        console.log('Status: success - The item was marked for deletion.');
-      } else {
-        removeButton.closest('.nested-fields').remove();
-        console.log('Status: success - The new item was removed.');
-      }
-    } else {
-      console.log('Status: cancelled - The item was not deleted.');
-    }
-  });
-});
-
-// タブメニューの記述
-$(document).on('turbolinks:load', function() {
-  $('#tab-contents .tab').not('#tab1').hide();
-
-  $('#tab-menu').on('click', 'a', function(event) {
-    $('#tab-contents .tab').hide();
-    $('#tab-menu .active').removeClass('active');
-    $(this).addClass('active');
-    $($(this).attr('href')).show();
-    event.preventDefault();
-  });
-});
-
-// ヘッターの記述
 document.addEventListener('turbolinks:load', () => {
+
+  // ヘッターの記述
   const header = document.querySelector('header');
   let prevY = window.scrollY;
 
@@ -102,264 +37,248 @@ document.addEventListener('turbolinks:load', () => {
     prevY = currentY;
   });
 
+  // タブメニューの記述
+  const tabContentsWrapper = document.querySelector('#tab-contents');
+  if (tabContentsWrapper) {
 
-});
-
-document.addEventListener('turbolinks:load', () => {
-  const planImageInput = document.getElementById('plan_plan_image');
-  const imagePreview = document.getElementById('image-preview');
-
-  const updateImagePreview = (blob) => {
-    // プレビュー画像が既に表示されている場合は削除
-    const existingImage = imagePreview.querySelector('img');
-    if (existingImage) {
-      existingImage.remove();
-    }
-
-    // 新しい画像を表示
-    const blobImage = document.createElement('img');
-    blobImage.setAttribute('class', 'preview-img');
-    blobImage.setAttribute('src', blob);
-    imagePreview.appendChild(blobImage);
-  };
-
-  if (planImageInput) {
-    planImageInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const blob = window.URL.createObjectURL(file);
-        updateImagePreview(blob);
+    const tabContents = tabContentsWrapper.querySelectorAll('.tab');
+    tabContents.forEach(tab => {
+      if (!tab.matches('#tab1')) {
+        tab.style.display = 'none';
       }
     });
 
-    // ページ読み込み時に画像が選択されている場合のプレビュー
-    if (planImageInput.files.length > 0) {
-      const file = planImageInput.files[0];
-      const blob = window.URL.createObjectURL(file);
-      updateImagePreview(blob);
-    }
+    const tabMenu = document.querySelector('#tab-menu');
+    tabMenu.addEventListener('click', event => {
+      const target = event.target;
+
+      if (target.tagName === 'A') {
+        event.preventDefault();
+        tabContents.forEach(tab => {
+          tab.style.display = 'none';
+        });
+
+        const activeLink = tabMenu.querySelector('.active');
+        if (activeLink) {
+          activeLink.classList.remove('active');
+        }
+        target.classList.add('active');
+
+        const targetTabId = target.getAttribute('href').substring(1); // hrefの#を除去
+        const targetTab = document.querySelector(`#${targetTabId}`);
+        if (targetTab) {
+          targetTab.style.display = 'block';
+        }
+      }
+    });
   }
-});
 
-// プロフィール画像プレビューの記述
-document.addEventListener('turbolinks:load', () => {
-  const profileImageInput = document.getElementById('user_profile_image');
-  const profileImagePreview = document.getElementById('profile-image-preview');
+  // 新規登録バリデーション
+  const registrationSubmitCheck = document.querySelector('#registration_submit');
+  if (registrationSubmitCheck) {
 
-  const updateImagePreview = (blob) => {
-    // プレビュー画像が既に表示されている場合は削除
-    const existingImage = profileImagePreview.querySelector('img');
-    if (existingImage) {
-      existingImage.remove();
-    }
+    let nameError = false;
+    let emailError = false;
+    let passError = false;
+    let passConfirmError = false;
 
-    // 新しい画像を表示
-    const blobImage = document.createElement('img');
-    blobImage.setAttribute('class', 'profile-image-preview-img');
-    blobImage.setAttribute('src', blob);
-    profileImagePreview.appendChild(blobImage);
-  };
+    const registrationName = document.querySelector('#registration_name');
+    const registrationEmail = document.querySelector('#registration_email');
+    const registrationPass = document.querySelector('#registration_pass');
+    const registrationPassConfirm = document.querySelector('#registration_pass_confirm');
+    const registrationSubmit = document.querySelector('#registration_submit');
 
-  if (profileImageInput) {
-    profileImageInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const blob = window.URL.createObjectURL(file);
-        updateImagePreview(blob);
+    const inputs = [registrationName, registrationEmail, registrationPass, registrationPassConfirm];
+
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        updateSubmit();
+      });
+    });
+
+    // ユーザー名のinputイベントを監視
+    registrationName.addEventListener('input', function() {
+      let name = this.value;
+      if (name.length < 1) {
+        nameError = true;
+        document.querySelector('#nameError').textContent = 'ユーザー名を入力してください。';
+        document.querySelector('#nameError').style.display = 'block';
+        updateSubmit();
+      } else {
+        fetch(`/users/check_name?name=${name}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === false) {
+              nameError = true;
+              document.querySelector('#nameError').textContent = 'このユーザー名は既に登録されています。';
+              document.querySelector('#nameError').style.display = 'block';
+            } else {
+              nameError = false;
+              document.querySelector('#nameError').style.display = 'none';
+            }
+            updateSubmit();
+          })
+          .catch(error => {
+            console.log("AJAXリクエスト失敗:", error);
+          });
       }
     });
 
-    // ページ読み込み時に画像が選択されている場合のプレビュー
-    if (profileImageInput.files.length > 0) {
-      const file = profileImageInput.files[0];
-      const blob = window.URL.createObjectURL(file);
-      updateImagePreview(blob);
+    registrationEmail.addEventListener('input', function() {
+      let email = this.value;
+      let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        emailError = true;
+        document.querySelector('#emailError').textContent = 'メールアドレスの形式が正しくありません。';
+        document.querySelector('#emailError').style.display = 'block';
+        updateSubmit();
+      } else {
+        fetch(`/users/check_email?email=${email}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === false) {
+              emailError = true;
+              document.querySelector('#emailError').textContent = 'このメールアドレスは既に登録されています。';
+              document.querySelector('#emailError').style.display = 'block';
+            } else {
+              emailError = false;
+              document.querySelector('#emailError').style.display = 'none';
+            }
+            updateSubmit();
+          })
+          .catch(error => {
+            console.log("AJAXリクエスト失敗:", error);
+          });
+      }
+    });
+
+    // パスワードフィールドのinputイベントを監視
+    registrationPass.addEventListener('input', function() {
+      if (this.value.length < 6) {
+        passError = true;
+        updatePasswordError();
+        document.querySelector('#passError').style.display = 'block';
+      } else {
+        passError = false;
+        document.querySelector('#passError').style.display = 'none';
+      }
+      updateSubmit();
+    });
+
+    // パスワード最低文字数カウント
+    function updatePasswordError() {
+      let remaining = 6 - registrationPass.value.length;
+      document.querySelector('#remainingChars').textContent = remaining;
+    }
+
+    // パスワード確認フィールドのinputイベントを監視
+    registrationPassConfirm.addEventListener('input', function() {
+      if (this.value !== registrationPass.value) {
+        passConfirmError = true;
+        document.querySelector('#passConfirmError').style.display = 'block';
+      } else {
+        passConfirmError = false;
+        document.querySelector('#passConfirmError').style.display = 'none';
+      }
+      updateSubmit();
+    });
+
+    function updateSubmit() {
+      if (registrationName.value.trim() === '' ||
+          registrationEmail.value.trim() === '' ||
+          registrationPass.value.trim() === '' ||
+          registrationPassConfirm.value.trim() === '' ||
+          nameError || emailError || passError || passConfirmError) {
+        registrationSubmit.classList.add('disabled');
+        registrationSubmit.setAttribute('disabled', true);
+      } else {
+        registrationSubmit.classList.remove('disabled');
+        registrationSubmit.removeAttribute('disabled');
+      }
     }
   }
-});
 
-// 新規登録バリデーション
-document.addEventListener('turbolinks:load', () => {
-  let emailError = false;
-  let nameError = false;
-  let passwordError = false;
-  let passwordConfirmationError = false;
+  // ログインバリデーション
+  const loginSubmitCheck = document.querySelector('#login_submit');
+  if (loginSubmitCheck) {
 
-  $('#registration_user_email, #registration_user_name, #registration_user_password, #registration_user_password_confirmation').on('input', function() {
-    updateSubmitButton();
-  });
+    let loginEmailError = false;
+    let loginPassError = false;
+    let loginError = false;
 
-  // ユーザー名のinputイベントを監視
-  $('#registration_user_name').on('input', function() {
-    var userName = $(this).val();
-    if (userName.length < 1) {
-      nameError = true;
-      $('#userNameError').text('ユーザー名を入力してください。').show();
-      updateSubmitButton();
-    } else {
-      $.ajax({
-        url: '/users/check_name',
-        method: 'GET',
-        data: { name: userName },
-        success: function(response) {
-          if (response.status === false) {
-            nameError = true;
-            $('#userNameError').text('このユーザー名は既に登録されています。').show();
-          } else {
-            nameError = false;
-            $('#userNameError').hide();
-          }
-          updateSubmitButton();
-        },
-        error: function(xhr, status, error) {
-          console.log("AJAXリクエスト失敗:", status, error);
+    document.querySelectorAll('#login_email, #login_pass').forEach(element => {
+      element.addEventListener('input', function() {
+        if (document.querySelector('#login_email').value.trim() === '' || document.querySelector('#login_pass').value.trim() === '') {
+          document.querySelector('#login_submit').classList.add('disabled');
+          document.querySelector('#login_submit').setAttribute('disabled', true);
+        } else if (loginEmailError || loginPassError || loginError) {
+          document.querySelector('#login_submit').classList.add('disabled');
+          document.querySelector('#login_submit').setAttribute('disabled', true);
+        } else {
+          document.querySelector('#login_submit').classList.remove('disabled');
+          document.querySelector('#login_submit').removeAttribute('disabled');
         }
       });
-    }
-  });
+    });
 
-  $('#registration_user_email').on('input', function() {
-    var email = $(this).val();
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      emailError = true;
-      $('#emailError').text('メールアドレスの形式が正しくありません。').show();
-      updateSubmitButton();
-    } else {
-      $.ajax({
-        url: '/users/check_email',
-        method: 'GET',
-        data: { email: email },
-        success: function(response) {
-          if (response.status === false) {
-            emailError = true;
-            $('#emailError').text('このメールアドレスは既に登録されています。').show();
-          } else {
-            emailError = false;
-            $('#emailError').hide();
-          }
-          updateSubmitButton();
-        },
-        error: function(xhr, status, error) {
-          console.log("AJAXリクエスト失敗:", status, error);
-        }
-      });
-    }
-  });
+    // メールアドレスのinputイベントを監視
+    document.querySelector('#login_email').addEventListener('input', function() {
+      let email = this.value;
+      let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.querySelector('#loginEmailError').textContent = 'メールアドレスの形式が正しくありません。';
+        document.querySelector('#loginEmailError').style.display = 'block';
+        loginEmailError = true;
+      } else {
+        document.querySelector('#loginEmailError').style.display = 'none';
+        loginEmailError = false;
+      }
+      updateLoginSubmit();
+    });
 
-  // パスワードフィールドのinputイベントを監視
-  $('#registration_user_password').on('input', function() {
-    if ($(this).val().length < 6) {
-      passwordError = true;
-      updatePasswordError();
-      $('#passwordError').show();
-    } else {
-      passwordError = false;
-      $('#passwordError').hide();
-    }
-    updateSubmitButton();
-  });
+    // パスワードフィールドのinputイベントを監視
+    document.querySelector('#login_pass').addEventListener('input', function() {
+      if (this.value.length < 6) {
+        updateLoginPasswordError();
+        document.querySelector('#loginPassError').style.display = 'block';
+        loginPassError = true;
+      } else {
+        document.querySelector('#loginPassError').style.display = 'none';
+        loginPassError = false;
+      }
+      updateLoginSubmit();
+    });
 
-  // パスワード確認フィールドのinputイベントを監視
-  $('#registration_user_password_confirmation').on('input', function() {
-    if ($(this).val() !== $('#registration_user_password').val()) {
-      passwordConfirmationError = true;
-      $('#passwordConfirmationError').show();
-    } else {
-      passwordConfirmationError = false;
-      $('#passwordConfirmationError').hide();
+    // パスワード最低文字数カウント
+    function updateLoginPasswordError() {
+      let remaining = 6 - document.querySelector('#login_pass').value.length;
+      document.querySelector('#loginRemainingChars').textContent = remaining;
     }
-    updateSubmitButton();
-  });
 
-  // パスワード最低文字数カウント
-  function updatePasswordError() {
-    var remaining = 6 - $('#registration_user_password').val().length;
-    $('#remainingChars').text(remaining);
+    function updateLoginSubmit() {
+      if (document.querySelector('#login_email').value.trim() === '' || document.querySelector('#login_pass').value.trim() === '' || loginEmailError || loginPassError) {
+        document.querySelector('#login_submit').classList.add('disabled');
+        document.querySelector('#login_submit').setAttribute('disabled', true);
+      } else {
+        document.querySelector('#login_submit').classList.remove('disabled');
+        document.querySelector('#login_submit').removeAttribute('disabled');
+      }
+    }
+
+    document.addEventListener("ajax:success", function(e){
+      let data = e.detail[0];
+      if (data.status === true) {
+        location.href = "/";
+      } else {
+        document.querySelector('#loginError').textContent = 'メールアドレスまたはパスワードが間違っています。';
+        document.querySelector('#loginError').style.display = 'block';
+      }
+    });
+
+    document.addEventListener("ajax:error", function(e) {
+      document.querySelector('#loginError').textContent = '通信エラーが発生しました。';
+      document.querySelector('#loginError').style.display = 'block';
+    });
+
   }
-
-  function updateSubmitButton() {
-    if ($('#registration_user_email').val().trim() === '' ||
-        $('#registration_user_name').val().trim() === '' ||
-        $('#registration_user_password').val().trim() === '' ||
-        $('#registration_user_password_confirmation').val().trim() === '' ||
-        emailError || nameError || passwordError || passwordConfirmationError) {
-      $('#registration_submit_btn').addClass('disabled').attr('disabled', true);
-    } else {
-      $('#registration_submit_btn').removeClass('disabled').attr('disabled', false);
-    }
-  }
-});
-
-
-
-// ログインバリデーション
-document.addEventListener('turbolinks:load', () => {
-  let emailError = false;
-  let passwordError = false;
-  let formatError = false;
-
-  $('#login_user_email, #login_user_password').on('input', function() {
-    if ($('#login_user_email').val().trim() === '' || $('#login_user_password').val().trim() === '') {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
-    } else if (emailError || passwordError || formatError) {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
-    } else {
-      $('#login_submit_btn').removeClass('disabled').attr('disabled', false);
-    }
-  });
-
-  // メールアドレスのinputイベントを監視
-  $('#login_user_email').on('input', function() {
-    var email = $(this).val();
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      $('#loginEmailError').text('メールアドレスの形式が正しくありません。').show();
-      emailError = true;
-    } else {
-      $('#loginEmailError').hide();
-      emailError = false;
-    }
-    updateSubmitButton();
-  });
-
-  // パスワードフィールドのinputイベントを監視
-  $('#login_user_password').on('input', function() {
-    if ($(this).val().length < 6) {
-      updateLoginPasswordError();
-      $('#loginPasswordError').show();
-      passwordError = true;
-    } else {
-      $('#loginPasswordError').hide();
-      passwordError = false;
-    }
-    updateSubmitButton();
-  });
-
-  // パスワード最低文字数カウント
-  function updateLoginPasswordError() {
-    var remaining = 6 - $('#login_user_password').val().length;
-    $('#loginRemainingChars').text(remaining);
-  }
-
-  function updateSubmitButton() {
-    if ($('#login_user_email').val().trim() === '' || $('#login_user_password').val().trim() === '' || emailError || passwordError) {
-      $('#login_submit_btn').addClass('disabled').attr('disabled', true);
-    } else {
-      $('#login_submit_btn').removeClass('disabled').attr('disabled', false);
-    }
-  }
-});
-
-$(document).on("ajax:success", '.sessions', function(e){
-  var data = e.detail[0];
-  if (data.status === true) {
-    location.href = "/";
-  } else {
-    $('#loginError').text('メールアドレスまたはパスワードが間違っています。').show();
-  }
-});
-
-$(document).on("ajax:error", function(e) {
-  $('#loginError').text('通信エラーが発生しました。').show();
 });

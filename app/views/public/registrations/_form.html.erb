@@ -12,27 +12,27 @@
           <%= form_with model: resource, url: user_registration_path do |f| %>
 
             <div class="mb-2">
-              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" , id: "registration_user_name"%>
-              <div id="userNameError" class="mt-1" style="display: none; color: red;"></div>
+              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" , id: "registration_name"%>
+              <div id="nameError" class="mt-1" style="display: none; color: red;"></div>
             </div>
 
             <div class="mb-2">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "registration_user_email" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "registration_email" %>
               <div id="emailError" class="mt-1" style="display: none; color: red;"></div>
             </div>
 
             <div class="mb-2">
-              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "パスワード", id: "registration_user_password" %>
-              <div id="passwordError" class="mt-1" style="display: none; color: red;">パスワードを入力してください（あと<span id="remainingChars"></span>文字）。</div>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "パスワード", id: "registration_pass" %>
+              <div id="passError" class="mt-1" style="display: none; color: red;">パスワードを入力してください（あと<span id="remainingChars"></span>文字）。</div>
             </div>
 
             <div class="mb-2">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)", id: "registration_user_password_confirmation" %>
-              <div id="passwordConfirmationError" style="display: none; color: red;">パスワードが一致していません。</div>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "パスワード(確認)", id: "registration_pass_confirm" %>
+              <div id="passConfirmError" style="display: none; color: red;">パスワードが一致していません。</div>
             </div>
 
             <div class="row justify-content-center" >
-              <%= f.submit "登録", disabled: true, class: "btn btn-warning mx-3 my-3 btn-form disabled", id: "registration_submit_btn" %>
+              <%= f.submit "登録", disabled: true, class: "btn btn-warning mx-3 my-3 btn-form disabled", id: "registration_submit" %>
 
               <%- if devise_mapping.omniauthable? %>
                 <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-light btn-sm border btn-form mx-3' do %>

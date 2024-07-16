@@ -5,7 +5,7 @@
         <ul class="navbar-nav ml-auto d-flex justify-content-end">
 
           <% if admin_signed_in? %>
-          <li class="nav-item mx-2">
+          <li class="nav-item mx-2 pt-4">
             <%= link_to destroy_admin_session_path, method: :delete, class: "menu-icon" do %>
               <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #FFD43B;"></i>
               <p class="mt-3" style="color: #FFD43B; font-size: 10px;">ログアウト</p>
@@ -70,6 +70,7 @@
 </div>
 
 <!-- Logout Modal -->
+<% if user_signed_in? %>
 <div class="modal fade bd-example-modal-sm modal-logout" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -80,9 +81,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= link_to "アカウント設定", edit_mypage_path %><br>
+        <% if current_user.email != "guest@example.com" %>
+          <%= link_to "アカウント設定", edit_mypage_path, 'data-turbolinks': false %><br>
+        <% end %>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       </div>
     </div>
   </div>
 </div>
+<% end %>
