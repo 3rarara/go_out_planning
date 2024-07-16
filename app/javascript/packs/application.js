@@ -18,6 +18,22 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+
+// 投稿の住所入力フォームオートコンプリート
+function initAutocomplete() {
+  const inputs = document.querySelectorAll('.pac-input');
+  inputs.forEach(input => {
+    const autocomplete = new google.maps.places.Autocomplete(input);
+  });
+}
+
+// Turbolinksを考慮したイベントリスナー
+document.addEventListener("turbolinks:load", function() {
+  if (document.querySelector('.pac-input')) {
+    initAutocomplete();
+  }
+});
+
 // plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
 $(document).ready(function() {
   var wrapper = '#plan_details_wrapper';
@@ -28,25 +44,28 @@ $(document).ready(function() {
     e.preventDefault();
     x++;
 
-  var formHtml = `
-    <div class="row nested-fields">
-      <div class="col-10">
-        <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+    var formHtml = `
+      <div class="row nested-fields">
+        <div class="col-10">
+          <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          <a href="#" class="remove_field btn btn-danger my-3">
+            <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+          </a>
+        </div>
+        <div class="col-12">
+          <textarea class="form-control mb-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
+          <input type="text" class="form-control mb-3 pac-input" name="plan[plan_details_attributes][${x}][address]" placeholder="住所または施設名">
+        </div>
+        <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
       </div>
-      <div class="col-2 d-flex align-items-center">
-        <a href="#" class="remove_field btn btn-danger my-3">
-          <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
-        </a>
-      </div>
-      <div class="col-12">
-        <textarea class="form-control mb-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
-        <input type="text" class="form-control mb-3" name="plan[plan_details_attributes][${x}][address]" placeholder="住所">
-      </div>
-      <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
-    </div>
-  `;
+    `;
 
     $(wrapper).append(formHtml);
+
+    // 追加されたフォームにオートコンプリートを適用
+    initAutocomplete();
   });
 
 // plans/newでplan_detailsの入力フォームを削除するための記述
