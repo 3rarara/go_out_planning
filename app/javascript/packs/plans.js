@@ -1,11 +1,3 @@
-// 投稿の住所入力フォームオートコンプリート
-function addAutocompleteEvent() {
-  const textFields = document.querySelectorAll(".js-address-autocomplete");
-  textFields.forEach(function(textField) {
-    new google.maps.places.Autocomplete(textField);
-  });
-}
-
 document.addEventListener('turbolinks:load', () => {
 
   // // 住所入力フォームオートコンプリート
@@ -100,3 +92,11 @@ document.addEventListener('turbolinks:load', () => {
     }
   }
 });
+
+// 投稿の住所入力フォームオートコンプリート
+function addAutocompleteEvent() {
+  const textFields = document.querySelectorAll(".js-address-autocomplete");
+  textFields.forEach(function(textField) {
+    new google.maps.places.Autocomplete(textField);
+  });
+}
