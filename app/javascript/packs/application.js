@@ -17,7 +17,6 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-
 document.addEventListener('turbolinks:load', () => {
 
   // ヘッターの記述
@@ -282,6 +281,6 @@ document.addEventListener('turbolinks:load', () => {
       document.querySelector('#loginError').textContent = '通信エラーが発生しました。';
       document.querySelector('#loginError').style.display = 'block';
     });
-
   }
+
 });
