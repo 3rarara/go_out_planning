@@ -1,9 +1,12 @@
 document.addEventListener('turbolinks:load', () => {
+  // Google Maps API のスクリプトがロードされていることを確認
+  if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+    addAutocompleteEvent();
+  } else {
+    loadGoogleMapsScript();
+  }
 
-  // // 住所入力フォームオートコンプリート
-  addAutocompleteEvent();
-
-// plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
+  // plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
   let wrapper = '#plan_details_wrapper';
   let addButton = '#add_plan_details';
   let x = 1;
@@ -33,14 +36,16 @@ document.addEventListener('turbolinks:load', () => {
     $(wrapper).append(formHtml);
 
     // 追加されたフォームにオートコンプリートを適用
-    addAutocompleteEvent();
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      addAutocompleteEvent();
+    }
   });
 
-// plans/newでplan_detailsの入力フォームを削除するための記述
+  // plans/newでplan_detailsの入力フォームを削除するための記述
   $(document).on("click", ".remove_field", function(e) {
     e.preventDefault();
 
-// plans/editでplan_detailsの入力フォームを削除するための記述
+    // plans/editでplan_detailsの入力フォームを削除するための記述
     if(confirm('この詳細を削除してもよろしいですか？')) {
       let removeButton = $(e.target);
       let destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
@@ -93,10 +98,26 @@ document.addEventListener('turbolinks:load', () => {
   }
 });
 
+function loadGoogleMapsScript() {
+  if (!document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]')) {
+    var script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+}
+
+function initAutocomplete() {
+  addAutocompleteEvent();
+}
+
 // 投稿の住所入力フォームオートコンプリート
 function addAutocompleteEvent() {
   const textFields = document.querySelectorAll(".js-address-autocomplete");
-  textFields.forEach(function(textField) {
-    new google.maps.places.Autocomplete(textField);
-  });
+  if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+    textFields.forEach(function(textField) {
+      new google.maps.places.Autocomplete(textField);
+    });
+  }
 }
