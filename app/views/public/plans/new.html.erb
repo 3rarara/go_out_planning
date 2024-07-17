@@ -1,4 +1,4 @@
-<%= javascript_pack_tag 'plans' %>
+<%= javascript_pack_tag 'plans', 'data-turbolinks-track': 'reload' %>
 
 <!--タブメニュー-->
 <div class="wrap">
@@ -27,4 +27,4 @@
   </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places" async defer></script>
