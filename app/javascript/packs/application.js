@@ -26,7 +26,7 @@ document.addEventListener('turbolinks:load', () => {
 
   window.addEventListener('scroll', () => {
     const currentY = window.scrollY;
-    console.log('scrolling', { prevY, currentY });
+  
     if (currentY < prevY) {
       header.classList.remove('hidden');
     } else {

@@ -15,7 +15,7 @@
     <div class="col">
       <%= pd.text_field :title, class: "form-control mb-3", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
       <%= pd.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動" %>
-      <%= pd.text_field :address, id: "pac-input", class: "form-control mb-3 pac-input", placeholder: "住所または施設名" %>
+      <%= pd.text_field :address, class: "form-control mb-3 js-address-autocomplete", placeholder: "住所または施設名" %>
     </div>
   </div>
   <% end %>

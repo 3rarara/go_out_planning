@@ -1,15 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
 
-  // 投稿の住所入力フォームオートコンプリート
-  function initAutocomplete() {
-    const inputs = document.querySelectorAll('.pac-input');
-    inputs.forEach(input => {
-      new google.maps.places.Autocomplete(input);
+  // // 投稿の住所入力フォームオートコンプリート
+  function addAutocompleteEvent() {
+    const textFields = document.querySelectorAll(".js-address-autocomplete");
+    textFields.forEach(function(textField) {
+      new google.maps.places.Autocomplete(textField);
     });
   }
 
-  // 住所入力フォームオートコンプリート
-  initAutocomplete();
+  // // 住所入力フォームオートコンプリート
+  addAutocompleteEvent();
 
 // plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
   let wrapper = '#plan_details_wrapper';
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="col-12">
           <textarea class="form-control mb-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
-          <input type="text" class="form-control mb-3 pac-input" name="plan[plan_details_attributes][${x}][address]" placeholder="住所または施設名">
+          <input type="text" class="form-control mb-3 js-address-autocomplete" name="plan[plan_details_attributes][${x}][address]" placeholder="住所または施設名">
         </div>
         <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
       </div>
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $(wrapper).append(formHtml);
 
     // 追加されたフォームにオートコンプリートを適用
-    initAutocomplete();
+    addAutocompleteEvent();
   });
 
 // plans/newでplan_detailsの入力フォームを削除するための記述
@@ -99,5 +99,4 @@ document.addEventListener('DOMContentLoaded', () => {
       updateImagePreview(blob);
     }
   }
-
 });
