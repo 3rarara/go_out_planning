@@ -265,12 +265,15 @@ document.addEventListener('turbolinks:load', () => {
       }
     }
 
-    document.addEventListener("ajax:success", function(e){
+    document.addEventListener("ajax:success", function(e) {
       let data = e.detail[0];
       if (data.status === true) {
         location.href = "/";
-      } else {
+      } else if (data.status === false) {
         document.querySelector('#loginError').textContent = 'メールアドレスまたはパスワードが間違っています。';
+        document.querySelector('#loginError').style.display = 'block';
+      } else if (data.status === "inactive") {
+        document.querySelector('#loginError').textContent = '退会済みです。別のメールアドレスをお使いください。';
         document.querySelector('#loginError').style.display = 'block';
       }
     });

@@ -12,7 +12,7 @@
             以下の「登録」ボタンを押してください。
           </p>
 
-          <%= form_with model: @user, url: user_registration_path do |f| %>
+          <%= form_with model: resource, url: user_registration_path do |f| %>
 
             <div class="mb-2">
               <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" %>
