@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
   // 投稿の住所入力フォームオートコンプリート
   function initAutocomplete() {
