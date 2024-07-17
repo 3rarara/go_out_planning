@@ -1,4 +1,14 @@
 document.addEventListener('turbolinks:load', () => {
+  // 投稿の住所入力フォームオートコンプリート
+  function addAutocompleteEvent() {
+    const textFields = document.querySelectorAll(".js-address-autocomplete");
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      textFields.forEach(function(textField) {
+        new google.maps.places.Autocomplete(textField);
+      });
+    }
+  }
+
   // Google Maps API のスクリプトがロードされていることを確認
   if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
     addAutocompleteEvent();
@@ -110,14 +120,4 @@ function loadGoogleMapsScript() {
 
 function initAutocomplete() {
   addAutocompleteEvent();
-}
-
-// 投稿の住所入力フォームオートコンプリート
-function addAutocompleteEvent() {
-  const textFields = document.querySelectorAll(".js-address-autocomplete");
-  if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-    textFields.forEach(function(textField) {
-      new google.maps.places.Autocomplete(textField);
-    });
-  }
 }
