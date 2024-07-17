@@ -60,9 +60,13 @@ class Public::UsersController < ApplicationController
   def check_user
     user = User.find_by(email: params[:user][:email])
     if !user.nil? && user.valid_password?(params[:user][:password])
-      sign_in user
-      flash[:notice] = "ログインしました。"
-      render json: {status: true}.to_json
+      if user.is_active?
+        sign_in user
+        flash[:notice] = "ログインしました。"
+        render json: {status: true}.to_json
+      else
+        render json: {status: "inactive"}.to_json
+      end
     else
       render json: {status: false}.to_json
     end
