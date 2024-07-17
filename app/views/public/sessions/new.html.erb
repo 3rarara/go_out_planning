@@ -7,7 +7,7 @@
         <div class="col mx-2">
           <h5 class="mb-3">ログイン</h5>
 
-          <%= form_with model: @user, url: user_session_path do |f| %>
+          <%= form_with model: resource, url: user_session_path do |f| %>
 
             <div class="mb-2">
               <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
