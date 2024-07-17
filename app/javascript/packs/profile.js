@@ -1,5 +1,5 @@
 // プロフィール画像プレビューの記述
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   const profileImageInput = document.getElementById('user_profile_image');
   const profileImagePreview = document.getElementById('profile-image-preview');
 
