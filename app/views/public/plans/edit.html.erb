@@ -9,16 +9,20 @@
         <div class="row">
           <div class="col">
             <h5>プラン概要</h5>
-            <%= f.text_field :title, class: "form-control my-3", data: { plan_id: @plan.id }, placeholder: "プランタイトル" %>
+            <div style="color: red;">*必須</div>
+            <%= f.text_field :title, class: "form-control mt-1", data: { plan_id: @plan.id }, placeholder: "プランタイトル", id: "plan_title" %>
+            <div id="planTitleError", class="mt-1", style="display: none; color: red;"></div>
             <%= f.text_area :body, class: "form-control my-3", placeholder: "プラン説明" %>
           </div>
         </div>
 
         <h5 class="mt-3">スケジュール</h5>
         <%= f.fields_for :plan_details do |pd| %>
+        <div style="color: red;">*必須</div>
           <div class="row nested-fields">
             <div class="col-10">
-              <%= pd.text_field :title, class: "form-control mb-3", data: { plan_detail_id: pd.object.id }, placeholder: "詳細タイトル" %>
+              <%= pd.text_field :title, class: "form-control mt-1 plan_detail_title", data: { plan_detail_id: pd.object.id }, placeholder: "詳細タイトル" %>
+              <div id="planDetailTitleError", class="mt-1", style="display: none; color: red;"></div>
             </div>
             <div class="col-2 d-flex align-items-center">
               <%= link_to "#", class: "remove_field btn btn-danger mb-3" do %>
@@ -26,8 +30,8 @@
               <% end %>
             </div>
             <div class="col-12">
-              <%= pd.text_area :body, class: "form-control mb-3", placeholder: "詳細説明" %>
-              <%= pd.text_field :address, class: "form-control mb-3 pac-input", placeholder: "住所" %>
+              <%= pd.text_area :body, class: "form-control my-3", placeholder: "詳細説明" %>
+              <%= pd.text_field :address, class: "form-control mb-3 js-address-autocomplete", placeholder: "住所" %>
             </div>
             <%= pd.hidden_field :_destroy, class: 'destroy-field' %>
           </div>
@@ -58,9 +62,9 @@
 
         <div class="row">
           <div class="col text-center my-3">
-          <button type="submit" class="btn btn-primary mx-auto px-4">
-            <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
-          </button>
+            <button type="submit" disabled class="btn btn-primary mx-auto px-4 disabled" id="plan_submit">
+              <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
+            </button>
             <%= f.submit '下書き保存', class: 'btn btn-warning mx-auto px-4' %>
           </div>
         </div>
@@ -69,4 +73,14 @@
   </div>
 </div>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=<%#= ENV['Maps_API_Key'] %>&libraries=places" async defer></script>-->
+<script>
+  // 投稿の住所入力フォームオートコンプリート
+  function autocompleteEvent() {
+    const textFields = document.querySelectorAll(".js-address-autocomplete");
+    textFields.forEach(function(textField) {
+      new google.maps.places.Autocomplete(textField);
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places&callback=autocompleteEvent" async defer></script>
