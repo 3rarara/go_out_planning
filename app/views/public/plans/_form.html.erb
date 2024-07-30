@@ -4,7 +4,9 @@
   <div class="row">
     <div class="col">
       <h5>プラン概要</h5>
-      <%= f.text_field :title, class:"form-control mb-3", placeholder: "例) ＊＊県旅行！" %>
+      <div style="color: red;">*必須</div>
+      <%= f.text_field :title, class:"form-control", placeholder: "例) ＊＊県旅行！", id: "plan_title" %>
+      <div id="planTitleError", class="mt-1", style="display: none; color: red;"></div>
       <%= f.text_area :body, class:"form-control my-3", placeholder: "例)御朱印巡りをしました！" %>
     </div>
   </div>
@@ -13,9 +15,11 @@
   <%= f.fields_for :plan_details do |pd| %>
   <div class="row">
     <div class="col">
-      <%= pd.text_field :title, class: "form-control mb-3", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
+      <div style="color: red;">*必須</div>
+      <%= pd.text_field :title, class: "form-control plan_detail_title", placeholder: "例) ＊＊駅(集合場所や施設名)" %>
+      <div id="planDetailTitleError", class="mt-1", style="display: none; color: red;"></div>
       <%= pd.text_area :body, class: "form-control my-3", placeholder: "例) 10:00集合 徒歩3分移動" %>
-      <%= pd.text_field :address, class: "form-control mb-3 js-address-autocomplete", placeholder: "住所または施設名" %>
+      <%= pd.text_field :address, class: "form-control my-3 js-address-autocomplete", placeholder: "住所または施設名" %>
     </div>
   </div>
   <% end %>
@@ -50,7 +54,7 @@
 
   <div class="row">
     <div class="col text-center my-3">
-      <button type="submit" class="btn btn-primary mx-auto px-4">
+      <button type="submit" disabled class="btn btn-primary mx-auto px-4 disabled" id="plan_submit">
         <i class="fas fa-paper-plane fa-lg" style="color: #ffffff;"></i>
       </button>
       <%= f.submit '下書き保存', class: 'btn btn-warning mx-auto px-4' %>

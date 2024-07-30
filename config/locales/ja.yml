@@ -1,4 +1,17 @@
 ja:
+  activerecord:
+    models:
+      plan: プラン
+      plan_details: スケジュール
+    attributes:
+      plan:
+        title: タイトル
+        body: 本文
+        is_draft: 下書き
+      plan_details:
+        title: スケジュールタイトル
+        body: スケジュール本文
+
   date:
     abbr_day_names:
     - 日
