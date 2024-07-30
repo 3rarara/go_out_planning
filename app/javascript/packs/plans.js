@@ -1,20 +1,91 @@
-document.addEventListener('turbolinks:load', () => {
-  // 投稿の住所入力フォームオートコンプリート
-  function addAutocompleteEvent() {
-    const textFields = document.querySelectorAll(".js-address-autocomplete");
-    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-      textFields.forEach(function(textField) {
-        new google.maps.places.Autocomplete(textField);
-      });
-    }
-  }
-
-  // Google Maps API のスクリプトがロードされていることを確認
+// 投稿の住所入力フォームオートコンプリート
+function addAutocompleteEvent() {
+  const textFields = document.querySelectorAll(".js-address-autocomplete");
   if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-    addAutocompleteEvent();
-  } else {
-    loadGoogleMapsScript();
+    textFields.forEach(function(textField) {
+      new google.maps.places.Autocomplete(textField);
+    });
   }
+}
+
+// 投稿バリデーションの記述
+function validateEvent() {
+  const planSubmitCheck = document.querySelector('#plan_submit');
+  if (planSubmitCheck) {
+    let planTitleError = false;
+    let planDetailTitleError = false;
+
+    const planTitle = document.querySelector('#plan_title');
+    const planSubmit = document.querySelector('#plan_submit');
+
+    function validateInput(input) {
+      let error = false;
+      let errorElement;
+      if (input === planTitle) {
+        errorElement = document.querySelector('#planTitleError');
+        if (input.value.trim() === '') {
+          error = true;
+          errorElement.textContent = 'タイトルを入力してください。';
+        }
+      } else if (input.classList.contains('plan_detail_title')) {
+        errorElement = input.nextElementSibling; // 各入力フィールドの隣にエラー要素を置く
+        if (input.value.trim() === '') {
+          error = true;
+          errorElement.textContent = 'スケジュールタイトルを入力してください。';
+        }
+      }
+      if (error) {
+        errorElement.style.display = 'block';
+        if (input === planTitle) {
+          planTitleError = true;
+        } else {
+          planDetailTitleError = true;
+        }
+      } else {
+        errorElement.style.display = 'none';
+        if (input === planTitle) {
+          planTitleError = false;
+        } else {
+          planDetailTitleError = false;
+        }
+      }
+    }
+
+    function updatePlanSubmit() {
+      const planDetailTitles = document.querySelectorAll('.plan_detail_title:not(.hidden)');
+      let hasError = planTitleError || planDetailTitleError;
+
+      planDetailTitles.forEach(input => {
+        if (input.value.trim() === '') {
+          hasError = true;
+        }
+      });
+
+      if (planTitle.value.trim() === '' || hasError) {
+        planSubmit.classList.add('disabled');
+        planSubmit.setAttribute('disabled', true);
+      } else {
+        planSubmit.classList.remove('disabled');
+        planSubmit.removeAttribute('disabled');
+      }
+    }
+
+    const planDetailTitles = document.querySelectorAll('.plan_detail_title');
+    const inputs = [planTitle, ...planDetailTitles];
+
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        validateInput(input);
+        updatePlanSubmit();
+      });
+    });
+
+    updatePlanSubmit(); // 初期状態をチェック
+  }
+}
+
+document.addEventListener('turbolinks:load', () => {
+  validateEvent();
 
   // plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
   let wrapper = '#plan_details_wrapper';
@@ -28,15 +99,17 @@ document.addEventListener('turbolinks:load', () => {
     let formHtml = `
       <div class="row nested-fields">
         <div class="col-10">
-          <input type="text" class="form-control my-3" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+          <div class="text-left" style="color: red;">*必須</div>
+          <input type="text" class="form-control plan_detail_title" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
+          <div id="planDetailTitleError" class="text-left mt-1" style="display: none; color: red;"></div>
         </div>
         <div class="col-2 d-flex align-items-center">
-          <a href="#" class="remove_field btn btn-danger my-3">
+          <a href="#" class="remove_field btn btn-danger">
             <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
           </a>
         </div>
         <div class="col-12">
-          <textarea class="form-control mb-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
+          <textarea class="form-control my-3" name="plan[plan_details_attributes][${x}][body]" placeholder="詳細説明"></textarea>
           <input type="text" class="form-control mb-3 js-address-autocomplete" name="plan[plan_details_attributes][${x}][address]" placeholder="住所または施設名">
         </div>
         <input type="hidden" name="plan[plan_details_attributes][${x}][_destroy]" class="destroy-field" value="false">
@@ -49,6 +122,9 @@ document.addEventListener('turbolinks:load', () => {
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
       addAutocompleteEvent();
     }
+
+    // 追加されたフォームにバリデーションを適用
+    validateEvent();
   });
 
   // plans/newでplan_detailsの入力フォームを削除するための記述
@@ -58,17 +134,20 @@ document.addEventListener('turbolinks:load', () => {
     // plans/editでplan_detailsの入力フォームを削除するための記述
     if(confirm('この詳細を削除してもよろしいですか？')) {
       let removeButton = $(e.target);
-      let destroyField = removeButton.closest('.nested-fields').find('.destroy-field');
+      let nestedFields = removeButton.closest('.nested-fields');
+      let destroyField = nestedFields.find('.destroy-field');
       if (destroyField.length > 0) {
         destroyField.val('true');
         removeButton.closest('.nested-fields').hide();
-        console.log('Status: success - The item was marked for deletion.');
+        nestedFields.find('input').addClass('hidden');
+        validateEvent();
+
       } else {
         removeButton.closest('.nested-fields').remove();
-        console.log('Status: success - The new item was removed.');
       }
-    } else {
-      console.log('Status: cancelled - The item was not deleted.');
+
+      // フォームが削除された場合にバリデーションを再確認
+      validateEvent();
     }
   });
 
@@ -107,17 +186,3 @@ document.addEventListener('turbolinks:load', () => {
     }
   }
 });
-
-function loadGoogleMapsScript() {
-  if (!document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]')) {
-    var script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-  }
-}
-
-function initAutocomplete() {
-  addAutocompleteEvent();
-}

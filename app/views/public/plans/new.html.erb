@@ -27,4 +27,14 @@
   </div>
 </div>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=<%#= ENV['Maps_API_Key'] %>&libraries=places" async defer></script>-->
+<script>
+  // 投稿の住所入力フォームオートコンプリート
+  function autocompleteEvent() {
+    const textFields = document.querySelectorAll(".js-address-autocomplete");
+    textFields.forEach(function(textField) {
+      new google.maps.places.Autocomplete(textField);
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places&callback=autocompleteEvent" async defer></script>
