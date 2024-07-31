@@ -82,7 +82,7 @@
       </div>
       <div class="modal-body">
         <% if current_user.email != "guest@example.com" %>
-          <%= link_to "アカウント設定", edit_mypage_path, 'data-turbolinks': false %><br>
+          <%= link_to "アカウント設定", mypage_edit_path, 'data-turbolinks': false %><br>
         <% end %>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       </div>

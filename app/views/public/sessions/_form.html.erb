@@ -6,7 +6,7 @@
         <div class="col mx-2">
           <div id="loginError" class="mb-3" style="display: none; color: red;"></div>
 
-          <%= form_with model: resource, url: users_check_user_path, local: false, class: 'sessions' do |f| %>
+          <%= form_with model: resource, url: check_user_users_path, local: false, class: 'sessions' do |f| %>
 
             <div class="mb-2">
               <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "login_email" %>

@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col">
             <h5>プラン概要</h5>
-            <div style="color: red;">*必須</div>
+            <div style="color: red;">*</div>
             <%= f.text_field :title, class: "form-control mt-1", data: { plan_id: @plan.id }, placeholder: "プランタイトル", id: "plan_title" %>
             <div id="planTitleError", class="mt-1", style="display: none; color: red;"></div>
             <%= f.text_area :body, class: "form-control my-3", placeholder: "プラン説明" %>
@@ -18,7 +18,7 @@
 
         <h5 class="mt-3">スケジュール</h5>
         <%= f.fields_for :plan_details do |pd| %>
-        <div style="color: red;">*必須</div>
+        <div style="color: red;">*</div>
           <div class="row nested-fields">
             <div class="col-10">
               <%= pd.text_field :title, class: "form-control mt-1 plan_detail_title", data: { plan_detail_id: pd.object.id }, placeholder: "詳細タイトル" %>
