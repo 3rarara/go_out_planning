@@ -25,7 +25,7 @@ document.addEventListener('turbolinks:load', () => {
 
   window.addEventListener('scroll', () => {
     const currentY = window.scrollY;
-  
+
     if (currentY < prevY) {
       header.classList.remove('hidden');
     } else {
@@ -126,7 +126,12 @@ document.addEventListener('turbolinks:load', () => {
     registrationEmail.addEventListener('input', function() {
       let email = this.value;
       let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (email.length < 1 ) {
+        document.querySelector('#emailError').textContent = 'メールアドレスを入力してください。';
+        document.querySelector('#emailError').style.display = 'block';
+        emailError = true;
+        updateSubmit();
+      } else if (!emailRegex.test(email)) {
         emailError = true;
         document.querySelector('#emailError').textContent = 'メールアドレスの形式が正しくありません。';
         document.querySelector('#emailError').style.display = 'block';
@@ -224,7 +229,10 @@ document.addEventListener('turbolinks:load', () => {
     document.querySelector('#login_email').addEventListener('input', function() {
       let email = this.value;
       let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (email.length < 1 ) {
+        document.querySelector('#loginEmailError').textContent = 'メールアドレスを入力してください。';
+        document.querySelector('#loginEmailError').style.display = 'block';
+      } else if (!emailRegex.test(email)) {
         document.querySelector('#loginEmailError').textContent = 'メールアドレスの形式が正しくありません。';
         document.querySelector('#loginEmailError').style.display = 'block';
         loginEmailError = true;
