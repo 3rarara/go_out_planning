@@ -11,12 +11,14 @@
           <% end %>
         </div>
 
-          <% unless user.id == current_user.id && user.email != "guest@example.com" %>
-          <div class="col my-auto mx-auto">
-            <div class="row text-left relationship_btns_<%= user.id %>">
-              <%= render "public/relationships/btn", user: user %>
+          <% if user_signed_in? %>
+            <% unless user.id == current_user.id && user.email != "guest@example.com" %>
+            <div class="col my-auto mx-auto">
+              <div class="row text-left relationship_btns_<%= user.id %>">
+                <%= render "public/relationships/btn", user: user %>
+              </div>
             </div>
-          </div>
+            <% end %>
           <% end %>
 
       </div>
