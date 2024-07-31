@@ -58,7 +58,11 @@ a {
 
 /*フォントサイズ指定*/
 .fsize_13-18 {
-  font-size: clamp(14px, 3vw, 18px);;
+  font-size: clamp(13px, 3vw, 18px);;
+}
+
+.fsize_10-13 {
+  font-size: clamp(10px, 3vw, 13px);;
 }
 
 /*自分以外のメッセージの吹き出し*/

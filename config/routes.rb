@@ -14,34 +14,34 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    post 'users/guest_sign_in' => 'users/sessions#guest_sign_in'
   end
 
   scope module: :public do
     root to: 'homes#top'
-    get 'terms_of_use', to: 'homes#terms_of_use'
-    get 'privacy_policy', to: 'homes#privacy_policy'
-    get 'mypage' => 'users#mypage', as: 'mypage'
-    get 'mypage/edit' => 'users#edit', as: 'edit_mypage'
+    get 'terms_of_use' => 'homes#terms_of_use'
+    get 'privacy_policy' => 'homes#privacy_policy'
+
+    get 'mypage' => 'users#mypage'
+    get 'mypage/edit' => 'users#edit'
     patch 'mypage' => 'users#update'
-    get 'users/confirm' => 'users#confirm', as: 'confirm_user'
-    patch 'users/close_account' => 'users#close_account', as: 'close_account_user'
-    get 'users/check_name' => 'users#check_name'
-    get 'users/check_email' => 'users#check_email'
-    post 'users/check_user' => 'users#check_user'
+    get 'confirm' => 'users#confirm'
+    patch 'close_account' => 'users#close_account'
     resources :users, only: [:show] do
+      collection do
+        get 'check_name'
+        get 'check_email'
+        post 'check_user'
+      end
       resource :relationships, only: [:create, :destroy]
-        get 'followings' => 'relationships#followings', as: 'followings'
-        get 'followers' => 'relationships#followers', as: 'followers'
+      get 'followings' => 'relationships#followings'
+      get 'followers' => 'relationships#followers'
     end
     resources :plans do
       resources :comments, only: [:create, :destroy]
       resource :like, only: [:create, :destroy]
       member do
         get :liked_users
-      end
-      collection do
-        get :tags_list
       end
     end
     get 'search' => 'searches#search'

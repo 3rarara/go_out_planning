@@ -99,11 +99,11 @@ document.addEventListener('turbolinks:load', () => {
     let formHtml = `
       <div class="row nested-fields">
         <div class="col-10">
-          <div class="text-left" style="color: red;">*必須</div>
+          <div class="text-left" style="color: red;">*</div>
           <input type="text" class="form-control plan_detail_title" name="plan[plan_details_attributes][${x}][title]" placeholder="詳細タイトル">
           <div id="planDetailTitleError" class="text-left mt-1" style="display: none; color: red;"></div>
         </div>
-        <div class="col-2 d-flex align-items-center">
+        <div class="col-2 d-flex align-items-center mt-4">
           <a href="#" class="remove_field btn btn-danger">
             <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
           </a>
