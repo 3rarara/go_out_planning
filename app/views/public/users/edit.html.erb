@@ -21,19 +21,21 @@
               <%= f.file_field :profile_image, accept: "image/*", class: 'file-input' %>
             </div><br>
 
-            <%= f.label :ユーザー名 %>
+            <%= f.label :name, "ユーザー名" %>
             <div class="mb-4">
-              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名" %>
+              <%= f.text_field :name, class: "form-control", placeholder: "ユーザー名", id: "edit_name" %>
+              <div id="editNameError" class="mt-1" style="display: none; color: red;">ユーザー名を入力してください。</div>
             </div>
 
-            <%= f.label :メールアドレス %>
+            <%= f.label :email, "メールアドレス" %>
             <div class="mb-4">
-              <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "メールアドレス" %>
+              <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "メールアドレス", id: "edit_email" %>
+              <div id="editEmailError" class="mt-1" style="display: none; color: red;"></div>
             </div>
 
             <div class="row justify-content-center">
-              <%= f.submit "更新", class: "btn btn-warning m-4" %>
-              <%= link_to "退会", confirm_user_path, class: "btn btn-danger m-4" %>
+              <%= f.submit "更新", disabled: true, class: "btn btn-warning m-4 disabled", id: "edit_submit" %>
+              <%= link_to "退会", confirm_path, class: "btn btn-danger m-4" %>
             </div>
           <% end %>
 

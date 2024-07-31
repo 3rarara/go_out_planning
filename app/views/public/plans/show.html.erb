@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-4">
           <%= link_to user_path(@plan.user) do %>
-            <%= image_tag @plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block" %>
+            <%= image_tag @plan.user.get_profile_image(90, 90), class: "rounded-circle mx-auto d-block img-fluid" %>
             <div class="text-center mb-1"><%= @plan.user.name %></div>
           <% end %>
         </div>
@@ -20,7 +20,7 @@
           <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.body %></div>
         <% end %>
         <% if pd.address.present? %>
-          <div class="col fsize_13-18 p-3 my-2" style="background-color: #CDD3E8;"><%= pd.address %></div>
+          <div class="col fsize_10-13 px-3 my-2"><i class="fa-solid fa-location-pin" style="color: #3b4674;"></i><%= pd.address %></div>
         <% end %>
       <% end %>
 
@@ -41,14 +41,19 @@
         <% end %>
       </div>
 
-        <div class="row">
-          <!--コメントカウント非同期化テンプレート-->
-          <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
-          <!--いいね非同期化テンプレート-->
-          <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
+      <div class="row">
+        <!--コメントカウント非同期化テンプレート-->
+        <div class="col text-center comment_counter"><%= render 'public/comments/counter', plan: @plan %></div>
+        <!--いいね非同期化テンプレート-->
+        <div class="col text-center like_buttons_<%= @plan.id %>"><%= render 'public/likes/like', plan: @plan %></div>
 
-          <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
-        </div>
+        <div class="col text-center"><%= @plan.view_counts.count %>Views</div>
+      </div>
+
+      <div class="row">
+        <div class="col text-center fsize_10-13 my-2" style="color:#69727B;">投稿日:<%= @plan.created_at.strftime('%Y/%m/%d') %></div>
+        <div class="col text-center fsize_10-13 my-2" style="color:#69727B;">更新日:<%= @plan.updated_at.strftime('%Y/%m/%d') %></div>
+      </div>
 
       <% if @plan.user == current_user %>
       <div class="row mt-3">
@@ -100,7 +105,7 @@
     <% map = false %>
     <% end %>
 
-    let contentString<%= pd.id %> = '【住所】<%= pd.address %>';
+    let contentString<%= pd.id %> = '<i class="fa-solid fa-location-pin" style="color: #3b4674;"><%= pd.address %>';
     let infowindow<%= pd.id %> = new google.maps.InfoWindow({
       content: contentString<%= pd.id %>
     });

@@ -54,7 +54,12 @@ class Public::UsersController < ApplicationController
   def check_email
     email = params[:email]
     user = User.find_by(email: email)
-    render json: user.nil? ? {status: true}.to_json : {status: false}.to_json
+
+    if user.nil? || user == current_user
+      render json: { status: true }.to_json
+    else
+      render json: { status: false }.to_json
+    end
   end
 
   def check_user

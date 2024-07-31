@@ -29,7 +29,7 @@
       <% next if pd.address.blank? %>
       let mapPosition<%= pd.id %> = { lat: <%= pd.latitude %>, lng: <%= pd.longitude %> };
 
-      let contentString<%= pd.id %> = '<%= link_to pd.title, plan_path(pd.plan) %></br>【住所】<%= pd.address %>';
+      let contentString<%= pd.id %> = '<%= link_to pd.title, plan_path(pd.plan) %></br><i class="fa-solid fa-location-pin" style="color: #3b4674;"><%= pd.address %>';
       let infowindow<%= pd.id %> = new google.maps.InfoWindow({
         content: contentString<%= pd.id %>
       });
