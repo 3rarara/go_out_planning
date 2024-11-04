@@ -88,15 +88,23 @@ document.addEventListener('turbolinks:load', () => {
   validateEvent();
 
   // plans/newまたはeditでplan_detailsの入力フォームを追加するための記述
-  let wrapper = '#plan_details_wrapper';
-  let addButton = '#add_plan_details';
+  const wrapper =  document.getElementById("plan_details_wrapper");
+  const addButton = document.getElementById("add_plan_details");
   let x = 1;
 
-  $(document).on("click", addButton, function(e) {
-    e.preventDefault();
-    x++;
+  // IDの生成と管理
+  const existingFields = document.querySelectorAll('.nested-fields');
+  if (existingFields.length > 0) {
+    const lastField = existingFields[existingFields.length - 1];
+    const match = lastField.querySelector('input[name*="[title]"]').name.match(/\[(\d+)\]/);
+    x = match ? parseInt(match[1], 10) + 1 : 0;
+  }
 
-    let formHtml = `
+
+  addButton.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const formHtml = `
       <div class="row nested-fields">
         <div class="col-10">
           <div class="text-left" style="color: red;">*</div>
@@ -116,7 +124,8 @@ document.addEventListener('turbolinks:load', () => {
       </div>
     `;
 
-    $(wrapper).append(formHtml);
+    wrapper.insertAdjacentHTML('beforeend', formHtml);
+    x++;
 
     // 追加されたフォームにオートコンプリートを適用
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -128,26 +137,32 @@ document.addEventListener('turbolinks:load', () => {
   });
 
   // plans/newでplan_detailsの入力フォームを削除するための記述
-  $(document).on("click", ".remove_field", function(e) {
-    e.preventDefault();
+  document.addEventListener("click", function(e) {
+    if(e.target.closest(".remove_field")) {
+      e.preventDefault();
 
-    // plans/editでplan_detailsの入力フォームを削除するための記述
-    if(confirm('この詳細を削除してもよろしいですか？')) {
-      let removeButton = $(e.target);
-      let nestedFields = removeButton.closest('.nested-fields');
-      let destroyField = nestedFields.find('.destroy-field');
-      if (destroyField.length > 0) {
-        destroyField.val('true');
-        removeButton.closest('.nested-fields').hide();
-        nestedFields.find('input').addClass('hidden');
+      // plans/editでplan_detailsの入力フォームを削除するための記述
+      if(confirm('この詳細を削除してもよろしいですか？')) {
+        const removeButton = e.target.closest(".remove_field");
+        const nestedFields = removeButton.closest('.nested-fields');
+        const destroyField = nestedFields.querySelector('.destroy-field');
+        const inputs = nestedFields.querySelectorAll('input');
+
+        if (destroyField) {
+          destroyField.value = 'true';
+          nestedFields.style.display = 'none';
+
+          // バリデーションするためクラスを付与
+          inputs.forEach(input => input.classList.add('hidden'));
+          validateEvent();
+
+        } else {
+          nestedFields.remove();
+        }
+
+        // フォームが削除された場合にバリデーションを再確認
         validateEvent();
-
-      } else {
-        removeButton.closest('.nested-fields').remove();
       }
-
-      // フォームが削除された場合にバリデーションを再確認
-      validateEvent();
     }
   });
 
